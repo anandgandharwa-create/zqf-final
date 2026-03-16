@@ -3,16 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Maun Chakra</title>
 
 <style>
 
 body{
-margin:0;
-font-family:sans-serif;
-background:linear-gradient(180deg,#021b1b,#001010);
+background:#001b1b;
 color:white;
+font-family:sans-serif;
 text-align:center;
 padding:30px;
 }
@@ -21,50 +19,56 @@ h1{
 color:#ffd54f;
 }
 
-.chakra{
-width:120px;
-height:120px;
+.wheelBox{
+position:relative;
+width:260px;
+margin:auto;
+}
+
+.pointer{
+width:0;
+height:0;
+border-left:12px solid transparent;
+border-right:12px solid transparent;
+border-bottom:20px solid white;
+margin:auto;
+position:absolute;
+left:0;
+right:0;
+top:-10px;
+z-index:2;
+}
+
+#wheel{
+width:260px;
+height:260px;
 border-radius:50%;
-margin:40px auto;
-border:10px solid #00ffff;
-border-top:10px solid #ffd54f;
+background:conic-gradient(
+red,
+orange,
+yellow,
+lime,
+cyan,
+blue,
+purple,
+red
+);
+transition:transform 2s ease-out;
 }
 
-.spin{
-animation:spin 2s linear infinite;
-}
-
-@keyframes spin{
-
-0%{transform:rotate(0deg);}
-
-100%{transform:rotate(360deg);}
-
-}
-
-button{
-
-background:#ffd54f;
-border:none;
-padding:12px 25px;
-border-radius:25px;
-font-size:16px;
-cursor:pointer;
-
-}
-
-button:hover{
-
-background:#ffc107;
-
-}
-
-#message{
-
+.spinBtn{
 margin-top:30px;
+background:linear-gradient(45deg,#00e5ff,#00ff99);
+border:none;
+padding:16px 40px;
 font-size:18px;
-line-height:1.6;
+border-radius:40px;
+cursor:pointer;
+}
 
+.result{
+margin-top:25px;
+font-size:18px;
 }
 
 </style>
@@ -76,41 +80,48 @@ line-height:1.6;
 
 <p>भीतर ठहरने वाले मौन की दिशा पाने के लिए स्पिन करें</p>
 
-<div id="chakra" class="chakra"></div>
+<div class="wheelBox">
 
-<button onclick="spinChakra()">Spin</button>
+<div class="pointer"></div>
 
-<div id="message"></div>
+<div id="wheel"></div>
+
+</div>
+
+<button class="spinBtn" onclick="spinWheel()">Spin</button>
+
+<div id="result" class="result"></div>
 
 <script>
 
+let deg = 0;
+
 const messages=[
-
-"शांत मन में ही सत्य प्रकट होता है।",
-
+"शांत मन में सत्य प्रकट होता है।",
 "मौन वह स्थान है जहाँ आत्मा बोलती है।",
-
-"जो भीतर ठहर गया, वही जीवन समझ गया।",
-
+"जो भीतर ठहर गया वही जीवन समझ गया।",
 "मन शांत करो — उत्तर स्वयं प्रकट होगा।",
-
-"जिस क्षण तुम मौन हो जाते हो, उसी क्षण परम सत्य पास आ जाता है।"
-
+"मौन ही ईश्वर का द्वार है।",
+"अहंकार शांत करो — सत्य प्रकट होगा।",
+"भीतर जाओ — सब कुछ वहीं है।",
+"जिस क्षण तुम मौन होते हो उसी क्षण सत्य प्रकट होता है।"
 ];
 
-function spinChakra(){
+function spinWheel(){
 
-const chakra=document.getElementById("chakra");
+let wheel=document.getElementById("wheel");
 
-chakra.classList.add("spin");
+let random=Math.floor(Math.random()*360);
+
+deg += 720 + random;   // 2 fast rotations
+
+wheel.style.transform="rotate("+deg+"deg)";
 
 setTimeout(()=>{
 
-chakra.classList.remove("spin");
+let msg=messages[Math.floor(Math.random()*messages.length)];
 
-let random=Math.floor(Math.random()*messages.length);
-
-document.getElementById("message").innerText=messages[random];
+document.getElementById("result").innerText=msg;
 
 },2000);
 
