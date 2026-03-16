@@ -41,7 +41,7 @@ padding:25px 20px;
 max-width:420px;
 margin:auto;
 min-height:100vh;
-
+position:relative;
 display:flex;
 flex-direction:column;
 align-items:center;
@@ -79,27 +79,29 @@ text-decoration:none;
 font-size:20px;
 box-shadow:0 0 18px rgba(255,215,0,0.2);
 }
-
 .btn:hover{
 background:#121212;
 }
-
-/* ===== Universal App Back Button ===== */
-/* ===== Universal App Back Button ===== */
 /* ===== Universal App Back Button ===== */
 .appBack{
-display:block;
+position:absolute;
+top:calc(env(safe-area-inset-top) + 8px);
+left:15px;
+
+display:inline-block;
 width:max-content;
-margin:14px 0 14px 14px;
-text-align:left;
 
 background:#4b2a73;
 color:#ffffff;
+
 padding:9px 16px;
 border-radius:12px;
+
 font-size:15px;
 cursor:pointer;
+
 box-shadow:0 2px 8px rgba(0,0,0,0.35);
+z-index:1000;
 }
 
 .appBack:active{
