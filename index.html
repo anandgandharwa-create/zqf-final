@@ -752,56 +752,112 @@ color:#f3d77a;
 }
  /* Sticky divine menu */
 
+/* Sticky menu */
+
 .divineMenuSticky{
+
 position:sticky;
 top:60px;
 z-index:500;
+
 background:#071826;
-padding:12px 0;
+
+padding:18px 0;
+
 }
 
-/* Horizontal scroll */
+/* Horizontal slider */
 
 .divineTopScroll{
 
 display:flex;
-gap:14px;
+
+gap:18px;
+
 overflow-x:auto;
-padding:6px 12px;
+
+padding:0 20px;
+
+scroll-snap-type:x mandatory;
 
 scrollbar-width:none;
+
 }
 
 .divineTopScroll::-webkit-scrollbar{
 display:none;
 }
 
-/* Small cards */
+/* Big cards */
 
-.divineTopScroll .divineCard{
+.bigCard{
 
-min-width:120px;
+min-width:85%;
+
+scroll-snap-align:center;
 
 background:linear-gradient(145deg,#0f2a22,#081a16);
 
-border-radius:16px;
+border-radius:22px;
 
-padding:16px 10px;
+padding:28px 20px;
 
 text-align:center;
 
-box-shadow:0 6px 18px rgba(0,0,0,0.55);
+box-shadow:0 10px 28px rgba(0,0,0,0.6);
 
 }
 
-.divineTopScroll .divineIcon{
-font-size:24px;
-margin-bottom:4px;
+/* Icon */
+
+.bigCard .divineIcon{
+
+font-size:38px;
+
+margin-bottom:10px;
+
 }
 
-.divineTopScroll .divineTitle{
-font-size:13px;
+/* Title */
+
+.bigCard .divineTitle{
+font-size:18px;
 color:#f3d77a;
+}
+ /* Indicator dots */
+
+.divineIndicator{
+
+display:flex;
+
+justify-content:center;
+
+gap:8px;
+
+margin-top:14px;
+
+}
+
+.dot{
+
+width:8px;
+
+height:8px;
+
+border-radius:50%;
+
+background:#6b7c8c;
+
+opacity:0.5;
+
+}
+
+.dot.active{
+
+background:#ffd700;
+
+opacity:1;
+
 }
 </style>
 </head>
@@ -967,29 +1023,37 @@ SRINAGAR, J & K
 
 <div class="appBack" onclick="goHome()">← Back</div>
 
- <h2>Divine Access</h2>
 <div class="divineMenuSticky">
 
 <div class="divineTopScroll">
+<div class="divineIndicator">
 
-<div class="divineCard" onclick="window.open('maun-chakra.html','_self')">
+<span class="dot active"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+
+</div>
+<div class="divineCard bigCard" onclick="window.open('maun-chakra.html','_self')">
 <div class="divineIcon">🌀</div>
 <div class="divineTitle">Maun Chakra</div>
 </div>
 
-<div class="divineCard">
+<div class="divineCard bigCard">
 <div class="divineIcon">🔮</div>
 <div class="divineTitle">Krishna Guidance</div>
 </div>
 
-<div class="divineCard">
+<div class="divineCard bigCard">
 <div class="divineIcon">🪞</div>
 <div class="divineTitle">Antardarpan</div>
 </div>
 
-<div class="divineCard">
+<div class="divineCard bigCard">
 <div class="divineIcon">📿</div>
 <div class="divineTitle">Daily Sadhana</div>
+</div>
+
 </div>
 
 </div>
@@ -1055,50 +1119,6 @@ Krishna Oracle
 </div>
 </div>
 
-<div class="divineTopScroll">
-
-<div class="divineCard" onclick="window.open('maun-chakra.html','_self')">
-<div class="divineIcon">🌀</div>
-<div class="divineTitle">Maun Chakra</div>
-</div>
-
-<div class="divineCard">
-
-<div class="divineIcon">🔮</div>
-
-<div class="divineTitle">Krishna Guidance</div>
-
-<div class="divineText">
-अपने प्रश्न लिखें और दिव्य मार्गदर्शन प्राप्त करें।
-</div>
-
-</div>
-
-<div class="divineCard">
-
-<div class="divineIcon">🪞</div>
-
-<div class="divineTitle">Antardarpan</div>
-
-<div class="divineText">
-अपने भीतर झांकने और साक्षीभाव को जागृत करने की साधना।
-</div>
-
-</div>
-
-<div class="divineCard">
-
-<div class="divineIcon">📿</div>
-
-<div class="divineTitle">Daily Sadhana</div>
-
-<div class="divineText">
-हर दिन चेतना को स्थिर करने के लिए सरल अभ्यास।
-</div>
-
-</div>
-
-</div>
 <!-- ANSWER SECTION -->
 
 <div style="text-align:center;margin-top:50px;">
@@ -1375,6 +1395,21 @@ document.getElementById("oracleResult").innerText = randomMessage;
   }
 
 });
+ <script>
+
+const slider = document.querySelector('.divineTopScroll');
+const dots = document.querySelectorAll('.dot');
+
+slider.addEventListener('scroll', () => {
+
+let index = Math.round(slider.scrollLeft / slider.clientWidth);
+
+dots.forEach(dot => dot.classList.remove('active'));
+
+if(dots[index]) dots[index].classList.add('active');
+
+});
+
 </script>
 </body>
 </html>
