@@ -750,6 +750,59 @@ margin-bottom:6px;
 font-size:14px;
 color:#f3d77a;
 }
+ /* Sticky divine menu */
+
+.divineMenuSticky{
+position:sticky;
+top:60px;
+z-index:500;
+background:#071826;
+padding:12px 0;
+}
+
+/* Horizontal scroll */
+
+.divineTopScroll{
+
+display:flex;
+gap:14px;
+overflow-x:auto;
+padding:6px 12px;
+
+scrollbar-width:none;
+}
+
+.divineTopScroll::-webkit-scrollbar{
+display:none;
+}
+
+/* Small cards */
+
+.divineTopScroll .divineCard{
+
+min-width:120px;
+
+background:linear-gradient(145deg,#0f2a22,#081a16);
+
+border-radius:16px;
+
+padding:16px 10px;
+
+text-align:center;
+
+box-shadow:0 6px 18px rgba(0,0,0,0.55);
+
+}
+
+.divineTopScroll .divineIcon{
+font-size:24px;
+margin-bottom:4px;
+}
+
+.divineTopScroll .divineTitle{
+font-size:13px;
+color:#f3d77a;
+}
 </style>
 </head>
 
@@ -915,7 +968,31 @@ SRINAGAR, J & K
 <div class="appBack" onclick="goHome()">← Back</div>
 
  <h2>Divine Access</h2>
+<div class="divineMenuSticky">
 
+<div class="divineTopScroll">
+
+<div class="divineCard" onclick="window.open('maun-chakra.html','_self')">
+<div class="divineIcon">🌀</div>
+<div class="divineTitle">Maun Chakra</div>
+</div>
+
+<div class="divineCard">
+<div class="divineIcon">🔮</div>
+<div class="divineTitle">Krishna Guidance</div>
+</div>
+
+<div class="divineCard">
+<div class="divineIcon">🪞</div>
+<div class="divineTitle">Antardarpan</div>
+</div>
+
+<div class="divineCard">
+<div class="divineIcon">📿</div>
+<div class="divineTitle">Daily Sadhana</div>
+</div>
+
+</div>
 <p class="courseTagline">
 मन की शांति का पहला कदम
 </p>
@@ -985,22 +1062,6 @@ Krishna Oracle
 <div class="divineTitle">Maun Chakra</div>
 </div>
 
-<div class="divineCard">
-<div class="divineIcon">🔮</div>
-<div class="divineTitle">Krishna Guidance</div>
-</div>
-
-<div class="divineCard">
-<div class="divineIcon">🪞</div>
-<div class="divineTitle">Antardarpan</div>
-</div>
-
-<div class="divineCard">
-<div class="divineIcon">📿</div>
-<div class="divineTitle">Daily Sadhana</div>
-</div>
-
-</div>
 <div class="divineCard">
 
 <div class="divineIcon">🔮</div>
