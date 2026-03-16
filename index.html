@@ -585,6 +585,133 @@ margin-bottom:26px;
 width:100%;
 max-width:420px;
 }
+ /* Ask Question Button */
+
+.askButton{
+display:inline-block;
+background:linear-gradient(45deg,#6b2cff,#8b5cf6);
+color:white;
+padding:12px 22px;
+border-radius:14px;
+text-decoration:none;
+font-size:17px;
+box-shadow:0 0 18px rgba(140,90,255,0.45);
+transition:0.25s;
+}
+
+.askButton:hover{
+transform:scale(1.05);
+}
+/* Answer Button */
+
+.answerButton{
+display:inline-block;
+margin-top:18px;
+background:#f59e0b;
+color:black;
+padding:14px 22px;
+border-radius:14px;
+text-decoration:none;
+font-size:18px;
+font-weight:bold;
+box-shadow:0 0 20px rgba(255,200,80,0.35);
+}
+/* Divine Cards Grid */
+
+.divineGrid{
+display:grid;
+grid-template-columns:1fr;
+gap:18px;
+margin-top:35px;
+max-width:380px;
+}
+
+/* Divine Card */
+
+.divineCard{
+background:linear-gradient(145deg,#132532,#08131c);
+border-radius:18px;
+padding:22px;
+text-align:center;
+cursor:pointer;
+
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+transition:0.3s;
+}
+
+.divineCard:hover{
+transform:translateY(-4px);
+}
+
+/* Card Icon */
+
+.divineIcon{
+font-size:32px;
+margin-bottom:10px;
+}
+
+/* Card Title */
+
+.divineTitle{
+font-size:18px;
+font-weight:600;
+color:#ffd700;
+margin-bottom:6px;
+}
+/* Card Text */
+.divineText{
+font-size:14px;
+color:#d6e6f2;
+line-height:1.6;
+}
+ /* Krishna Oracle Card */
+
+.oracleCard{
+background:linear-gradient(145deg,#132532,#08131c);
+border-radius:20px;
+padding:26px;
+margin-top:25px;
+text-align:center;
+
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+max-width:380px;
+}
+
+.oracleIcon{
+font-size:34px;
+margin-bottom:10px;
+}
+
+.oracleTitle{
+font-size:20px;
+font-weight:600;
+color:#ffd700;
+margin-bottom:8px;
+}
+
+.oracleText{
+font-size:15px;
+color:#d6e6f2;
+margin-bottom:18px;
+line-height:1.6;
+}
+
+.oracleBtn{
+background:linear-gradient(45deg,#ffd700,#ffb300);
+border:none;
+padding:12px 22px;
+border-radius:16px;
+font-size:16px;
+cursor:pointer;
+font-weight:600;
+}
+
+.oracleResult{
+margin-top:18px;
+font-size:16px;
+color:#ffffff;
+line-height:1.7;
+}
 </style>
 </head>
 
@@ -731,8 +858,6 @@ Zero Quantum Frequency reveals the space within where mental weight dissolves an
 BLUE DUCK PUBLICATION<br>
 SRINAGAR, J & K
 </div>
-
-
 <div class="gallery">
 
 <img src="AM.jpg">
@@ -744,112 +869,150 @@ SRINAGAR, J & K
 </div>
 
 </div>
-<!-- COURSES -->
+
+ <!-- DIVINE ACCESS -->
+
 <div id="courses" class="container page">
 
 <div class="appBack" onclick="goHome()">← Back</div>
 
 <div class="comingSoon">COMING SOON</div>
 
-<!-- QUESTION BUTTON (TOP) -->
-<div style="text-align:center; margin:25px 0;">
-<a onclick="openPrashn()" style="
-display:inline-block;
-background:#6b2cff;
-color:white;
-padding:12px 20px;
-border-radius:12px;
-text-decoration:none;
-font-size:17px;
-cursor:pointer;">
+<!-- ASK QUESTION BUTTON -->
+
+<div style="text-align:center;margin:20px 0 30px 0;">
+<a onclick="openPrashn()" class="askButton">
 कोई प्रश्न है? यहाँ लिखें
 </a>
 </div>
 
-<h2>ZQ Frequency Starter</h2>
+ <h2>Divine Access</h2>
 
 <p class="courseTagline">
 मन की शांति का पहला कदम
 </p>
 
 <p class="courseDesc">
-यह उन्नत कोर्स आपकी चेतना और ऊर्जा को उच्च आवृत्ति पर ले जाकर स्पष्टता और आकर्षण-शक्ति को सक्रिय करता है।
+यह साधना-आधारित मार्ग आपकी चेतना और ऊर्जा को उच्च आवृत्ति पर ले जाकर
+स्पष्टता, संतुलन और आंतरिक आकर्षण-शक्ति को सक्रिय करता है।
 </p>
+
 
 <p class="courseHighlight">
 "आप एक ऐसी जेल में हैं जिसमें ना सलाखें हैं, ना दीवारें और ना ताला"
 </p>
-
 <div class="coursePromo">
+<div class="coursePromoTitle">Divine Access</div>
 
-<div class="coursePromoTitle">ZQ Frequency Starter</div>
+ <p>
+आज का मनुष्य बाहर से सफल दिखता है, पर भीतर से अशांत है।
+विचारों का शोर, अपेक्षाओं का दबाव और निरंतर भागदौड़ उसे
+ऐसी अदृश्य जेल में कैद कर देती है,
+जिसमें ना सलाखें हैं, ना दीवारें और ना ताला —
+फिर भी वह स्वतंत्र नहीं है।
+</p>
 
-<p>आज का मनुष्य बाहर से सफल दिखता है, पर भीतर से अशांत है। विचारों का शोर, अपेक्षाओं का दबाव और निरंतर भागदौड़ उसे ऐसी अदृश्य जेल में कैद कर देती है, जिसमें ना सलाखें हैं, ना दीवारें और ना ताला - फिर भी वह स्वतंत्र नहीं है।</p>
+<p>
+Divine Access उसी आंतरिक बंधन से मुक्ति का पहला कदम है।
+यह केवल एक कार्यक्रम नहीं,
+बल्कि चेतना की दिशा बदलने की प्रक्रिया है।
+</p>
 
-<p>ZQ Frequency Starter उसी आंतरिक बंधन से मुक्ति का पहला कदम है। यह केवल एक कोर्स नहीं, बल्कि चेतना की दिशा बदलने की प्रक्रिया है। इस विशेष साधना-आधारित कार्यक्रम में आपको 21 गहन वीडियो और 21 मार्गदर्शित ऑडियो सत्र मिलेंगे, जो आपके मन को स्थिर करने, ऊर्जा को संतुलित करने और साक्षीभाव को जागृत करने में सहायक होंगे।</p>
-
-<p>हर वीडियो आपको धीरे-धीरे उस बिंदु तक ले जाएगा जहाँ विचारों का भार हल्का होने लगता है। हर ऑडियो सत्र आपके भीतर की मौन शक्ति को सक्रिय करेगा। यह कोर्स किसी जटिल दर्शन या कठिन साधना का आग्रह नहीं करता; यह आपको सहज, सरल और व्यावहारिक तरीके से भीतर लौटना सिखाता है।</p>
-
-<p>इसके साथ आपको मिलेगा एक डिजिटल ग्रैटिट्यूड जर्नल, जो आपके दैनिक चिंतन को नई दिशा देगा। कृतज्ञता केवल एक भावना नहीं, बल्कि चेतना को उच्च आवृत्ति पर ले जाने का माध्यम है। जब आप नियमित रूप से अपने अनुभवों को लिखते हैं, तो मन नकारात्मकता से हटकर संतुलन की ओर बढ़ता है।</p>
-
-<p>यह कोर्स उन लोगों के लिए है जो केवल ज्ञान नहीं, अनुभव चाहते हैं। जो केवल प्रेरणा नहीं, आंतरिक परिवर्तन चाहते हैं। जो बाहरी उपलब्धियों से आगे बढ़कर आत्मिक स्थिरता को समझना चाहते हैं।</p>
-
-<p>यदि आप जीवन की भागदौड़ से थक चुके हैं, यदि आप मन के शोर से ऊपर उठकर मौन की शक्ति को जानना चाहते हैं, तो यह कोर्स आपके लिए है।</p>
+<p>
+हर अभ्यास आपको धीरे-धीरे उस बिंदु तक ले जाएगा
+जहाँ विचारों का भार हल्का होने लगता है
+और भीतर की मौन शक्ति सक्रिय होती है।
+</p>
 
 <div class="courseClosing">
-ZQ Frequency Starter - क्योंकि सच्ची समृद्धि भीतर की शांति से प्रारंभ होती है।
+Divine Access — क्योंकि सच्ची समृद्धि भीतर की शांति से प्रारंभ होती है।
+</div>
+<!-- KRISHNA ORACLE -->
+
+<div class="oracleCard">
+
+<div class="oracleIcon">🕉</div>
+
+<div class="oracleTitle">
+Krishna Oracle
 </div>
 
-<!-- QUESTION BUTTON (BOTTOM) -->
-<div style="text-align:center; margin-top:50px;">
+<div class="oracleText">
+अपने मन में एक प्रश्न रखें और कृष्ण से मार्गदर्शन प्राप्त करें।
+</div>
 
-<h3 style="color:#c084fc;">साधना में प्रश्न आना प्रगति का संकेत है</h3>
+<button class="oracleBtn" onclick="krishnaOracle()">
+कृष्ण से उत्तर प्राप्त करें
+</button>
 
-<p style="max-width:600px; margin:auto; line-height:1.6;">
-यदि आपके भीतर कोई उलझन है, आप यहाँ लिख सकते हैं।
-</p>
-<!-- UTTAR BUTTON -->
-<div style="text-align:center; margin-top:30px;">
+<div id="oracleResult" class="oracleResult"></div>
+
+</div>
+</div>
+
+
+
+<!-- DIVINE FEATURE CARDS -->
+<div class="divineGrid">
+<div class="divineCard" onclick="openPrashn()">
+<div class="divineIcon">🔮</div>
+<div class="divineTitle">Krishna Guidance</div>
+
+<div class="divineText">
+अपने प्रश्न लिखें और दिव्य मार्गदर्शन प्राप्त करें।
+</div>
+
+</div>
+
+
+<div class="divineCard">
+<div class="divineIcon">🪞</div>
+<div class="divineTitle">Antardarpan</div>
+<div class="divineText">
+अपने भीतर झांकने और साक्षीभाव को जागृत करने की साधना।
+</div>
+
+</div>
+<div class="divineCard">
+
+<div class="divineIcon">📿</div>
+
+<div class="divineTitle">Daily Sadhana</div>
+
+<div class="divineText">
+हर दिन चेतना को स्थिर करने के लिए सरल अभ्यास।
+</div>
+
+</div>
+
+</div>
+<!-- ANSWER SECTION -->
+
+<div style="text-align:center;margin-top:50px;">
 
 <h3 style="color:#ffd166;">क्या आपने पहले प्रश्न भेजा था?</h3>
 
-<p style="max-width:600px; margin:auto; line-height:1.6;">
+<p style="max-width:380px;margin:auto;line-height:1.7;">
 आपके द्वारा भेजे गए चुने हुए प्रश्नों के उत्तर यहाँ प्रकाशित किए जाते हैं।
 अपना Q-ID देखकर उत्तर पढ़ें।
 </p>
 
-<a href="uttar.html" style="
-display:inline-block;
-margin-top:18px;
-background:#f59e0b;
-color:black;
-padding:14px 22px;
-border-radius:12px;
-text-decoration:none;
-font-size:18px;
-font-weight:bold;">
+<a href="uttar.html" class="answerButton">
 📜 अपने उत्तर देखें
 </a>
-
 </div>
-<a onclick="openPrashn()" style="
-display:inline-block;
-margin-top:20px;
-background:#6b2cff;
-color:white;
-padding:14px 22px;
-border-radius:12px;
-text-decoration:none;
-font-size:18px;
-cursor:pointer;">
+
+ <!-- ASK AGAIN BUTTON -->
+
+<div style="text-align:center;margin-top:30px;">
+
+<a onclick="openPrashn()" class="askButton">
 अपने भीतर के प्रश्न पूछें
 </a>
 
 </div>
 
 </div>
-</div>
-
 <!-- KRISHNA -->
 <div id="krishna" class="container page">
 <div class="appBack" onclick="goHome()">← Back</div>
@@ -1064,7 +1227,31 @@ document.addEventListener('click', function(e) {
     window.location.href = url;
     return;
   }
+function krishnaOracle(){
 
+const messages = [
+
+"मन को स्थिर करो — उत्तर पहले से भीतर उपस्थित है।",
+
+"कर्म करो, फल की चिंता मत करो।",
+
+"जिसे तुम खोज रहे हो, वह तुम्हारे भीतर है।",
+
+"मौन में जाओ — वहीं सत्य स्पष्ट होता है।",
+
+"अहंकार छोड़ते ही मार्ग खुलने लगता है।",
+
+"जहाँ प्रेम है, वहीं कृष्ण का मार्ग है।",
+
+"चिंता छोड़ो — जीवन तुम्हें सही दिशा दे रहा है।"
+
+];
+
+const randomMessage = messages[Math.floor(Math.random()*messages.length)];
+
+document.getElementById("oracleResult").innerText = randomMessage;
+
+}
   // internal pages ignore
   if (url.startsWith('#') || url.startsWith('/')) return;
 
