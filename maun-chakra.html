@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -8,29 +9,60 @@
 <style>
 
 body{
-background:#001b1b;
-color:white;
+background:linear-gradient(180deg,#002626,#001515);
 font-family:sans-serif;
 text-align:center;
+color:white;
 padding:30px;
+overflow:hidden;
 }
 
 h1{
 color:#ffd54f;
+margin-bottom:8px;
 }
+
+.subtitle{
+color:#d6e6f2;
+margin-bottom:30px;
+}
+
+/* Cosmic glow background */
+
+body::before{
+content:"";
+position:fixed;
+width:500px;
+height:500px;
+background:radial-gradient(circle,rgba(0,255,200,0.35),transparent 70%);
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+animation:cosmicGlow 6s infinite alternate;
+z-index:-1;
+}
+
+@keyframes cosmicGlow{
+0%{transform:translate(-50%,-50%) scale(0.9);}
+100%{transform:translate(-50%,-50%) scale(1.3);}
+}
+
+/* Wheel Container */
 
 .wheelBox{
 position:relative;
-width:260px;
+width:220px;
 margin:auto;
 }
+
+/* Pointer */
 
 .pointer{
 width:0;
 height:0;
 border-left:12px solid transparent;
 border-right:12px solid transparent;
-border-bottom:20px solid white;
+border-bottom:18px solid white;
 margin:auto;
 position:absolute;
 left:0;
@@ -39,36 +71,61 @@ top:-10px;
 z-index:2;
 }
 
+/* Wheel */
+
 #wheel{
-width:260px;
-height:260px;
+width:220px;
+height:220px;
 border-radius:50%;
+
 background:conic-gradient(
-red,
-orange,
-yellow,
-lime,
-cyan,
-blue,
-purple,
-red
+#ff004c,
+#ff7a00,
+#ffd500,
+#b6ff00,
+#00ffd5,
+#6bcfff,
+#9a5cff,
+#ff004c
 );
-transition:transform 2s ease-out;
+
+/* divine glow */
+
+box-shadow:
+0 0 18px rgba(255,215,120,0.45),
+0 0 45px rgba(0,255,200,0.35),
+0 0 90px rgba(0,255,200,0.15);
+
+transition:transform 1.8s cubic-bezier(.25,.1,.25,1);
 }
 
+/* Spin Button */
+
 .spinBtn{
-margin-top:30px;
-background:linear-gradient(45deg,#00e5ff,#00ff99);
+margin-top:28px;
+background:linear-gradient(45deg,#00e5ff,#00ffa8);
 border:none;
-padding:16px 40px;
+padding:14px 36px;
 font-size:18px;
 border-radius:40px;
 cursor:pointer;
+box-shadow:0 0 20px rgba(0,255,200,0.35);
 }
 
+.spinBtn:hover{
+transform:scale(1.05);
+}
+
+/* Result */
+
 .result{
-margin-top:25px;
+margin-top:28px;
 font-size:18px;
+line-height:1.7;
+color:#ffffff;
+max-width:320px;
+margin-left:auto;
+margin-right:auto;
 }
 
 </style>
@@ -78,7 +135,9 @@ font-size:18px;
 
 <h1>Maun Chakra</h1>
 
-<p>भीतर ठहरने वाले मौन की दिशा पाने के लिए स्पिन करें</p>
+<div class="subtitle">
+भीतर ठहरने वाले मौन की दिशा पाने के लिए स्पिन करें
+</div>
 
 <div class="wheelBox">
 
@@ -92,30 +151,50 @@ font-size:18px;
 
 <div id="result" class="result"></div>
 
+<!-- OM SOUND -->
+<audio id="omSound">
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_2b4b7b27fa.mp3?filename=om-chanting-110482.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 
 let deg = 0;
 
 const messages=[
-"शांत मन में सत्य प्रकट होता है।",
+
+"जिस क्षण तुम मौन हो जाते हो, उसी क्षण परम सत्य पास आ जाता है।",
+
 "मौन वह स्थान है जहाँ आत्मा बोलती है।",
+
+"शांत मन में सत्य स्पष्ट दिखाई देता है।",
+
 "जो भीतर ठहर गया वही जीवन समझ गया।",
-"मन शांत करो - उत्तर स्वयं प्रकट होगा।",
-"मौन ही ईश्वर का द्वार है।",
-"अहंकार शांत करो - सत्य प्रकट होगा।",
-"भीतर जाओ - सब कुछ वहीं है।",
-"जिस क्षण तुम मौन होते हो उसी क्षण सत्य प्रकट होता है।"
+
+"अहंकार शांत होते ही मार्ग खुल जाता है।",
+
+"मौन में जाओ — वहीं उत्तर प्रकट होता है।",
+
+"भीतर की शांति ही वास्तविक शक्ति है।",
+
+"जहाँ मौन है, वहीं ईश्वर का स्पर्श है।"
+
 ];
 
 function spinWheel(){
 
 let wheel=document.getElementById("wheel");
+let sound=document.getElementById("omSound");
 
 let random=Math.floor(Math.random()*360);
 
-deg += 720 + random;   // 2 fast rotations
+deg += 720 + random;
 
 wheel.style.transform="rotate("+deg+"deg)";
+
+/* play om vibration */
+
+sound.currentTime=0;
+sound.play();
 
 setTimeout(()=>{
 
@@ -123,7 +202,9 @@ let msg=messages[Math.floor(Math.random()*messages.length)];
 
 document.getElementById("result").innerText=msg;
 
-},2000);
+sound.pause();
+
+},1800);
 
 }
 
@@ -131,3 +212,4 @@ document.getElementById("result").innerText=msg;
 
 </body>
 </html>
+```
