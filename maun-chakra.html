@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Maun Chakra</title>
+
+<style>
+
+body{
+margin:0;
+font-family:sans-serif;
+background:linear-gradient(180deg,#021b1b,#001010);
+color:white;
+text-align:center;
+padding:30px;
+}
+
+h1{
+color:#ffd54f;
+}
+
+.chakra{
+width:120px;
+height:120px;
+border-radius:50%;
+margin:40px auto;
+border:10px solid #00ffff;
+border-top:10px solid #ffd54f;
+}
+
+.spin{
+animation:spin 2s linear infinite;
+}
+
+@keyframes spin{
+
+0%{transform:rotate(0deg);}
+
+100%{transform:rotate(360deg);}
+
+}
+
+button{
+
+background:#ffd54f;
+border:none;
+padding:12px 25px;
+border-radius:25px;
+font-size:16px;
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#ffc107;
+
+}
+
+#message{
+
+margin-top:30px;
+font-size:18px;
+line-height:1.6;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Maun Chakra</h1>
+
+<p>भीतर ठहरने वाले मौन की दिशा पाने के लिए स्पिन करें</p>
+
+<div id="chakra" class="chakra"></div>
+
+<button onclick="spinChakra()">Spin</button>
+
+<div id="message"></div>
+
+<script>
+
+const messages=[
+
+"शांत मन में ही सत्य प्रकट होता है।",
+
+"मौन वह स्थान है जहाँ आत्मा बोलती है।",
+
+"जो भीतर ठहर गया, वही जीवन समझ गया।",
+
+"मन शांत करो — उत्तर स्वयं प्रकट होगा।",
+
+"जिस क्षण तुम मौन हो जाते हो, उसी क्षण परम सत्य पास आ जाता है।"
+
+];
+
+function spinChakra(){
+
+const chakra=document.getElementById("chakra");
+
+chakra.classList.add("spin");
+
+setTimeout(()=>{
+
+chakra.classList.remove("spin");
+
+let random=Math.floor(Math.random()*messages.length);
+
+document.getElementById("message").innerText=messages[random];
+
+},2000);
+
+}
+
+</script>
+
+</body>
+</html>
