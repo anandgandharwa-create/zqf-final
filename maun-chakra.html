@@ -176,7 +176,15 @@ animation:float 6s infinite ease-in-out;
 <button class="spinBtn" onclick="spinWheel()">Spin</button>
 
 <div id="result" class="result"></div>
+.fadeText{
+opacity:0;
+animation:fadeIn 1.5s ease forwards;
+}
 
+@keyframes fadeIn{
+0%{opacity:0;}
+100%{opacity:1;}
+}
 <!-- OM SOUND -->
 <audio id="omSound">
 <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_2b4b7b27fa.mp3?filename=om-chanting-110482.mp3" type="audio/mpeg">
@@ -226,7 +234,12 @@ setTimeout(()=>{
 
 let msg=messages[Math.floor(Math.random()*messages.length)];
 
-document.getElementById("result").innerText=msg;
+let result = document.getElementById("result");
+
+result.innerText = msg;
+result.classList.remove("fadeText"); 
+void result.offsetWidth;  
+result.classList.add("fadeText");
 
 sound.pause();
 
