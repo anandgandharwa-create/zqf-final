@@ -710,6 +710,46 @@ font-size:16px;
 color:#ffffff;
 line-height:1.7;
 }
+ /* Horizontal Divine Menu */
+
+.divineTopScroll{
+
+display:flex;
+gap:14px;
+overflow-x:auto;
+padding:12px 5px 18px 5px;
+
+scrollbar-width:none;
+}
+
+.divineTopScroll::-webkit-scrollbar{
+display:none;
+}
+
+.divineTopScroll .divineCard{
+
+min-width:120px;
+padding:18px 12px;
+
+background:linear-gradient(145deg,#0f2a22,#081a16);
+
+border-radius:16px;
+
+text-align:center;
+
+box-shadow:0 6px 18px rgba(0,0,0,0.55);
+
+}
+
+.divineTopScroll .divineIcon{
+font-size:26px;
+margin-bottom:6px;
+}
+
+.divineTopScroll .divineTitle{
+font-size:14px;
+color:#f3d77a;
+}
 </style>
 </head>
 
@@ -938,23 +978,29 @@ Krishna Oracle
 </div>
 </div>
 
-
-
-<div class="divineGrid">
+<div class="divineTopScroll">
 
 <div class="divineCard" onclick="window.open('maun-chakra.html','_self')">
-
 <div class="divineIcon">🌀</div>
-
 <div class="divineTitle">Maun Chakra</div>
+</div>
 
-<div class="divineText">
-भीतर ठहरने वाले मौन की दिशा पाने के लिए
-स्पिन करें।
+<div class="divineCard">
+<div class="divineIcon">🔮</div>
+<div class="divineTitle">Krishna Guidance</div>
+</div>
+
+<div class="divineCard">
+<div class="divineIcon">🪞</div>
+<div class="divineTitle">Antardarpan</div>
+</div>
+
+<div class="divineCard">
+<div class="divineIcon">📿</div>
+<div class="divineTitle">Daily Sadhana</div>
 </div>
 
 </div>
-
 <div class="divineCard">
 
 <div class="divineIcon">🔮</div>
