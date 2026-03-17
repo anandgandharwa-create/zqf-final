@@ -523,15 +523,35 @@ cursor:pointer;
 transition:0.25s;
 font-weight:600;
 
-box-shadow:0 10px 25px rgba(0,0,0,0.6),
-           inset 0 0 10px rgba(255,255,255,0.03);
+box-shadow:
+0 10px 25px rgba(0,0,0,0.6),
+inset 0 0 10px rgba(255,255,255,0.03);
 
 text-align:center;
 }
 
+/* Hover */
 .menuCard:hover{
 transform:translateY(-4px);
 box-shadow:0 12px 28px rgba(0,0,0,0.7);
+}
+
+/* ⭐ About page cards yellow */
+.aboutTopMenu .menuCard{
+background:linear-gradient(145deg,#fff7a8,#ffd84d);
+color:#000;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,0.5),
+0 0 18px rgba(255,215,0,0.35);
+}
+
+/* hover yellow cards */
+.aboutTopMenu .menuCard:hover{
+transform:translateY(-4px);
+box-shadow:
+0 14px 28px rgba(0,0,0,0.6),
+0 0 22px rgba(255,215,0,0.5);
 }
 
 .menuIcon{
