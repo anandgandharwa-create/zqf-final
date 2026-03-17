@@ -1245,14 +1245,23 @@ box-shadow:0 0 18px rgba(255,215,0,0.4);
 </div>
 <script>
 function openPage(id,title){
+
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
 document.getElementById(id).classList.add('active');
-document.getElementById('title').innerText = title;   // ⭐ यही fix है
+
+document.getElementById('title').innerText = title;
+
+/* 👇 Back arrow control */
+if(id === "home"){
+document.getElementById("backBtn").style.display="none";
+}else{
+document.getElementById("backBtn").style.display="block";
+}
+
 window.scrollTo(0,0);
 
 setTimeout(initGallery,300);
 }
-
 function goHome(){
 openPage('home','Home');
 }
