@@ -83,30 +83,7 @@ box-shadow:0 0 18px rgba(255,215,0,0.2);
 background:#121212;
 }
 /* ===== Universal App Back Button ===== */
-.appBack{
-position:absolute;
-top:calc(env(safe-area-inset-top) + 8px);
-left:15px;
 
-display:inline-block;
-width:max-content;
-
-background:#4b2a73;
-color:#ffffff;
-
-padding:9px 16px;
-border-radius:12px;
-
-font-size:15px;
-cursor:pointer;
-
-box-shadow:0 2px 8px rgba(0,0,0,0.35);
-z-index:1000;
-}
-
-.appBack:active{
-transform:scale(0.96);
-}
 .page{display:none;}
 .active{display:block;}
 
@@ -809,6 +786,33 @@ color:#f3d77a;
 .swipeDots {
 display:none !important;
 }
+ .appHeader{
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+padding:12px 16px;
+
+background:#4b2a73;
+color:#fff;
+
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.headerTitle{
+font-size:18px;
+font-weight:600;
+}
+
+.headerBack{
+cursor:pointer;
+}
+
+.headerSettings{
+cursor:pointer;
+}
 </style>
 </head>
 
@@ -970,9 +974,15 @@ SRINAGAR, J & K
  <!-- DIVINE ACCESS -->
 
 <div id="courses" class="container page">
+<div class="appHeader">
 
-<div class="appBack" onclick="goHome()">← Back</div>
+<div class="headerBack" onclick="goHome()">← Back</div>
 
+<div class="headerTitle">Divine Access</div>
+
+<div class="headerSettings">⚙</div>
+
+</div>
 <div class="divineMenuSticky">
 
 <div class="divineTopScroll">
