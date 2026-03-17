@@ -787,7 +787,8 @@ color:#f3d77a;
 display:none !important;
 }
 .topBar{
-position:relative;
+position:sticky;
+top:0;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -795,12 +796,14 @@ justify-content:center;
 height:60px;
 background:#4b2a73;
 color:#fff;
+
+z-index:1000;
 }
 
 .topBack{
 position:absolute;
 left:15px;
-font-size:18px;
+font-size:20px;
 cursor:pointer;
 }
 
@@ -968,11 +971,17 @@ SRINAGAR, J & K
 
  <!-- DIVINE ACCESS -->
 
+<!-- DIVINE ACCESS -->
+
 <div id="courses" class="container page">
+
+<!-- Top Header -->
 <div class="topBar">
 <div class="topBack" onclick="goHome()">←</div>
 <div class="topTitle">Divine Access</div>
 </div>
+
+<!-- Sticky Menu -->
 <div class="divineMenuSticky">
 
 <div class="divineTopScroll">
@@ -996,11 +1005,10 @@ SRINAGAR, J & K
 <div class="divineIcon">📿</div>
 <div class="divineTitle">Daily Sadhana</div>
 </div>
-
+</div>
 </div>
 
-</div>
-<p class="courseTagline">
+ <p class="courseTagline">
 मन की शांति का पहला कदम
 </p>
 
