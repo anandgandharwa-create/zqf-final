@@ -11,14 +11,18 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
-body{
+html, body{
 margin:0;
+padding:0;
+max-width:100%;
+overflow-x:hidden;
+}
+
+body{
 font-family:system-ui;
 background:#071826;
 color:#f1e2a6;
 text-align:center;
-
-overflow-x:hidden;   /* horizontal move बंद */
 }
 header{
 position:sticky;
@@ -750,21 +754,21 @@ padding:18px 0;
 .divineTopScroll{
 display:flex;
 overflow-x:auto;
-
 scroll-snap-type:x mandatory;
-
 gap:12px;
 padding:10px 18px;
-
 scroll-behavior:smooth;
+
+max-width:100%;
+box-sizing:border-box;
 }
 .divineTopScroll::-webkit-scrollbar{
 display:none;
 }
 
 .bigCard{
-flex:0 0 90%;
-max-width:90%;
+flex:0 0 85%;
+max-width:85%;
 
 margin-right:10px;
 
