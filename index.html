@@ -751,8 +751,11 @@ padding:18px 0;
 display:flex;
 overflow-x:auto;
 scroll-snap-type:x mandatory;
-gap:20px;
-padding:10px;
+
+gap:0;
+padding:10px 0;
+
+scroll-behavior:smooth;
 }
 
 .divineTopScroll::-webkit-scrollbar{
@@ -760,8 +763,13 @@ display:none;
 }
 
 .bigCard{
-min-width:100%;
+flex:0 0 100%;
+max-width:100%;
+
 padding:50px 25px;
+box-sizing:border-box;
+
+scroll-snap-align:center;
 }
 /* Icon */
 
