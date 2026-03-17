@@ -811,6 +811,9 @@ left:15px;
 font-size:22px;
 cursor:pointer;
 }
+ #backBtn{
+display:none;
+}
 </style>
 </head>
 
@@ -1251,11 +1254,13 @@ document.getElementById(id).classList.add('active');
 
 document.getElementById('title').innerText = title;
 
-/* 👇 Back arrow control */
+/* Back arrow control */
+const backBtn = document.getElementById("backBtn");
+
 if(id === "home"){
-document.getElementById("backBtn").style.display="none";
+backBtn.style.display = "none";
 }else{
-document.getElementById("backBtn").style.display="block";
+backBtn.style.display = "block";
 }
 
 window.scrollTo(0,0);
@@ -1350,7 +1355,16 @@ document.getElementById("oracleResult").innerText = randomMessage;
   }
 
 });
+window.onload = function(){
 
+const activePage = document.querySelector('.page.active').id;
+const backBtn = document.getElementById("backBtn");
+
+if(activePage === "home"){
+backBtn.style.display = "none";
+}
+
+};
 </script>
 </body>
 </html>
