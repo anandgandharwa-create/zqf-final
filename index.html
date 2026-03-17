@@ -786,36 +786,39 @@ color:#f3d77a;
 .swipeDots {
 display:none !important;
 }
-.topBar{
+#titleBar{
 position:sticky;
 top:0;
+width:100%;
+
+background:linear-gradient(90deg,#5b2c83,#402060);
+padding:18px 10px;
+
+font-size:22px;
+font-weight:bold;
+color:#fff;
+
 display:flex;
 align-items:center;
 justify-content:center;
 
-height:60px;
-background:#4b2a73;
-color:#fff;
-
 z-index:1000;
 }
 
-.topBack{
+#backBtn{
 position:absolute;
 left:15px;
-font-size:20px;
+font-size:22px;
 cursor:pointer;
-}
-
-.topTitle{
-font-size:18px;
-font-weight:600;
 }
 </style>
 </head>
 
 <body>
-<header id="title">Home</header>
+<header id="titleBar">
+<span id="backBtn" onclick="goHome()">←</span>
+<span id="title">Home</span>
+</header>
 
 <!-- HOME -->
 <div id="home" class="container page active">
@@ -971,15 +974,7 @@ SRINAGAR, J & K
 
  <!-- DIVINE ACCESS -->
 
-<!-- DIVINE ACCESS -->
-
 <div id="courses" class="container page">
-
-<!-- Top Header -->
-<div class="topBar">
-<div class="topBack" onclick="goHome()">←</div>
-<div class="topTitle">Divine Access</div>
-</div>
 
 <!-- Sticky Menu -->
 <div class="divineMenuSticky">
