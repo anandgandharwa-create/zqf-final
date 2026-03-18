@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mind vs Witness Quiz</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:linear-gradient(180deg,#021a2e,#000814);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+
+.container{
+width:90%;
+max-width:420px;
+background:#0b1d33;
+padding:35px 25px;
+border-radius:16px;
+box-shadow:0 0 20px rgba(0,0,0,0.5);
+text-align:center;
+}
+
+.title{
+font-size:22px;
+margin-bottom:20px;
+}
+
+.question{
+font-size:18px;
+margin-bottom:20px;
+}
+
+.option{
+display:block;
+width:100%;
+padding:16px;
+margin:18px 0;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.option:hover{
+transform:scale(1.03);
+}
+
+.optionA{background:#ef4444;color:white;}
+.optionB{background:#3b82f6;color:white;}
+.optionC{background:#f59e0b;color:white;}
+.optionD{background:#22c55e;color:white;}
+
+.result{
+font-size:20px;
+margin-top:20px;
+}
+
+button.restart{
+margin-top:20px;
+padding:12px 20px;
+border:none;
+border-radius:8px;
+background:#06b6d4;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="title">🧠 Mind vs Witness Quiz</div>
+
+<div id="quiz">
+
+<div class="question" id="question"></div>
+
+<button class="option optionA" onclick="selectAnswer(0)" id="opt0"></button>
+<button class="option optionB" onclick="selectAnswer(1)" id="opt1"></button>
+<button class="option optionC" onclick="selectAnswer(2)" id="opt2"></button>
+<button class="option optionD" onclick="selectAnswer(3)" id="opt3"></button>
+
+</div>
+
+<div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+const questions=[
+
+{
+q:"वेदांत के अनुसार आप वास्तव में कौन हैं?",
+options:["शरीर","मन","साक्षी","भावना"],
+answer:2
+},
+
+{
+q:"विचार कहाँ उत्पन्न होते हैं?",
+options:["आत्मा में","मन में","शरीर में","प्राण में"],
+answer:1
+},
+
+{
+q:"साक्षी की अवस्था कैसी होती है?",
+options:["अशांत","डरी हुई","स्थिर और शांत","क्रोधित"],
+answer:2
+},
+
+{
+q:"ध्यान का मुख्य उद्देश्य क्या है?",
+options:["मन को देखना","शरीर को मजबूत करना","सो जाना","सोचना"],
+answer:0
+}
+
+]
+
+let current=0
+let score=0
+
+function loadQuestion(){
+
+document.getElementById("question").innerText=questions[current].q
+
+for(let i=0;i<4;i++){
+document.getElementById("opt"+i).innerText=questions[current].options[i]
+}
+
+}
+
+function selectAnswer(i){
+
+if(i===questions[current].answer){
+score+=10
+}
+
+current++
+
+if(current<questions.length){
+loadQuestion()
+}
+else{
+showResult()
+}
+
+}
+
+function showResult(){
+
+document.getElementById("quiz").style.display="none"
+
+document.getElementById("result").innerHTML=
+"🎉 Quiz Complete <br><br> आपका स्कोर: "+score+"/40 <br><br>"+
+'<button class="restart" onclick="location.reload()">फिर से खेलें</button>'
+
+}
+
+loadQuestion()
+
+</script>
+
+</body>
+</html>
