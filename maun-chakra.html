@@ -231,7 +231,11 @@ sound.play();
 
 setTimeout(()=>{
 
-let msg=messages[Math.floor(Math.random()*messages.length)];
+let actualDeg = deg % 360;
+
+let index = Math.floor((360 - actualDeg) / (360/messages.length));
+
+let msg = messages[index];
 
 let result=document.getElementById("result");
 
@@ -245,7 +249,6 @@ sound.pause();
 },4000);
 
 }
-
 </script>
 
 </body>
