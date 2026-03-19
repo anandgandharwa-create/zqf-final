@@ -905,8 +905,15 @@ color:#082567;
 </header>
 
 <div id="sideMenu" class="side-menu">
-  <a href="#">Meditation</a>
-  <a href="#">Courses</a>
+
+  <a href="#" onclick="openPage('courses','Divine Access')">📚 Course</a>
+
+  <a href="#" onclick="openPage('courses','Meditation')">🧘 Meditation</a>
+
+  <a href="#" onclick="openPage('about','About')">ℹ️ About</a>
+
+  <a href="#" onclick="openPage('contact','Privacy')">🔒 Privacy Policy</a>
+
 </div>
 
 <!-- HOME -->
@@ -1330,7 +1337,7 @@ box-shadow:0 0 18px rgba(255,215,0,0.4);
 </div>
 <script>
 function openPage(id,title){
-
+document.getElementById("sideMenu").style.left = "-250px";
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
 document.getElementById(id).classList.add('active');
 
@@ -1447,6 +1454,18 @@ backBtn.style.display = "none";
 }
 
 };
+ <script>
+
+function toggleMenu() {
+  let menu = document.getElementById("sideMenu");
+
+  if (menu.style.left === "0px") {
+    menu.style.left = "-250px";
+  } else {
+    menu.style.left = "0px";
+  }
+}
+
 </script>
 </body>
 </html>
