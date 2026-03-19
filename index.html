@@ -867,8 +867,8 @@ color:#082567;
   left: 15px;
   top: 15px;
   cursor: pointer;
+  display: block;   /* हमेशा available रहेगा */
 }
-
 .side-menu {
   position: fixed;
   top: 0;
@@ -1376,25 +1376,28 @@ box-shadow:0 0 18px rgba(255,215,0,0.4);
 </div>
 </div>
 <script>
-function openPage(id,title){
+function openPage(id, title){
 
-closeMenu();   // 🔥 ADD THIS
+  closeMenu();
 
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 
-document.getElementById('title').innerText = title;
+  document.getElementById('title').innerText = title;
 
-const backBtn = document.getElementById("backBtn");
+  const backBtn = document.getElementById("backBtn");
+  const menuIcon = document.querySelector(".menu-icon");
 
-if(id === "home"){
-backBtn.style.display = "none";
-}else{
-backBtn.style.display = "block";
-}
+  if(id === "home"){
+    backBtn.style.display = "none";
+    menuIcon.style.display = "block";   // ✅ Home पर दिखेगा
+  }else{
+    backBtn.style.display = "block";
+    menuIcon.style.display = "none";    // ❌ बाकी pages पर hide
+  }
 
-window.scrollTo(0,0);
-setTimeout(initGallery,300);
+  window.scrollTo(0,0);
+  setTimeout(initGallery,300);
 }
 function goHome(){
 openPage('home','Home');
@@ -1453,13 +1456,13 @@ function krishnaOracle(){
 
 const messages = [
 
-"मन को स्थिर करो — उत्तर पहले से भीतर उपस्थित है।",
+"मन को स्थिर करो - उत्तर पहले से भीतर उपस्थित है।",
 
 "कर्म करो, फल की चिंता मत करो।",
 
 "जिसे तुम खोज रहे हो, वह तुम्हारे भीतर है।",
 
-"मौन में जाओ — वहीं सत्य स्पष्ट होता है।",
+"मौन में जाओ - वहीं सत्य स्पष्ट होता है।",
 
 "अहंकार छोड़ते ही मार्ग खुलने लगता है।",
 
@@ -1486,12 +1489,17 @@ document.getElementById("oracleResult").innerText = randomMessage;
 });
 window.onload = function(){
 
-const activePage = document.querySelector('.page.active').id;
-const backBtn = document.getElementById("backBtn");
+  const activePage = document.querySelector('.page.active').id;
+  const backBtn = document.getElementById("backBtn");
+  const menuIcon = document.querySelector(".menu-icon");
 
-if(activePage === "home"){
-backBtn.style.display = "none";
-}
+  if(activePage === "home"){
+    backBtn.style.display = "none";
+    menuIcon.style.display = "block";   // ✅ Home पर दिखेगा
+  }else{
+    backBtn.style.display = "block";
+    menuIcon.style.display = "none";    // ❌ बाकी pages पर hide
+  }
 
 };
 </script>
