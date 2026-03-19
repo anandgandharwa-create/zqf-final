@@ -1,4 +1,4 @@
-const CACHE_NAME = "zqf-v72";  // <-- हर update पर सिर्फ यही बदलना
+const CACHE_NAME = "zqf-v73";  // <-- हर update पर सिर्फ यही बदलना
 
 const urlsToCache = [
   "/zero-quantum-frequency/",
@@ -6,11 +6,18 @@ const urlsToCache = [
   "/zero-quantum-frequency/manifest.json",
   "/zero-quantum-frequency/icon-192.png",
   "/zero-quantum-frequency/icon-512.png",
+
+  // 🔥 NEW PAGES
+  "/zero-quantum-frequency/maun-chakra.html",
+  "/zero-quantum-frequency/antar-darpan.html",
+  "/zero-quantum-frequency/gyan-game.html",
+  "/zero-quantum-frequency/mind-witness-quiz.html",
+
+  // existing
   "/zero-quantum-frequency/mindos.html",
   "/zero-quantum-frequency/prashn.html",
   "/zero-quantum-frequency/uttar.html",
 ];
-
 
 // INSTALL
 self.addEventListener("install", event => {
