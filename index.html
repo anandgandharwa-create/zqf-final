@@ -876,11 +876,9 @@ color:#082567;
   width: 260px;
   height: 100%;
   background: #0b1d2a;
-  padding-top: 70px;
+  padding-top: 0px;   /* ✅ FIX */
   transition: 0.3s ease;
   z-index: 9999;
-  box-shadow: 4px 0 25px rgba(0,0,0,0.6);
- /* 🔥 IMPORTANT */
 }
 /* Menu links */
 .side-menu a {
@@ -894,24 +892,34 @@ color:#082567;
 .side-menu a:hover {
   background: #122c3f;
 }
- .menuHeader {
-  font-size: 22px;
+/* ===== MENU HEADER (GMAIL STYLE) ===== */
+
+.menuHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-size: 20px;
   font-weight: bold;
   color: #ffd700;
 
-  padding: 18px 16px 14px 16px;
-
-  text-align: left;
+  padding: 16px;
 
   border-bottom: 1px solid #1f3a4d;
 
   background: linear-gradient(90deg,#1a2f3f,#0b1d2a);
 
-  letter-spacing: 1px;
-
   position: sticky;
   top: 0;
   z-index: 10;
+}
+
+/* Logo */
+.menuLogo {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255,215,0,0.6);
 }
 </style>
 </head>
@@ -937,12 +945,12 @@ z-index:9998;
 <div id="sideMenu" class="side-menu">
 
   <div class="menuHeader">
-    ZQ Frequency
+    <img src="icon-512.png" class="menuLogo">
+    <span>ZQ Frequency</span>
   </div>
 
- 
-  <a href="#" onclick="openPage('courses','Meditation')">🧘 Meditation</a>
   <a href="#" onclick="openPage('courses','Divine Access')">📚 Course</a>
+  <a href="#" onclick="openPage('courses','Meditation')">🧘 Meditation</a>
   <a href="#" onclick="openPage('about','About')">ℹ️ About</a>
   <a href="#" onclick="openPage('contact','Privacy')">🔒 Privacy Policy</a>
 
