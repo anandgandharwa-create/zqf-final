@@ -1439,25 +1439,7 @@ window.open("prashn.html","_self");
 }
 </script>
 <script>
-document.addEventListener('click', function(e) {
 
-  let link = e.target.closest('a');
-  if (!link) return;
-
-  let url = link.getAttribute('href');
-  if (!url) return;
-
-  // Allow email links (Gmail / mail apps)
-  if (url.startsWith('mailto:')) {
-    window.location.href = url;
-    return;
-  }
-
-const randomMessage = messages[Math.floor(Math.random()*messages.length)];
-
-document.getElementById("oracleResult").innerText = randomMessage;
-
-}
   // internal pages ignore
   if (url.startsWith('#') || url.startsWith('/')) return;
 
@@ -1501,23 +1483,20 @@ function closeMenu() {
 }
 function krishnaOracle(){
 
-const messages = [
+  const messages = [
+    "मन को स्थिर करो - उत्तर पहले से भीतर उपस्थित है।",
+    "कर्म करो, फल की चिंता मत करो।",
+    "जिसे तुम खोज रहे हो, वह तुम्हारे भीतर है।",
+    "मौन में जाओ - वहीं सत्य स्पष्ट होता है।",
+    "अहंकार छोड़ते ही मार्ग खुलने लगता है।",
+    "जहाँ प्रेम है, वहीं कृष्ण का मार्ग है।",
+    "चिंता छोड़ो — जीवन तुम्हें सही दिशा दे रहा है।"
+  ];
 
-"मन को स्थिर करो - उत्तर पहले से भीतर उपस्थित है।",
+  const randomMessage = messages[Math.floor(Math.random()*messages.length)];
 
-"कर्म करो, फल की चिंता मत करो।",
-
-"जिसे तुम खोज रहे हो, वह तुम्हारे भीतर है।",
-
-"मौन में जाओ - वहीं सत्य स्पष्ट होता है।",
-
-"अहंकार छोड़ते ही मार्ग खुलने लगता है।",
-
-"जहाँ प्रेम है, वहीं कृष्ण का मार्ग है।",
-
-"चिंता छोड़ो — जीवन तुम्हें सही दिशा दे रहा है।"
-
-];
+  document.getElementById("oracleResult").innerText = randomMessage;
+}
 </script>
 </body>
 </html>
