@@ -859,14 +859,55 @@ opacity:0.85;
 margin-top:10px;
 color:#082567;
 }
+ /* Hamburger icon */
+.menu-icon {
+  font-size: 26px;
+  color: white;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  cursor: pointer;
+}
+
+/* Side menu */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background: #0b1d2a;
+  padding-top: 60px;
+  transition: 0.3s;
+}
+
+/* Menu links */
+.side-menu a {
+  display: block;
+  padding: 15px;
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid #1f3a4d;
+}
+
+.side-menu a:hover {
+  background: #122c3f;
+}
 </style>
 </head>
 
 <body>
+
 <header id="titleBar">
-<span id="backBtn" onclick="goHome()">←</span>
-<span id="title">Home</span>
+  <span class="menu-icon" onclick="toggleMenu()">☰</span>
+  <span id="backBtn" onclick="goHome()">←</span>
+  <span id="title">Home</span>
 </header>
+
+<div id="sideMenu" class="side-menu">
+  <a href="#">Meditation</a>
+  <a href="#">Courses</a>
+</div>
 
 <!-- HOME -->
 <div id="home" class="container page active">
