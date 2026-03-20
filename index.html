@@ -938,20 +938,32 @@ object-fit:cover;
 }
  /* ===== MENU CARD GLOW EFFECT ===== */
 
+/* ===== GREEN SHINING MENU CARDS ===== */
+
 .menuCard {
-  position: relative;
-  overflow: hidden;
+  background: linear-gradient(145deg, #0f2f1f, #071b12) !important;
+  border: 1px solid rgba(0, 255, 150, 0.25) !important;
+  color: #b6ffd6 !important;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.6),
+    0 0 12px rgba(0,255,150,0.15),
+    inset 0 0 12px rgba(0,255,150,0.08);
+
   transition: all 0.3s ease;
 }
 
-/* 🔥 Hover Glow */
+/* ✨ GREEN GLOW ON HOVER */
 .menuCard:hover {
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6),
-              0 0 40px rgba(255, 215, 0, 0.4);
-  transform: translateY(-5px) scale(1.03);
+  transform: translateY(-5px) scale(1.04);
+
+  box-shadow:
+    0 0 10px rgba(0,255,150,0.5),
+    0 0 25px rgba(0,255,150,0.9),
+    0 0 60px rgba(0,255,150,0.6);
 }
 
-/* ✨ Shine Effect */
+/* ✨ SHINE EFFECT */
 .menuCard::before {
   content: "";
   position: absolute;
@@ -959,17 +971,103 @@ object-fit:cover;
   left: -100%;
   width: 100%;
   height: 100%;
+
   background: linear-gradient(
     120deg,
     transparent,
-    rgba(255,255,255,0.4),
+    rgba(0,255,150,0.5),
     transparent
   );
+
   transition: 0.5s;
 }
 
 .menuCard:hover::before {
   left: 100%;
+}
+
+/* ⭐ Highlight card (Divine Access) */
+.highlight {
+  border: 1px solid rgba(0,255,150,0.8) !important;
+  box-shadow:
+    0 0 20px rgba(0,255,150,0.4),
+    0 0 40px rgba(0,255,150,0.25);
+ /* 🌿 BREATHING ANIMATION */
+@keyframes greenBreath {
+  0% {
+    box-shadow:
+      0 0 5px rgba(0,255,150,0.2),
+      0 0 10px rgba(0,255,150,0.2),
+      0 0 20px rgba(0,255,150,0.15);
+  }
+
+  50% {
+    box-shadow:
+      0 0 15px rgba(0,255,150,0.6),
+      0 0 35px rgba(0,255,150,0.9),
+      0 0 70px rgba(0,255,150,0.7);
+  }
+
+  100% {
+    box-shadow:
+      0 0 5px rgba(0,255,150,0.2),
+      0 0 10px rgba(0,255,150,0.2),
+      0 0 20px rgba(0,255,150,0.15);
+  }
+}
+
+/* 🌿 MENU CARD BASE */
+.menuCard {
+  background: linear-gradient(145deg, #0f2f1f, #071b12) !important;
+  border: 1px solid rgba(0, 255, 150, 0.3) !important;
+  color: #b6ffd6 !important;
+
+  animation: greenBreath 2.8s infinite ease-in-out;
+
+  transition: all 0.3s ease;
+}
+
+/* ✨ HOVER = SUPER GLOW */
+.menuCard:hover {
+  transform: translateY(-6px) scale(1.05);
+
+  box-shadow:
+    0 0 20px rgba(0,255,150,0.8),
+    0 0 50px rgba(0,255,150,1),
+    0 0 90px rgba(0,255,150,0.9);
+
+  animation: none; /* hover पर breathing बंद */
+}
+
+/* ✨ SHINE SWEEP */
+.menuCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(0,255,150,0.6),
+    transparent
+  );
+
+  transition: 0.6s;
+}
+
+.menuCard:hover::before {
+  left: 120%;
+}
+
+/* ⭐ Divine Access extra glow */
+.highlight {
+  border: 1px solid rgba(0,255,150,0.9) !important;
+
+  animation: greenBreath 2s infinite ease-in-out;
+}
 }
 </style>
 </head>
