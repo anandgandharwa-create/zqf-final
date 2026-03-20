@@ -28,20 +28,98 @@ padding:20px;
 }
 
 /* Cards */
+/* 💚 GREEN PREMIUM AUDIO CARDS */
+
 .card{
-background:#0c2233;
-border-radius:16px;
-padding:20px;
-margin:15px auto;
+position:relative;
+overflow:hidden;
+
+background: linear-gradient(145deg,#0f2f1f,#071b12);
+border-radius:18px;
+padding:22px;
+margin:16px auto;
 max-width:320px;
 cursor:pointer;
+
+border:1px solid rgba(0,255,150,0.3);
+
 transition:0.3s;
-box-shadow:0 0 10px rgba(255,211,107,0.1);
+
+/* ✨ Soft glow */
+box-shadow:
+0 0 8px rgba(0,255,150,0.15),
+0 0 18px rgba(0,255,150,0.1);
+
+/* 🌿 Breathing effect */
+animation: greenBreath 3s infinite ease-in-out;
 }
 
+/* 🌿 Breathing Animation */
+@keyframes greenBreath{
+0%{
+box-shadow:
+0 0 6px rgba(0,255,150,0.15),
+0 0 12px rgba(0,255,150,0.1);
+}
+50%{
+box-shadow:
+0 0 18px rgba(0,255,150,0.6),
+0 0 35px rgba(0,255,150,0.7);
+}
+100%{
+box-shadow:
+0 0 6px rgba(0,255,150,0.15),
+0 0 12px rgba(0,255,150,0.1);
+}
+}
+
+/* 🔥 Hover effect */
 .card:hover{
 transform:scale(1.05);
-box-shadow:0 0 20px rgba(255,211,107,0.4);
+
+box-shadow:
+0 0 20px rgba(0,255,150,0.8),
+0 0 45px rgba(0,255,150,0.9);
+
+animation:none;
+}
+
+/* ✨ Shine effect */
+.card::before{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:50%;
+height:100%;
+
+background:linear-gradient(
+120deg,
+transparent,
+rgba(0,255,150,0.5),
+transparent
+);
+
+transition:0.5s;
+}
+
+.card:hover::before{
+left:120%;
+}
+.card.active{
+border:1px solid rgba(0,255,150,0.9);
+
+box-shadow:
+0 0 25px rgba(0,255,150,0.9),
+0 0 60px rgba(0,255,150,0.6);
+
+animation:none;
+}
+/* TEXT */
+.title{
+font-size:18px;
+color:#b6ffd6;
+font-weight:600;
 }
 
 .title{
@@ -117,6 +195,11 @@ border-radius:8px;
 <script>
 function playAudio(id){
 
+// sab card normal karo
+document.querySelectorAll(".card").forEach(c=>{
+c.classList.remove("active");
+});
+
 // sab audio band karo
 let audios = document.querySelectorAll("audio");
 audios.forEach(a=>{
@@ -125,10 +208,13 @@ a.currentTime = 0;
 a.style.display = "none";
 });
 
-// selected audio play karo
+// selected audio
 let selected = document.getElementById(id);
 selected.style.display = "block";
 selected.play();
+
+// active card highlight
+selected.parentElement.classList.add("active");
 }
 </script>
 
