@@ -940,59 +940,76 @@ object-fit:cover;
 
 /* ===== GREEN SHINING MENU CARDS ===== */
 
+/* 🌿 FIX: CARD CONTAINER CONTROL */
 .menuCard {
+  position: relative;   /* ⭐ सबसे जरूरी fix */
+  overflow: hidden;     /* ⭐ glow बाहर नहीं फैलेगा */
+
   background: linear-gradient(145deg, #0f2f1f, #071b12) !important;
-  border: 1px solid rgba(0, 255, 150, 0.25) !important;
+  border: 1px solid rgba(0,255,150,0.3) !important;
   color: #b6ffd6 !important;
 
-  box-shadow:
-    0 10px 25px rgba(0,0,0,0.6),
-    0 0 12px rgba(0,255,150,0.15),
-    inset 0 0 12px rgba(0,255,150,0.08);
-
-  transition: all 0.3s ease;
+  animation: greenBreath 2.5s infinite ease-in-out;
 }
 
-/* ✨ GREEN GLOW ON HOVER */
-.menuCard:hover {
-  transform: translateY(-5px) scale(1.04);
-
-  box-shadow:
-    0 0 10px rgba(0,255,150,0.5),
-    0 0 25px rgba(0,255,150,0.9),
-    0 0 60px rgba(0,255,150,0.6);
+/* 🌿 BREATHING GLOW (SAFE) */
+@keyframes greenBreath {
+  0% {
+    box-shadow:
+      0 0 5px rgba(0,255,150,0.15),
+      0 0 10px rgba(0,255,150,0.15);
+  }
+  50% {
+    box-shadow:
+      0 0 15px rgba(0,255,150,0.5),
+      0 0 30px rgba(0,255,150,0.7);
+  }
+  100% {
+    box-shadow:
+      0 0 5px rgba(0,255,150,0.15),
+      0 0 10px rgba(0,255,150,0.15);
+  }
 }
 
-/* ✨ SHINE EFFECT */
+/* ✨ SHINE (CONTROLLED WIDTH) */
 .menuCard::before {
   content: "";
   position: absolute;
   top: 0;
   left: -100%;
-  width: 100%;
+  width: 50%;   /* ⭐ FULL WIDTH नहीं */
   height: 100%;
 
   background: linear-gradient(
     120deg,
     transparent,
-    rgba(0,255,150,0.5),
+    rgba(0,255,150,0.4),
     transparent
   );
 
   transition: 0.5s;
 }
 
+/* hover shine */
 .menuCard:hover::before {
-  left: 100%;
+  left: 120%;
 }
 
-/* ⭐ Highlight card (Divine Access) */
+/* 🔥 HOVER STRONG EFFECT */
+.menuCard:hover {
+  transform: translateY(-5px) scale(1.04);
+
+  box-shadow:
+    0 0 15px rgba(0,255,150,0.7),
+    0 0 35px rgba(0,255,150,0.9);
+
+  animation: none;
+}
+
+/* ⭐ Highlight card */
 .highlight {
   border: 1px solid rgba(0,255,150,0.8) !important;
-  box-shadow:
-    0 0 20px rgba(0,255,150,0.4),
-    0 0 40px rgba(0,255,150,0.25);
-
+}
 </style>
 </head>
 
