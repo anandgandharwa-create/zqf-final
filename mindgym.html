@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mind Gym</title>
+
+<style>
+body{
+margin:0;
+font-family:system-ui;
+background:#071826;
+color:#fff;
+text-align:center;
+}
+
+/* Header */
+header{
+background:linear-gradient(90deg,#5b2c83,#402060);
+padding:16px;
+font-size:20px;
+font-weight:bold;
+}
+
+/* Container */
+.container{
+padding:20px;
+max-width:420px;
+margin:auto;
+}
+
+/* Stats Box */
+.stats{
+display:flex;
+justify-content:space-between;
+background:#0b1f2d;
+padding:14px;
+border-radius:14px;
+margin-bottom:20px;
+font-size:14px;
+}
+
+/* Cards */
+.card{
+background:linear-gradient(145deg,#132532,#08131c);
+border-radius:20px;
+padding:20px;
+margin-bottom:16px;
+cursor:pointer;
+position:relative;
+}
+
+.locked{
+opacity:0.4;
+}
+
+/* Lock Label */
+.lockLabel{
+position:absolute;
+top:10px;
+right:12px;
+background:#ff4d4d;
+padding:4px 8px;
+border-radius:8px;
+font-size:12px;
+}
+
+/* Premium Button */
+.premiumBtn{
+background:linear-gradient(45deg,#ffd700,#ffb300);
+color:#000;
+padding:14px;
+border-radius:14px;
+margin-top:15px;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* Result */
+.result{
+margin-top:10px;
+color:#7CFF9E;
+}
+
+/* Back */
+.back{
+display:inline-block;
+margin-top:20px;
+background:#666;
+padding:10px 20px;
+border-radius:10px;
+color:#fff;
+text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>🧠 Mind Gym</header>
+
+<div class="container">
+
+<!-- STATS -->
+<div class="stats">
+<div>🔥 Streak: <span id="streak">0</span></div>
+<div>⭐ XP: <span id="xp">0</span></div>
+</div>
+
+<!-- FREE EXERCISE -->
+<div class="card" onclick="completeExercise()">
+<h3>🎯 Focus Drill</h3>
+<p>30 सेकंड सांस पर ध्यान दें</p>
+<div id="result" class="result"></div>
+</div>
+
+<!-- LOCKED -->
+<div class="card locked" onclick="checkPremium()">
+<div class="lockLabel">🔒 Premium</div>
+<h3>🔁 Thought Shift</h3>
+<p>विचार बदलने की कला</p>
+</div>
+
+<div class="card locked" onclick="checkPremium()">
+<div class="lockLabel">🔒 Premium</div>
+<h3>👁 Awareness Drill</h3>
+<p>साक्षी भाव अभ्यास</p>
+</div>
+
+<!-- PREMIUM BUTTON -->
+<div class="premiumBtn" onclick="buyPremium()">
+🔓 Unlock All – ₹199
+</div>
+
+<a href="index.html" class="back">← Back</a>
+
+</div>
+
+<script>
+
+// Load data
+let streak = localStorage.getItem("streak") || 0;
+let xp = localStorage.getItem("xp") || 0;
+let premium = localStorage.getItem("premium") || false;
+
+document.getElementById("streak").innerText = streak;
+document.getElementById("xp").innerText = xp;
+
+// Complete exercise
+function completeExercise(){
+xp++;
+streak++;
+
+localStorage.setItem("xp", xp);
+localStorage.setItem("streak", streak);
+
+document.getElementById("xp").innerText = xp;
+document.getElementById("streak").innerText = streak;
+
+document.getElementById("result").innerText =
+"🔥 Great! आपने आज का अभ्यास पूरा किया";
+}
+
+// Check premium
+function checkPremium(){
+if(premium === "true"){
+alert("Exercise unlocked!");
+}else{
+alert("🔒 यह Premium है");
+}
+}
+
+// Buy premium (demo)
+function buyPremium(){
+localStorage.setItem("premium", "true");
+alert("🎉 Premium Activated!");
+location.reload();
+}
+
+</script>
+
+</body>
+</html>
