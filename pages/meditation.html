@@ -30,101 +30,39 @@ padding:20px;
 /* Cards */
 /* 💚 GREEN PREMIUM AUDIO CARDS */
 
-.card{
-position:relative;
-overflow:hidden;
+/* 💚 SOLID GREEN CARDS (NO ANIMATION) */
 
-background: linear-gradient(145deg,#0f2f1f,#071b12);
+.card{
+background: linear-gradient(145deg, #1fd18b, #0ea96e); /* bright green */
 border-radius:18px;
 padding:22px;
 margin:16px auto;
 max-width:320px;
 cursor:pointer;
 
-border:1px solid rgba(0,255,150,0.3);
+border:1px solid rgba(0,255,150,0.6);
 
-transition:0.3s;
+transition:0.25s;
 
-/* ✨ Soft glow */
+/* soft glow */
 box-shadow:
-0 0 8px rgba(0,255,150,0.15),
-0 0 18px rgba(0,255,150,0.1);
+0 6px 18px rgba(0,255,150,0.25);
 
-/* 🌿 Breathing effect */
-animation: greenBreath 3s infinite ease-in-out;
 }
 
-/* 🌿 Breathing Animation */
-@keyframes greenBreath{
-0%{
-box-shadow:
-0 0 6px rgba(0,255,150,0.15),
-0 0 12px rgba(0,255,150,0.1);
-}
-50%{
-box-shadow:
-0 0 18px rgba(0,255,150,0.6),
-0 0 35px rgba(0,255,150,0.7);
-}
-100%{
-box-shadow:
-0 0 6px rgba(0,255,150,0.15),
-0 0 12px rgba(0,255,150,0.1);
-}
-}
-
-/* 🔥 Hover effect */
+/* hover = little premium effect */
 .card:hover{
-transform:scale(1.05);
+transform:translateY(-3px);
 
 box-shadow:
-0 0 20px rgba(0,255,150,0.8),
-0 0 45px rgba(0,255,150,0.9);
-
-animation:none;
+0 10px 25px rgba(0,255,150,0.5);
 }
 
-/* ✨ Shine effect */
-.card::before{
-content:"";
-position:absolute;
-top:0;
-left:-100%;
-width:50%;
-height:100%;
-
-background:linear-gradient(
-120deg,
-transparent,
-rgba(0,255,150,0.5),
-transparent
-);
-
-transition:0.5s;
-}
-
-.card:hover::before{
-left:120%;
-}
-.card.active{
-border:1px solid rgba(0,255,150,0.9);
-
-box-shadow:
-0 0 25px rgba(0,255,150,0.9),
-0 0 60px rgba(0,255,150,0.6);
-
-animation:none;
-}
 /* TEXT */
 .title{
 font-size:18px;
-color:#b6ffd6;
+color:#ffd36b; /* dark green text for contrast */
 font-weight:600;
-}
-
-.title{
-font-size:18px;
-color:#ffd36b;
 }
 
 /* Audio Player */
