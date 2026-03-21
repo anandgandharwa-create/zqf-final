@@ -86,11 +86,31 @@ background:rgba(255,255,255,0.1);
 padding:5px 12px;
 border-radius:8px;
 }
- .meditationText{
-color:#ffd700;   /* rich gold */
-text-shadow:
-0 0 6px rgba(255,215,120,0.6),
-0 0 12px rgba(255,215,120,0.4);
+.meditationText{
+font-size:18px;
+line-height:1.7;
+
+color:#ffd700;
+text-align:center;
+
+max-width:320px;
+margin:10px auto 25px auto;  /* 👈 नीचे space बढ़ेगा */
+
+padding:14px 18px;
+
+/* 🌿 frame */
+background:rgba(255,215,0,0.06);
+border-radius:16px;
+border:1px solid rgba(255,215,0,0.4);
+
+/* glow */
+box-shadow:0 0 12px rgba(255,215,120,0.25);
+
+/* text glow */
+text-shadow:0 0 6px rgba(255,215,120,0.6);
+}
+  .meditationText:hover{
+box-shadow:0 0 20px rgba(255,215,120,0.5);
 }
 </style>
 </head>
