@@ -1015,6 +1015,29 @@ opacity:0.4;
 pointer-events:none;   /* 🔥 click completely बंद */
 cursor:not-allowed;
 }
+ /* 🔥 FORCE YELLOW ABOUT CARDS */
+.aboutTopMenu .menuCard{
+background:linear-gradient(145deg,#fff7a8,#ffd84d) !important;
+color:#000 !important;
+
+animation:none !important;   /* green animation OFF */
+
+box-shadow:
+0 10px 25px rgba(0,0,0,0.5),
+0 0 18px rgba(255,215,0,0.35) !important;
+
+border:none !important;
+}
+
+/* shine effect हटाओ */
+.aboutTopMenu .menuCard::before{
+display:none !important;
+}
+ .aboutTopMenu .menuCard:hover{
+transform:translateY(-5px);
+box-shadow:
+0 0 30px rgba(255,215,0,0.6);
+}
 </style>
 </head>
 
