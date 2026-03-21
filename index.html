@@ -1010,6 +1010,11 @@ object-fit:cover;
 .highlight {
   border: 1px solid rgba(0,255,150,0.8) !important;
 }
+ .disabledMenu{
+opacity:0.4;
+pointer-events:none;   /* 🔥 click completely बंद */
+cursor:not-allowed;
+}
 </style>
 </head>
 
@@ -1038,7 +1043,7 @@ z-index:9998;
     <span>ZQ Frequency</span>
   </div>
 
-<a href="#" onclick="openPage('courses','Divine Access')">📚 Course</a>
+<a href="#" class="disabledMenu">📚 Course (Coming Soon)</a>
 <a href="pages/meditation.html">🧘 Meditation</a>
 <a href="pages/mindgym.html">🏋️ Mind Gym</a>
 <a href="#" onclick="openPage('about','About')">ℹ️ About</a>
