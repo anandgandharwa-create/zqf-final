@@ -101,6 +101,13 @@ border-radius:10px;
 z-index:9999;
 cursor:pointer;
 }
+  .disabledBtn{
+opacity:0.5;
+cursor:not-allowed;
+background:linear-gradient(45deg,#999,#666);
+color:#ddd;
+box-shadow:none;
+}
 </style>
 </head>
 
@@ -127,25 +134,22 @@ cursor:pointer;
 </div>
 
 <!-- LOCKED -->
-<div class="card locked" onclick="checkPremium()">
+<div class="card locked">
 <div class="lockLabel">🔒 Premium</div>
 <h3>🔁 Thought Shift</h3>
 <p>विचार बदलने की कला</p>
 </div>
 
-<div class="card locked" onclick="checkPremium()">
+<div class="card locked">
 <div class="lockLabel">🔒 Premium</div>
 <h3>👁 Awareness Drill</h3>
 <p>साक्षी भाव अभ्यास</p>
 </div>
 
 <!-- PREMIUM BUTTON -->
-<div class="premiumBtn" onclick="buyPremium()">
-🔓 Unlock All – ₹199
+<div class="premiumBtn disabledBtn">
+🚧 Premium Coming Soon
 </div>
-
-</div>
-
 <script>
 
 // Load data
