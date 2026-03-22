@@ -10,8 +10,8 @@
 body{
     margin:0;
     font-family:'Segoe UI', sans-serif;
-    background: radial-gradient(circle at top,#0f2027,#203a43,#2c5364);
-    color:#fff;
+    background:#0f172a; /* deep dark blue */
+    color:#e2e8f0;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -21,55 +21,62 @@ body{
 .card{
     width:90%;
     max-width:360px;
-    padding:25px;
-    border-radius:20px;
-    background:rgba(255,255,255,0.05);
-    backdrop-filter: blur(15px);
-    box-shadow:0 0 25px rgba(0,255,200,0.2);
+    padding:22px;
+    border-radius:16px;
+    background:#1e293b; /* solid dark card */
+    box-shadow:0 4px 20px rgba(0,0,0,0.4);
     text-align:center;
 }
 
 .title{
-    font-size:22px;
-    margin-bottom:20px;
-    color:#00ffc3;
-    text-shadow:0 0 10px #00ffc3;
+    font-size:20px;
+    margin-bottom:18px;
+    color:#cbd5f5; /* soft light */
+    font-weight:500;
 }
 
-select, button{
+select{
     width:100%;
     padding:12px;
     margin:10px 0;
     border-radius:10px;
-    border:none;
-    font-size:15px;
-}
-
-select{
-    background:#ffffff10;
-    color:#fff;
+    border:1px solid #334155;
+    background:#0f172a;
+    color:#e2e8f0;
+    font-size:14px;
 }
 
 button{
-    background:linear-gradient(45deg,#00ffc3,#00c9ff);
-    color:#000;
-    font-weight:bold;
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb; /* simple blue */
+    color:#fff;
+    font-weight:500;
+    font-size:15px;
     cursor:pointer;
 }
 
+button:hover{
+    background:#1d4ed8;
+}
+
 .result{
-    margin-top:20px;
-    padding:15px;
-    border-radius:12px;
-    background:#00000040;
-    font-size:16px;
-    line-height:1.5;
+    margin-top:18px;
+    padding:14px;
+    border-radius:10px;
+    background:#0f172a;
+    border:1px solid #334155;
+    font-size:14px;
+    line-height:1.6;
 }
 
 .footer{
-    margin-top:12px;
+    margin-top:10px;
     font-size:12px;
-    opacity:0.7;
+    color:#94a3b8;
 }
 </style>
 </head>
