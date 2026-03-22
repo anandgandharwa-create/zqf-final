@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Decision Clarity</title>
+<title>मन शांति कैलकुलेटर</title>
 
 <style>
 body{
     margin:0;
-    font-family: 'Segoe UI', sans-serif;
-    background: radial-gradient(circle at top,#0f0c29,#302b63,#24243e);
+    font-family:'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top,#0f2027,#203a43,#2c5364);
     color:#fff;
     display:flex;
     justify-content:center;
@@ -25,44 +25,36 @@ body{
     border-radius:20px;
     background:rgba(255,255,255,0.05);
     backdrop-filter: blur(15px);
-    box-shadow:0 0 25px rgba(0,255,255,0.2);
+    box-shadow:0 0 25px rgba(0,255,200,0.2);
     text-align:center;
 }
 
 .title{
     font-size:22px;
     margin-bottom:20px;
-    color:#00eaff;
+    color:#00ffc3;
+    text-shadow:0 0 10px #00ffc3;
 }
 
-input, select{
+select, button{
     width:100%;
     padding:12px;
     margin:10px 0;
     border-radius:10px;
     border:none;
-    outline:none;
-    background:#ffffff10;
-    color:#fff;
     font-size:15px;
 }
 
-button{
-    width:100%;
-    padding:12px;
-    margin-top:15px;
-    border:none;
-    border-radius:12px;
-    background:linear-gradient(45deg,#00eaff,#00ffa3);
-    color:#000;
-    font-weight:bold;
-    font-size:16px;
-    cursor:pointer;
-    transition:0.3s;
+select{
+    background:#ffffff10;
+    color:#fff;
 }
 
-button:hover{
-    transform:scale(1.05);
+button{
+    background:linear-gradient(45deg,#00ffc3,#00c9ff);
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 .result{
@@ -71,14 +63,11 @@ button:hover{
     border-radius:12px;
     background:#00000040;
     font-size:16px;
-}
-
-.glow{
-    text-shadow:0 0 10px #00eaff;
+    line-height:1.5;
 }
 
 .footer{
-    margin-top:15px;
+    margin-top:12px;
     font-size:12px;
     opacity:0.7;
 }
@@ -88,62 +77,59 @@ button:hover{
 <body>
 
 <div class="card">
-    <div class="title glow">🧠 निर्णय स्पष्टता</div>
+    <div class="title">🌿 मन शांति</div>
 
-    <input type="number" id="benefit" placeholder="फायदे (1-10)">
-    <input type="number" id="loss" placeholder="नुकसान (1-10)">
-
-    <select id="intuition">
-        <option value="">अंतर की आवाज़?</option>
-        <option value="yes">हाँ 👍</option>
-        <option value="no">नहीं 👎</option>
+    <select id="mood">
+        <option value="">आप अभी कैसा महसूस कर रहे हैं?</option>
+        <option value="stress">तनाव 😣</option>
+        <option value="anger">गुस्सा 😡</option>
+        <option value="fear">डर 😰</option>
+        <option value="sad">उदासी 😔</option>
     </select>
 
-    <button onclick="calculate()">✨ परिणाम देखें</button>
+    <button onclick="calm()">✨ शांति प्राप्त करें</button>
 
     <div class="result" id="output"></div>
 
     <div class="footer">
-        यह केवल मार्गदर्शन है, अंतिम निर्णय आपका है
+        30 सेकंड दें — मन बदल जाएगा
     </div>
 </div>
 
 <script>
-function calculate(){
-    let benefit = parseInt(document.getElementById("benefit").value);
-    let loss = parseInt(document.getElementById("loss").value);
-    let intuition = document.getElementById("intuition").value;
+function calm(){
+    let mood = document.getElementById("mood").value;
 
-    if(!benefit || !loss || intuition===""){
-        document.getElementById("output").innerHTML = "⚠️ सभी जानकारी भरें";
+    if(mood === ""){
+        document.getElementById("output").innerHTML = "⚠️ पहले अपना भाव चुनें";
         return;
     }
 
-    let score = benefit - loss;
+    let result = "";
 
-    if(intuition === "yes"){
-        score += 3;
-    } else {
-        score -= 3;
+    if(mood === "stress"){
+        result = "🌬 4-7-8 श्वास लें (4 सेकंड inhale, 7 रोकें, 8 exhale)<br><br>🧘 मंत्र: मैं सुरक्षित हूँ<br><br>⏳ 7 बार दोहराएँ";
     }
 
-    let percent = Math.min(Math.max((score + 10) * 5, 0), 100);
+    if(mood === "anger"){
+        result = "🔥 गहरी सांस लें और धीरे छोड़ें<br><br>🧘 मंत्र: मैं शांत हूँ<br><br>⏳ 10 बार दोहराएँ";
+    }
 
-    let message = "";
+    if(mood === "fear"){
+        result = "🌿 लंबी धीमी सांस लें<br><br>🧘 मंत्र: सब ठीक है<br><br>⏳ 1 मिनट ध्यान करें";
+    }
 
-    if(percent > 70){
-        message = "🚀 ऊर्जा संकेत दे रही है — आगे बढ़ें";
-    } 
-    else if(percent > 40){
-        message = "⏳ रुकें, और भीतर स्पष्टता लाएँ";
-    } 
-    else {
-        message = "⚠️ अभी निर्णय न लें";
+    if(mood === "sad"){
+        result = "💫 छाती पर हाथ रखें और सांस महसूस करें<br><br>🧘 मंत्र: मैं पर्याप्त हूँ<br><br>⏳ 8 बार दोहराएँ";
     }
 
     document.getElementById("output").innerHTML =
-        "<div class='glow'>स्पष्टता स्कोर: " + percent + "%</div><br>" + message +
-        "<br><br>🔮 गहराई के लिए Divine Access खोलें";
+        result + "<br><br>🔮 गहराई के लिए Divine Access खोलें";
+
+    // optional vibration (mobile)
+    if(navigator.vibrate){
+        navigator.vibrate(100);
+    }
 }
 </script>
 
