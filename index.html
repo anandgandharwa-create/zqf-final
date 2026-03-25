@@ -3,141 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>मन शांति कैलकुलेटर</title>
+<title>Thought Shift</title>
 
 <style>
 body{
-    margin:0;
-    font-family:'Segoe UI', sans-serif;
-    background:#0f172a; /* deep dark blue */
-    color:#e2e8f0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+margin:0;
+font-family:system-ui;
+background:#071826;
+color:#fff;
+text-align:center;
 }
 
+/* Header */
+header{
+background:linear-gradient(90deg,#5b2c83,#402060);
+padding:16px;
+font-size:20px;
+font-weight:bold;
+}
+
+/* Container */
+.container{
+padding:20px;
+max-width:420px;
+margin:auto;
+}
+
+/* Card */
 .card{
-    width:90%;
-    max-width:360px;
-    padding:22px;
-    border-radius:16px;
-    background:#1e293b; /* solid dark card */
-    box-shadow:0 4px 20px rgba(0,0,0,0.4);
-    text-align:center;
+background:linear-gradient(145deg,#132532,#08131c);
+border-radius:20px;
+padding:20px;
+margin-top:20px;
 }
 
-.title{
-    font-size:20px;
-    margin-bottom:18px;
-    color:#cbd5f5; /* soft light */
-    font-weight:500;
+/* Input */
+input{
+width:100%;
+padding:14px;
+border-radius:12px;
+border:none;
+outline:none;
+margin-top:10px;
+font-size:14px;
 }
 
-select{
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border-radius:10px;
-    border:1px solid #334155;
-    background:#0f172a;
-    color:#e2e8f0;
-    font-size:14px;
-}
-
+/* Button */
 button{
-    width:100%;
-    padding:12px;
-    margin-top:12px;
-    border:none;
-    border-radius:10px;
-    background:#2563eb; /* simple blue */
-    color:#fff;
-    font-weight:500;
-    font-size:15px;
-    cursor:pointer;
+margin-top:15px;
+padding:14px;
+width:100%;
+border:none;
+border-radius:12px;
+background:linear-gradient(45deg,#00ffd5,#00a896);
+color:#000;
+font-weight:bold;
+cursor:pointer;
 }
 
-button:hover{
-    background:#1d4ed8;
-}
-
-.result{
-    margin-top:18px;
-    padding:14px;
-    border-radius:10px;
-    background:#0f172a;
-    border:1px solid #334155;
-    font-size:14px;
-    line-height:1.6;
-}
-
-.footer{
-    margin-top:10px;
-    font-size:12px;
-    color:#94a3b8;
+/* Output */
+.output{
+margin-top:20px;
+color:#7CFF9E;
+font-size:16px;
 }
 </style>
+
 </head>
 
 <body>
 
+<header>🔁 Thought Shift</header>
+
+<div class="container">
+
 <div class="card">
-    <div class="title">🌿 मन शांति</div>
 
-    <select id="mood">
-        <option value="">आप अभी कैसा महसूस कर रहे हैं?</option>
-        <option value="stress">तनाव 😣</option>
-        <option value="anger">गुस्सा 😡</option>
-        <option value="fear">डर 😰</option>
-        <option value="sad">उदासी 😔</option>
-    </select>
+<h3>अपना विचार बदलें</h3>
 
-    <button onclick="calm()">✨ शांति प्राप्त करें</button>
+<input id="thoughtInput" placeholder="जैसे: मैं यह नहीं कर सकता">
 
-    <div class="result" id="output"></div>
+<button onclick="shiftThought()">Shift करें</button>
 
-    <div class="footer">
-        30 सेकंड दें — मन बदल जाएगा
-    </div>
+<div class="output" id="output"></div>
+
+</div>
+
 </div>
 
 <script>
-function calm(){
-    let mood = document.getElementById("mood").value;
 
-    if(mood === ""){
-        document.getElementById("output").innerHTML = "⚠️ पहले अपना भाव चुनें";
-        return;
-    }
+function shiftThought(){
 
-    let result = "";
+let input = document.getElementById("thoughtInput").value.trim();
 
-    if(mood === "stress"){
-        result = "🌬 4-7-8 श्वास लें (4 सेकंड inhale, 7 रोकें, 8 exhale)<br><br>🧘 मंत्र: मैं सुरक्षित हूँ<br><br>⏳ 7 बार दोहराएँ";
-    }
-
-    if(mood === "anger"){
-        result = "🔥 गहरी सांस लें और धीरे छोड़ें<br><br>🧘 मंत्र: मैं शांत हूँ<br><br>⏳ 10 बार दोहराएँ";
-    }
-
-    if(mood === "fear"){
-        result = "🌿 लंबी धीमी सांस लें<br><br>🧘 मंत्र: सब ठीक है<br><br>⏳ 1 मिनट ध्यान करें";
-    }
-
-    if(mood === "sad"){
-        result = "💫 छाती पर हाथ रखें और सांस महसूस करें<br><br>🧘 मंत्र: मैं पर्याप्त हूँ<br><br>⏳ 8 बार दोहराएँ";
-    }
-
-    document.getElementById("output").innerHTML =
-        result + "<br><br>🔮 गहराई के लिए Divine Access खोलें";
-
-    // optional vibration (mobile)
-    if(navigator.vibrate){
-        navigator.vibrate(100);
-    }
+if(input === ""){
+alert("पहले कोई विचार लिखें");
+return;
 }
+
+let output = "";
+
+// Smart Replace Logic
+if(input.includes("नहीं")){
+output = input.replace("नहीं", "कर सकता हूँ");
+}
+else if(input.includes("डर")){
+output = "मैं साहसी हूँ और सुरक्षित हूँ";
+}
+else if(input.includes("कमजोर")){
+output = "मैं मजबूत हूँ";
+}
+else{
+output = "मैं सक्षम हूँ, सब संभव है";
+}
+
+// Show Result
+document.getElementById("output").innerText = "✨ नया विचार: " + output;
+
+// XP add (optional)
+let xp = localStorage.getItem("xp") || 0;
+xp++;
+localStorage.setItem("xp", xp);
+
+}
+
 </script>
 
 </body>
