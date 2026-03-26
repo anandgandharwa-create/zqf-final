@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI मार्गदर्शक</title>
+<title>तुरंत उत्तर</title>
 
 <style>
 body{
@@ -24,11 +24,16 @@ h1{
   color:#00ffcc;
 }
 
+.subtitle{
+  text-align:center;
+  margin-bottom:15px;
+  color:#ccc;
+}
+
 .box{
   background:#002626;
   padding:20px;
   border-radius:18px;
-  box-shadow:0 0 20px rgba(0,255,200,0.15);
 }
 
 select{
@@ -47,7 +52,6 @@ button{
   background:#00cc99;
   color:black;
   font-weight:bold;
-  cursor:pointer;
 }
 
 .answer{
@@ -55,8 +59,8 @@ button{
   padding:12px;
   background:#001f1f;
   border-radius:12px;
-  min-height:60px;
   line-height:1.5;
+  min-height:60px;
 }
 
 .limit{
@@ -76,29 +80,40 @@ button{
 
 <div class="container">
 
-<h1>AI मार्गदर्शक</h1>
+<h1>तुरंत उत्तर</h1>
+<div class="subtitle">अपने मन के सवाल चुनें और तुरंत मार्गदर्शन पाएं</div>
 
 <div class="box">
 
-<select id="questionSelect">
-<option value="">अपना प्रश्न चुनें...</option>
+<select id="q">
+<option value="">प्रश्न चुनें...</option>
 
 <option value="1">मुझे शांति क्यों नहीं मिलती?</option>
 <option value="2">मेरे पास पैसा क्यों नहीं आता?</option>
-<option value="3">मन बार-बार भटकता क्यों है?</option>
-<option value="4">मैं सफल क्यों नहीं हो पा रहा?</option>
-<option value="5">रिश्तों में समस्या क्यों आती है?</option>
-<option value="6">मुझे डर क्यों लगता है?</option>
-<option value="7">मैं खुश कैसे रहूँ?</option>
-<option value="8">मेरी ऊर्जा कम क्यों रहती है?</option>
+<option value="3">मैं बार-बार असफल क्यों होता हूँ?</option>
+<option value="4">मेरा मन स्थिर क्यों नहीं रहता?</option>
+<option value="5">मैं खुश कैसे रहूँ?</option>
+<option value="6">रिश्तों में समस्या क्यों आती है?</option>
+<option value="7">मुझे डर क्यों लगता है?</option>
+<option value="8">मेरे पास ऊर्जा क्यों नहीं रहती?</option>
 <option value="9">जीवन में दिशा कैसे मिले?</option>
-<option value="10">बार-बार असफलता क्यों मिलती है?</option>
+<option value="10">मेरी सोच नकारात्मक क्यों है?</option>
+<option value="11">मैं खुद पर विश्वास कैसे बढ़ाऊँ?</option>
+<option value="12">मुझे गुस्सा क्यों आता है?</option>
+<option value="13">मैं ध्यान क्यों नहीं कर पाता?</option>
+<option value="14">मैं बार-बार दुखी क्यों हो जाता हूँ?</option>
+<option value="15">मेरे निर्णय सही क्यों नहीं होते?</option>
+<option value="16">मैं अपने लक्ष्य तक क्यों नहीं पहुँच पा रहा?</option>
+<option value="17">मैं अकेला क्यों महसूस करता हूँ?</option>
+<option value="18">मुझे motivation क्यों नहीं मिलता?</option>
+<option value="19">मेरी आदतें क्यों नहीं बदलती?</option>
+<option value="20">मैं जीवन में आगे कैसे बढ़ूँ?</option>
 
 </select>
 
-<button onclick="getAnswer()">उत्तर देखें</button>
+<button onclick="getAns()">उत्तर देखें</button>
 
-<div class="answer" id="answer">उत्तर यहाँ आएगा...</div>
+<div class="answer" id="ans">उत्तर यहाँ आएगा...</div>
 
 <div class="limit" id="limitText"></div>
 
@@ -110,87 +125,80 @@ button{
 
 <script>
 
-// ===== SETTINGS =====
+// ===== LIMIT =====
 let dailyLimit = 2;
-
-// ===== STORAGE =====
 let used = localStorage.getItem("used") || 0;
 let premium = localStorage.getItem("premium");
 
-// ===== DATE RESET =====
 let today = new Date().toDateString();
-let lastDate = localStorage.getItem("date");
-
-if(lastDate !== today){
-  localStorage.setItem("used", 0);
-  localStorage.setItem("date", today);
-  used = 0;
+if(localStorage.getItem("date") !== today){
+  localStorage.setItem("used",0);
+  localStorage.setItem("date",today);
+  used=0;
 }
 
-// ===== UPDATE UI =====
-function updateLimit(){
-  if(premium === "yes"){
-    document.getElementById("limitText").innerText = "💎 Premium User (Unlimited)";
-  } else {
-    document.getElementById("limitText").innerText =
-      `Free: ${dailyLimit - used} / 2 प्रश्न बाकी`;
+function update(){
+  if(premium==="yes"){
+    limitText.innerText="💎 Premium (Unlimited)";
+  }else{
+    limitText.innerText=`Free: ${dailyLimit-used} / 2 बाकी`;
   }
 }
-updateLimit();
+update();
 
 // ===== ANSWERS =====
-const answers = {
-1:"शांति बाहर नहीं, भीतर मिलती है।\nआपका मन लगातार भाग रहा है।\nसांसों पर ध्यान देना शुरू करें।\nधीरे-धीरे शांति प्रकट होगी।",
+const A = {
 
-2:"पैसा पहले सोच में आता है, फिर जीवन में।\nआपका ध्यान कमी पर है, abundance पर नहीं।\nविश्वास और कर्म दोनों जरूरी हैं।\nदिशा स्पष्ट करें।",
-
-3:"मन का स्वभाव ही भटकना है।\nआप उसे रोकने की कोशिश कर रहे हैं।\nदेखना सीखें, रोकना नहीं।\nतभी स्थिरता आएगी।",
-
-4:"सफलता स्पष्ट दिशा मांगती है।\nआपका focus बिखरा हुआ है।\nएक लक्ष्य तय करें।\nनिरंतर प्रयास करें।",
-
-5:"रिश्तों में अपेक्षाएँ ज्यादा होती हैं।\nआप समझने से ज्यादा चाह रहे हैं।\nपहले देना सीखें।\nसंबंध सुधरेंगे।",
-
-6:"डर भविष्य की कल्पना है।\nवर्तमान में डर नहीं होता।\nसांस पर ध्यान लाएं।\nडर कम होने लगेगा।",
-
-7:"खुशी बाहर नहीं मिलती।\nआप उसे चीजों में खोज रहे हैं।\nअपने भीतर लौटें।\nवहीं स्थायी खुशी है।",
-
-8:"ऊर्जा विचारों से जुड़ी है।\nनकारात्मक सोच ऊर्जा गिराती है।\nसकारात्मक दिशा दें।\nऊर्जा बढ़ेगी।",
-
-9:"दिशा clarity से आती है।\nआप खुद को नहीं सुन रहे।\nशांत होकर सोचें।\nउत्तर भीतर है।",
-
-10:"असफलता सीख है, अंत नहीं।\nआप हार मान लेते हैं जल्दी।\nसीखकर आगे बढ़ें।\nसफलता करीब है।"
+1:"शांति बाहर नहीं, भीतर मिलती है। मन भाग रहा है। उसे देखो, रोको मत।",
+2:"पैसा सोच से शुरू होता है। कमी से नहीं, अवसर से जुड़ो। दिशा तय करो।",
+3:"असफलता सीख है। आप जल्दी हार मानते हैं। लगातार प्रयास करें।",
+4:"मन का स्वभाव ही चलायमान है। ध्यान का मतलब देखना है, रोकना नहीं।",
+5:"खुशी भीतर है। आप बाहर खोज रहे हैं। स्वयं में लौटें।",
+6:"रिश्तों में अपेक्षाएँ समस्या हैं। पहले समझें, फिर चाहें।",
+7:"डर भविष्य की कल्पना है। वर्तमान में रहें, डर घटेगा।",
+8:"ऊर्जा विचारों से जुड़ी है। सकारात्मक दिशा दें।",
+9:"दिशा स्पष्टता से आती है। शांत होकर भीतर देखें।",
+10:"नकारात्मक सोच आदत है। उसे observe करें, बदलना शुरू होगा।",
+11:"छोटे-छोटे सफल कदम लें। विश्वास धीरे-धीरे बनेगा।",
+12:"गुस्सा नियंत्रण की इच्छा से आता है। छोड़ना सीखें।",
+13:"आप कोशिश ज्यादा कर रहे हैं। ध्यान effort नहीं, awareness है।",
+14:"दुख attachment से आता है। छोड़ना सीखें।",
+15:"निर्णय clarity से आते हैं। मन शांत करें।",
+16:"लक्ष्य पर focus नहीं है। एक दिशा पकड़ें।",
+17:"आप खुद से जुड़े नहीं हैं। पहले खुद को जानें।",
+18:"motivation action से आता है, सोच से नहीं।",
+19:"आदतें repetition से बदलती हैं। छोटे कदम लें।",
+20:"आगे बढ़ने के लिए clarity + action जरूरी है।"
 };
 
 // ===== FUNCTION =====
-function getAnswer(){
+function getAns(){
 
-  let q = document.getElementById("questionSelect").value;
+let q=document.getElementById("q").value;
 
-  if(!q){
-    alert("प्रश्न चुनें");
-    return;
-  }
+if(!q){alert("प्रश्न चुनें");return;}
 
-  if(premium !== "yes" && used >= dailyLimit){
-    alert("Free limit खत्म! Premium लें ₹199");
-    return;
-  }
+if(premium!=="yes" && used>=dailyLimit){
+alert("Free limit खत्म! Premium लें ₹199");
+return;
+}
 
-  document.getElementById("answer").innerText = answers[q];
+ans.innerText=A[q];
 
-  if(premium !== "yes"){
-    used++;
-    localStorage.setItem("used", used);
-    updateLimit();
-  }
+if(premium!=="yes"){
+used++;
+localStorage.setItem("used",used);
+update();
+}
+
 }
 
 // ===== PREMIUM =====
 function goPremium(){
-  localStorage.setItem("premium","yes");
-  premium = "yes";
-  alert("🎉 अब आप Premium हो गए!");
-  updateLimit();
+localStorage.setItem("premium","yes");
+premium="yes";
+alert("🎉 Premium activated");
+update();
 }
 
 </script>
