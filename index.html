@@ -3,129 +3,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thought Shift</title>
+<title>AI Guide</title>
 
 <style>
 body{
-margin:0;
-font-family:system-ui;
-background:#071826;
-color:#fff;
-text-align:center;
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg,#001a1a,#003333);
+  color:white;
 }
 
-/* Header */
-header{
-background:linear-gradient(90deg,#5b2c83,#402060);
-padding:16px;
-font-size:20px;
-font-weight:bold;
-}
-
-/* Container */
 .container{
-padding:20px;
-max-width:420px;
-margin:auto;
+  max-width:500px;
+  margin:auto;
+  padding:20px;
 }
 
-/* Card */
-.card{
-background:linear-gradient(145deg,#132532,#08131c);
-border-radius:20px;
-padding:20px;
-margin-top:20px;
+h1{
+  text-align:center;
+  color:#00ffcc;
 }
 
-/* Input */
-input{
-width:100%;
-padding:14px;
-border-radius:12px;
-border:none;
-outline:none;
-margin-top:10px;
-font-size:14px;
+.box{
+  background:#002626;
+  padding:15px;
+  border-radius:15px;
+  box-shadow:0 0 10px rgba(0,255,200,0.2);
 }
 
-/* Button */
+textarea{
+  width:100%;
+  height:80px;
+  border:none;
+  border-radius:10px;
+  padding:10px;
+  font-size:16px;
+}
+
 button{
-margin-top:15px;
-padding:14px;
-width:100%;
-border:none;
-border-radius:12px;
-background:linear-gradient(45deg,#00ffd5,#00a896);
-color:#000;
-font-weight:bold;
-cursor:pointer;
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#00cc99;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-/* Output */
-.output{
-margin-top:20px;
-color:#7CFF9E;
-font-size:16px;
+button:hover{
+  background:#00ffcc;
+}
+
+.answer{
+  margin-top:15px;
+  padding:10px;
+  background:#001f1f;
+  border-radius:10px;
+  min-height:50px;
+}
+
+.limit{
+  text-align:center;
+  margin-top:10px;
+  color:#ccc;
 }
 </style>
-
 </head>
 
 <body>
 
-<header>🔁 Thought Shift</header>
-
 <div class="container">
 
-<div class="card">
+<h1>AI मार्गदर्शक</h1>
 
-<h3>अपना विचार बदलें</h3>
+<div class="box">
+<textarea id="question" placeholder="अपना प्रश्न लिखें..."></textarea>
 
-<input id="thoughtInput" placeholder="जैसे: मैं यह नहीं कर सकता">
+<button onclick="askAI()">पूछें</button>
 
-<button onclick="shiftThought()">Shift करें</button>
+<div class="answer" id="answer">उत्तर यहाँ आएगा...</div>
 
-<div class="output" id="output"></div>
-
+<div class="limit" id="limitText"></div>
 </div>
 
 </div>
 
 <script>
 
-function shiftThought(){
+// ====== SETTINGS ======
+const API_KEY = "YOUR_API_KEY_HERE"; // यहाँ अपनी API key डालो
 
-let input = document.getElementById("thoughtInput").value.trim();
+// Free limit
+let dailyLimit = 5;
 
-if(input === ""){
-alert("पहले कोई विचार लिखें");
-return;
+// Load usage
+let used = localStorage.getItem("used") || 0;
+
+// Premium check
+let premium = localStorage.getItem("premium");
+
+// Reset daily (simple version)
+let lastDate = localStorage.getItem("date");
+let today = new Date().toDateString();
+
+if(lastDate !== today){
+  localStorage.setItem("used", 0);
+  localStorage.setItem("date", today);
+  used = 0;
 }
 
-let output = "";
-
-// Smart Replace Logic
-if(input.includes("नहीं")){
-output = input.replace("नहीं", "कर सकता हूँ");
-}
-else if(input.includes("डर")){
-output = "मैं साहसी हूँ और सुरक्षित हूँ";
-}
-else if(input.includes("कमजोर")){
-output = "मैं मजबूत हूँ";
-}
-else{
-output = "मैं सक्षम हूँ, सब संभव है";
+// Update UI
+function updateLimit(){
+  if(premium === "yes"){
+    document.getElementById("limitText").innerText = "💎 Premium User";
+  } else {
+    document.getElementById("limitText").innerText = 
+      `Free Limit: ${dailyLimit - used} प्रश्न बचे`;
+  }
 }
 
-// Show Result
-document.getElementById("output").innerText = "✨ नया विचार: " + output;
+updateLimit();
 
-// XP add (optional)
-let xp = localStorage.getItem("xp") || 0;
-xp++;
-localStorage.setItem("xp", xp);
+// ====== AI FUNCTION ======
+async function askAI(){
 
+  let q = document.getElementById("question").value;
+
+  if(!q){
+    alert("प्रश्न लिखें");
+    return;
+  }
+
+  if(premium !== "yes" && used >= dailyLimit){
+    alert("Free limit खत्म! Premium लें");
+    return;
+  }
+
+  document.getElementById("answer").innerText = "सोच रहा है...";
+
+  try{
+
+    let response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + API_KEY
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          {role: "user", content: q}
+        ]
+      })
+    });
+
+    let data = await response.json();
+
+    let answer = data.choices[0].message.content;
+
+    document.getElementById("answer").innerText = answer;
+
+    // increase usage
+    if(premium !== "yes"){
+      used++;
+      localStorage.setItem("used", used);
+      updateLimit();
+    }
+
+  }catch(e){
+    document.getElementById("answer").innerText = "Error आया!";
+  }
+}
+
+// ====== DEMO PREMIUM BUTTON ======
+function goPremium(){
+  localStorage.setItem("premium","yes");
+  alert("अब आप Premium हो!");
+  updateLimit();
 }
 
 </script>
