@@ -107,7 +107,7 @@ button:hover{
 <script>
 
 // ===== SETTINGS =====
-let dailyLimit = 5;
+let dailyLimit = 2; // 🔥 FREE LIMIT = 2
 
 // ===== STORAGE =====
 let used = localStorage.getItem("used") || 0;
@@ -126,24 +126,22 @@ if(lastDate !== today){
 // ===== UPDATE LIMIT UI =====
 function updateLimit(){
   if(premium === "yes"){
-    document.getElementById("limitText").innerText = "💎 Premium User (Unlimited)";
+    document.getElementById("limitText").innerText = "💎 Premium User (Unlimited Access)";
   } else {
     document.getElementById("limitText").innerText =
-      `Free Limit: ${dailyLimit - used} प्रश्न बचे`;
+      `Free: ${dailyLimit - used} / 2 प्रश्न बाकी`;
   }
 }
 updateLimit();
 
 // ===== DUMMY ANSWERS =====
 const answers = [
-"शांति बाहर नहीं, भीतर मिलती है। अपने विचारों को देखना शुरू करें।",
-"मन जितना भागता है, उतनी अशांति होती है। रुकना ही समाधान है।",
-"आप अपनी सांसों पर ध्यान दें, वहीं से शांति शुरू होती है।",
-"शांति पाने के लिए कुछ छोड़ना पड़ता है — नियंत्रण और चिंता।",
-"आप शांत हैं, बस मन शोर कर रहा है। उसे देखो, उससे जुड़ो मत।",
-"हर उत्तर आपके भीतर है, बस मन शांत होना चाहिए।",
-"जिसे आप ढूंढ रहे हैं, वह आप पहले से ही हैं।",
-"चिंता भविष्य की कल्पना है, शांति वर्तमान में है।"
+"धन पहले सोच में आता है, फिर जीवन में। अपनी सोच को समृद्ध बनाएं।",
+"जहाँ ध्यान जाता है, वहीं ऊर्जा जाती है। आप कमी पर ध्यान दे रहे हैं या अवसर पर?",
+"पैसा रुकता नहीं, वह बहता है। अपने भीतर के अवरोध पहचानें।",
+"आप योग्य हैं, बस अपने विश्वास को मजबूत करना होगा।",
+"कर्म और स्पष्ट दिशा मिलते ही धन स्वतः आने लगता है।",
+"जिसे आप खोज रहे हैं, वह आपके अंदर की क्षमता में छिपा है।"
 ];
 
 // ===== ASK FUNCTION =====
@@ -157,7 +155,7 @@ function askAI(){
   }
 
   if(premium !== "yes" && used >= dailyLimit){
-    alert("Free limit खत्म! Premium लें");
+    alert("आज के 2 Free प्रश्न खत्म!\nPremium लेकर Unlimited पूछें (₹199/month)");
     return;
   }
 
@@ -174,18 +172,17 @@ function askAI(){
       updateLimit();
     }
 
-  }, 800);
+  }, 700);
 }
 
 // ===== PREMIUM =====
 function goPremium(){
   localStorage.setItem("premium","yes");
   premium = "yes";
-  alert("अब आप Premium User हो गए 🎉");
+  alert("🎉 अब आप Premium User हो!\nUnlimited Access मिल गया");
   updateLimit();
 }
 
 </script>
-
 </body>
 </html>
