@@ -31,19 +31,16 @@ h1{
   box-shadow:0 0 20px rgba(0,255,200,0.15);
 }
 
-textarea{
+select{
   width:100%;
-  height:90px;
-  border:none;
-  border-radius:12px;
   padding:12px;
+  border-radius:10px;
   font-size:16px;
-  outline:none;
+  margin-bottom:10px;
 }
 
 button{
   width:100%;
-  margin-top:12px;
   padding:14px;
   border:none;
   border-radius:12px;
@@ -51,11 +48,6 @@ button{
   color:black;
   font-weight:bold;
   cursor:pointer;
-  font-size:16px;
-}
-
-button:hover{
-  background:#00ffcc;
 }
 
 .answer{
@@ -71,14 +63,12 @@ button:hover{
   text-align:center;
   margin-top:12px;
   color:#ccc;
-  font-size:14px;
 }
 
 .premium-btn{
   margin-top:10px;
   background:#ffcc00;
 }
-
 </style>
 </head>
 
@@ -90,15 +80,29 @@ button:hover{
 
 <div class="box">
 
-<textarea id="question" placeholder="अपना प्रश्न लिखें..."></textarea>
+<select id="questionSelect">
+<option value="">अपना प्रश्न चुनें...</option>
 
-<button onclick="askAI()">पूछें</button>
+<option value="1">मुझे शांति क्यों नहीं मिलती?</option>
+<option value="2">मेरे पास पैसा क्यों नहीं आता?</option>
+<option value="3">मन बार-बार भटकता क्यों है?</option>
+<option value="4">मैं सफल क्यों नहीं हो पा रहा?</option>
+<option value="5">रिश्तों में समस्या क्यों आती है?</option>
+<option value="6">मुझे डर क्यों लगता है?</option>
+<option value="7">मैं खुश कैसे रहूँ?</option>
+<option value="8">मेरी ऊर्जा कम क्यों रहती है?</option>
+<option value="9">जीवन में दिशा कैसे मिले?</option>
+<option value="10">बार-बार असफलता क्यों मिलती है?</option>
+
+</select>
+
+<button onclick="getAnswer()">उत्तर देखें</button>
 
 <div class="answer" id="answer">उत्तर यहाँ आएगा...</div>
 
 <div class="limit" id="limitText"></div>
 
-<button class="premium-btn" onclick="goPremium()">💎 Premium लें</button>
+<button class="premium-btn" onclick="goPremium()">💎 Premium लें ₹199</button>
 
 </div>
 
@@ -107,7 +111,7 @@ button:hover{
 <script>
 
 // ===== SETTINGS =====
-let dailyLimit = 2; // 🔥 FREE LIMIT = 2
+let dailyLimit = 2;
 
 // ===== STORAGE =====
 let used = localStorage.getItem("used") || 0;
@@ -123,10 +127,10 @@ if(lastDate !== today){
   used = 0;
 }
 
-// ===== UPDATE LIMIT UI =====
+// ===== UPDATE UI =====
 function updateLimit(){
   if(premium === "yes"){
-    document.getElementById("limitText").innerText = "💎 Premium User (Unlimited Access)";
+    document.getElementById("limitText").innerText = "💎 Premium User (Unlimited)";
   } else {
     document.getElementById("limitText").innerText =
       `Free: ${dailyLimit - used} / 2 प्रश्न बाकी`;
@@ -134,55 +138,62 @@ function updateLimit(){
 }
 updateLimit();
 
-// ===== DUMMY ANSWERS =====
-const answers = [
-"धन पहले सोच में आता है, फिर जीवन में। अपनी सोच को समृद्ध बनाएं।",
-"जहाँ ध्यान जाता है, वहीं ऊर्जा जाती है। आप कमी पर ध्यान दे रहे हैं या अवसर पर?",
-"पैसा रुकता नहीं, वह बहता है। अपने भीतर के अवरोध पहचानें।",
-"आप योग्य हैं, बस अपने विश्वास को मजबूत करना होगा।",
-"कर्म और स्पष्ट दिशा मिलते ही धन स्वतः आने लगता है।",
-"जिसे आप खोज रहे हैं, वह आपके अंदर की क्षमता में छिपा है।"
-];
+// ===== ANSWERS =====
+const answers = {
+1:"शांति बाहर नहीं, भीतर मिलती है।\nआपका मन लगातार भाग रहा है।\nसांसों पर ध्यान देना शुरू करें।\nधीरे-धीरे शांति प्रकट होगी।",
 
-// ===== ASK FUNCTION =====
-function askAI(){
+2:"पैसा पहले सोच में आता है, फिर जीवन में।\nआपका ध्यान कमी पर है, abundance पर नहीं।\nविश्वास और कर्म दोनों जरूरी हैं।\nदिशा स्पष्ट करें।",
 
-  let q = document.getElementById("question").value.trim();
+3:"मन का स्वभाव ही भटकना है।\nआप उसे रोकने की कोशिश कर रहे हैं।\nदेखना सीखें, रोकना नहीं।\nतभी स्थिरता आएगी।",
+
+4:"सफलता स्पष्ट दिशा मांगती है।\nआपका focus बिखरा हुआ है।\nएक लक्ष्य तय करें।\nनिरंतर प्रयास करें।",
+
+5:"रिश्तों में अपेक्षाएँ ज्यादा होती हैं।\nआप समझने से ज्यादा चाह रहे हैं।\nपहले देना सीखें।\nसंबंध सुधरेंगे।",
+
+6:"डर भविष्य की कल्पना है।\nवर्तमान में डर नहीं होता।\nसांस पर ध्यान लाएं।\nडर कम होने लगेगा।",
+
+7:"खुशी बाहर नहीं मिलती।\nआप उसे चीजों में खोज रहे हैं।\nअपने भीतर लौटें।\nवहीं स्थायी खुशी है।",
+
+8:"ऊर्जा विचारों से जुड़ी है।\nनकारात्मक सोच ऊर्जा गिराती है।\nसकारात्मक दिशा दें।\nऊर्जा बढ़ेगी।",
+
+9:"दिशा clarity से आती है।\nआप खुद को नहीं सुन रहे।\nशांत होकर सोचें।\nउत्तर भीतर है।",
+
+10:"असफलता सीख है, अंत नहीं।\nआप हार मान लेते हैं जल्दी।\nसीखकर आगे बढ़ें।\nसफलता करीब है।"
+};
+
+// ===== FUNCTION =====
+function getAnswer(){
+
+  let q = document.getElementById("questionSelect").value;
 
   if(!q){
-    alert("प्रश्न लिखें");
+    alert("प्रश्न चुनें");
     return;
   }
 
   if(premium !== "yes" && used >= dailyLimit){
-    alert("आज के 2 Free प्रश्न खत्म!\nPremium लेकर Unlimited पूछें (₹199/month)");
+    alert("Free limit खत्म! Premium लें ₹199");
     return;
   }
 
-  document.getElementById("answer").innerText = "सोच रहा है...";
+  document.getElementById("answer").innerText = answers[q];
 
-  setTimeout(()=>{
-
-    let random = answers[Math.floor(Math.random() * answers.length)];
-    document.getElementById("answer").innerText = random;
-
-    if(premium !== "yes"){
-      used++;
-      localStorage.setItem("used", used);
-      updateLimit();
-    }
-
-  }, 700);
+  if(premium !== "yes"){
+    used++;
+    localStorage.setItem("used", used);
+    updateLimit();
+  }
 }
 
 // ===== PREMIUM =====
 function goPremium(){
   localStorage.setItem("premium","yes");
   premium = "yes";
-  alert("🎉 अब आप Premium User हो!\nUnlimited Access मिल गया");
+  alert("🎉 अब आप Premium हो गए!");
   updateLimit();
 }
 
 </script>
+
 </body>
 </html>
