@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Guide</title>
+<title>AI मार्गदर्शक</title>
 
 <style>
 body{
   margin:0;
-  font-family: 'Segoe UI', sans-serif;
+  font-family:'Segoe UI', sans-serif;
   background: linear-gradient(180deg,#001a1a,#003333);
   color:white;
 }
@@ -26,30 +26,32 @@ h1{
 
 .box{
   background:#002626;
-  padding:15px;
-  border-radius:15px;
-  box-shadow:0 0 10px rgba(0,255,200,0.2);
+  padding:20px;
+  border-radius:18px;
+  box-shadow:0 0 20px rgba(0,255,200,0.15);
 }
 
 textarea{
   width:100%;
-  height:80px;
+  height:90px;
   border:none;
-  border-radius:10px;
-  padding:10px;
+  border-radius:12px;
+  padding:12px;
   font-size:16px;
+  outline:none;
 }
 
 button{
   width:100%;
-  margin-top:10px;
-  padding:12px;
+  margin-top:12px;
+  padding:14px;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
   background:#00cc99;
   color:black;
   font-weight:bold;
   cursor:pointer;
+  font-size:16px;
 }
 
 button:hover{
@@ -58,17 +60,25 @@ button:hover{
 
 .answer{
   margin-top:15px;
-  padding:10px;
+  padding:12px;
   background:#001f1f;
-  border-radius:10px;
-  min-height:50px;
+  border-radius:12px;
+  min-height:60px;
+  line-height:1.5;
 }
 
 .limit{
   text-align:center;
-  margin-top:10px;
+  margin-top:12px;
   color:#ccc;
+  font-size:14px;
 }
+
+.premium-btn{
+  margin-top:10px;
+  background:#ffcc00;
+}
+
 </style>
 </head>
 
@@ -79,6 +89,7 @@ button:hover{
 <h1>AI मार्गदर्शक</h1>
 
 <div class="box">
+
 <textarea id="question" placeholder="अपना प्रश्न लिखें..."></textarea>
 
 <button onclick="askAI()">पूछें</button>
@@ -86,27 +97,25 @@ button:hover{
 <div class="answer" id="answer">उत्तर यहाँ आएगा...</div>
 
 <div class="limit" id="limitText"></div>
+
+<button class="premium-btn" onclick="goPremium()">💎 Premium लें</button>
+
 </div>
 
 </div>
 
 <script>
 
-// ====== SETTINGS ======
-const API_KEY = "YOUR_API_KEY_HERE"; // यहाँ अपनी API key डालो
-
-// Free limit
+// ===== SETTINGS =====
 let dailyLimit = 5;
 
-// Load usage
+// ===== STORAGE =====
 let used = localStorage.getItem("used") || 0;
-
-// Premium check
 let premium = localStorage.getItem("premium");
 
-// Reset daily (simple version)
-let lastDate = localStorage.getItem("date");
+// ===== DATE RESET =====
 let today = new Date().toDateString();
+let lastDate = localStorage.getItem("date");
 
 if(lastDate !== today){
   localStorage.setItem("used", 0);
@@ -114,22 +123,33 @@ if(lastDate !== today){
   used = 0;
 }
 
-// Update UI
+// ===== UPDATE LIMIT UI =====
 function updateLimit(){
   if(premium === "yes"){
-    document.getElementById("limitText").innerText = "💎 Premium User";
+    document.getElementById("limitText").innerText = "💎 Premium User (Unlimited)";
   } else {
-    document.getElementById("limitText").innerText = 
+    document.getElementById("limitText").innerText =
       `Free Limit: ${dailyLimit - used} प्रश्न बचे`;
   }
 }
-
 updateLimit();
 
-// ====== AI FUNCTION ======
-async function askAI(){
+// ===== DUMMY ANSWERS =====
+const answers = [
+"शांति बाहर नहीं, भीतर मिलती है। अपने विचारों को देखना शुरू करें।",
+"मन जितना भागता है, उतनी अशांति होती है। रुकना ही समाधान है।",
+"आप अपनी सांसों पर ध्यान दें, वहीं से शांति शुरू होती है।",
+"शांति पाने के लिए कुछ छोड़ना पड़ता है — नियंत्रण और चिंता।",
+"आप शांत हैं, बस मन शोर कर रहा है। उसे देखो, उससे जुड़ो मत।",
+"हर उत्तर आपके भीतर है, बस मन शांत होना चाहिए।",
+"जिसे आप ढूंढ रहे हैं, वह आप पहले से ही हैं।",
+"चिंता भविष्य की कल्पना है, शांति वर्तमान में है।"
+];
 
-  let q = document.getElementById("question").value;
+// ===== ASK FUNCTION =====
+function askAI(){
+
+  let q = document.getElementById("question").value.trim();
 
   if(!q){
     alert("प्रश्न लिखें");
@@ -143,44 +163,25 @@ async function askAI(){
 
   document.getElementById("answer").innerText = "सोच रहा है...";
 
-  try{
+  setTimeout(()=>{
 
-    let response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + API_KEY
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          {role: "user", content: q}
-        ]
-      })
-    });
+    let random = answers[Math.floor(Math.random() * answers.length)];
+    document.getElementById("answer").innerText = random;
 
-    let data = await response.json();
-
-    let answer = data.choices[0].message.content;
-
-    document.getElementById("answer").innerText = answer;
-
-    // increase usage
     if(premium !== "yes"){
       used++;
       localStorage.setItem("used", used);
       updateLimit();
     }
 
-  }catch(e){
-    document.getElementById("answer").innerText = "Error आया!";
-  }
+  }, 800);
 }
 
-// ====== DEMO PREMIUM BUTTON ======
+// ===== PREMIUM =====
 function goPremium(){
   localStorage.setItem("premium","yes");
-  alert("अब आप Premium हो!");
+  premium = "yes";
+  alert("अब आप Premium User हो गए 🎉");
   updateLimit();
 }
 
