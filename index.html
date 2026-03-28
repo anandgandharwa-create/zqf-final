@@ -237,12 +237,13 @@ q.innerHTML = '<option value="">प्रश्न चुनें...</option>';
 
 if(Q[cat]){
   Q[cat].forEach((item,i)=>{
-  q.innerHTML += `<option value="${cat}-${i}">${item.q}</option>`;
+    q.innerHTML += `<option value="${cat}-${i}">${item.q}</option>`;
   });
+
+  q.size = Q[cat].length; // 👈 show all
 }
 
 }
-
 
 // ===== GET ANSWER =====
 function getAns(){
