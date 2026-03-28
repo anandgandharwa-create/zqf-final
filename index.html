@@ -301,11 +301,11 @@ if(premium!=="yes" && used>=dailyLimit){
 // loading effect
 let ans = document.getElementById("ans");
 
-ans.innerText="✨ संदेश प्राप्त हो रहा है...    प्रतीक्षा करें...";
+ans.innerHTML = '<span style="color:#FFD700;text-shadow:0 0 6px rgba(255,215,0,0.6)">✨ संदेश प्राप्त हो रहा है... प्रतीक्षा करें...</span>';
 
 setTimeout(()=>{
 
-ans.innerText="✨ संदेश प्राप्त हो रहा है...   प्रतीक्षा करें...\n\n" + selected.a;
+ans.innerHTML = '<span style="color:#FFD700">✨ संदेश प्राप्त हो रहा है... प्रतीक्षा करें...</span><br><br>' + selected.a;
 
   if(premium!=="yes"){
     used++;
