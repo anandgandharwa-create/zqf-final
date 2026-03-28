@@ -89,16 +89,7 @@ button:active{
   font-weight:bold;
   box-shadow:0 0 12px rgba(255,200,0,0.6);
 }
-select{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  font-size:15px;
-  margin-bottom:12px;
-  background:#001f1f;
-  color:#00ffcc;
-  border:1px solid rgba(0,255,204,0.3);
-}
+
 </style>
 </head>
 
@@ -208,6 +199,20 @@ spiritual:[
 ]
 };
   // ===== FUNCTION =====
+  function loadQuestions(){
+
+let cat = document.getElementById("category").value;
+let q = document.getElementById("q");
+
+q.innerHTML = '<option value="">प्रश्न चुनें...</option>';
+
+if(Q[cat]){
+  Q[cat].forEach((item,i)=>{
+    q.innerHTML += `<option value="${cat}-${i}">${item}</option>`;
+  });
+}
+
+}
 function getAns(){
 
 let val=document.getElementById("q").value;
@@ -223,35 +228,18 @@ let index = parts[1];
 
 let selectedQ = Q[cat][index];
 
-if(!q){
-  alert("प्रश्न चुनें");
-  return;
 }
 
 if(premium!=="yes" && used>=dailyLimit){
   alert("Free limit खत्म! Premium लें ₹199");
   return;
-}
-function loadQuestions(){
 
-let cat = document.getElementById("category").value;
-let q = document.getElementById("q");
-
-q.innerHTML = '<option value="">प्रश्न चुनें...</option>';
-
-if(Q[cat]){
-  Q[cat].forEach((item,i)=>{
-    q.innerHTML += `<option value="${cat}-${i}">${item}</option>`;
-  });
-}
-
-}
 // loading feel
 ans.innerText="✨ संदेश प्राप्त हो रहा है...";
 
 setTimeout(()=>{
 
-  ans.innerText="✨ संदेश प्राप्त हो रहा है...\n\n" + A[q];
+ans.innerText="✨ संदेश प्राप्त हो रहा है...\n\n" + selectedQ;
 
   if(premium!=="yes"){
     used++;
