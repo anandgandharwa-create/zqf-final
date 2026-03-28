@@ -22,8 +22,9 @@ body{
 h1{
   text-align:center;
   color:#00ffcc;
+  letter-spacing:1px;
+  text-shadow:0 0 10px rgba(0,255,204,0.5);
 }
-
 .subtitle{
   text-align:center;
   margin-bottom:15px;
@@ -34,8 +35,9 @@ h1{
   background:#002626;
   padding:20px;
   border-radius:18px;
+  box-shadow: 0 0 20px rgba(0,255,204,0.15);
+  border:1px solid rgba(0,255,204,0.1);
 }
-
 select{
   width:100%;
   padding:12px;
@@ -45,24 +47,22 @@ select{
 }
 
 button{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:12px;
-  background:#00cc99;
-  color:black;
-  font-weight:bold;
+  transition:0.3s;
 }
 
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 12px rgba(0,255,204,0.6);
+}
 .answer{
   margin-top:15px;
-  padding:12px;
-  background:#001f1f;
+  padding:15px;
+  background:linear-gradient(180deg,#001f1f,#003333);
   border-radius:12px;
-  line-height:1.5;
+  line-height:1.6;
   min-height:60px;
+  border-left:3px solid #00ffcc;
 }
-
 .limit{
   text-align:center;
   margin-top:12px;
@@ -71,7 +71,10 @@ button{
 
 .premium-btn{
   margin-top:10px;
-  background:#ffcc00;
+  background:linear-gradient(45deg,#ffcc00,#ff9900);
+  color:black;
+  font-weight:bold;
+  box-shadow:0 0 10px rgba(255,204,0,0.5);
 }
 </style>
 </head>
@@ -261,6 +264,14 @@ if(!q){alert("प्रश्न चुनें");return;}
 if(premium!=="yes" && used>=dailyLimit){
 alert("Free limit खत्म! Premium लें ₹199");
 return;
+}
+
+// ❌ यहाँ पुराना था
+// ans.innerText = A[q];
+
+// ✅ इसे बदलकर यह लिखो
+ans.innerText="✨ संदेश प्राप्त हो रहा है...\n\n" + A[q];
+
 }
 
 ans.innerText=A[q];
