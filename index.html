@@ -47,12 +47,21 @@ select{
 }
 
 button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(45deg,#00ffcc,#00cc99);
+  color:#002626;
+  font-weight:bold;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 0 10px rgba(0,255,204,0.4);
   transition:0.3s;
 }
 
-button:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 12px rgba(0,255,204,0.6);
+button:active{
+  transform:scale(0.97);
 }
 .answer{
   margin-top:15px;
@@ -70,11 +79,11 @@ button:hover{
 }
 
 .premium-btn{
-  margin-top:10px;
-  background:linear-gradient(45deg,#ffcc00,#ff9900);
+  margin-top:12px;
+  background:linear-gradient(45deg,#ffcc00,#ff8800);
   color:black;
   font-weight:bold;
-  box-shadow:0 0 10px rgba(255,204,0,0.5);
+  box-shadow:0 0 12px rgba(255,200,0,0.6);
 }
 </style>
 </head>
@@ -259,31 +268,32 @@ function getAns(){
 
 let q=document.getElementById("q").value;
 
-if(!q){alert("प्रश्न चुनें");return;}
+if(!q){
+  alert("प्रश्न चुनें");
+  return;
+}
 
 if(premium!=="yes" && used>=dailyLimit){
-alert("Free limit खत्म! Premium लें ₹199");
-return;
+  alert("Free limit खत्म! Premium लें ₹199");
+  return;
 }
 
-// ❌ यहाँ पुराना था
-// ans.innerText = A[q];
+// loading feel
+ans.innerText="✨ संदेश प्राप्त हो रहा है...";
 
-// ✅ इसे बदलकर यह लिखो
-ans.innerText="✨ संदेश प्राप्त हो रहा है...\n\n" + A[q];
+setTimeout(()=>{
+
+  ans.innerText="✨ संदेश प्राप्त हो रहा है...\n\n" + A[q];
+
+  if(premium!=="yes"){
+    used++;
+    localStorage.setItem("used",used);
+    update();
+  }
+
+},700);
 
 }
-
-ans.innerText=A[q];
-
-if(premium!=="yes"){
-used++;
-localStorage.setItem("used",used);
-update();
-}
-
-}
-
 // ===== PREMIUM =====
 function goPremium(){
 localStorage.setItem("premium","yes");
