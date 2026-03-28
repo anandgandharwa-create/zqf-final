@@ -173,7 +173,6 @@ update();
 
 
 // ===== QUESTIONS =====
-const Q = {
 
 const Q = {
 
@@ -259,7 +258,7 @@ let parts = val.split("-");
 let cat = parts[0];
 let index = parts[1];
 
-let selectedQ = Q[cat][index];
+let selected = Q[cat][index];
 
 if(premium!=="yes" && used>=dailyLimit){
   alert("Free limit खत्म! Premium लें ₹199");
