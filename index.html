@@ -141,6 +141,8 @@ if(localStorage.getItem("date") !== today){
 }
 
 function update(){
+  let limitText = document.getElementById("limitText");
+
   if(premium==="yes"){
     limitText.innerText="💎 Premium (Unlimited)";
   }else{
@@ -148,6 +150,9 @@ function update(){
   }
 }
 update();
+
+
+// ===== QUESTIONS =====
 const Q = {
 
 family:[
@@ -197,9 +202,12 @@ spiritual:[
 "आध्यात्मिक प्रगति कैसे करें?",
 "भीतर की आवाज़ कैसे सुनें?"
 ]
+
 };
-  // ===== FUNCTION =====
-  function loadQuestions(){
+
+
+// ===== LOAD QUESTIONS =====
+function loadQuestions(){
 
 let cat = document.getElementById("category").value;
 let q = document.getElementById("q");
@@ -213,9 +221,12 @@ if(Q[cat]){
 }
 
 }
+
+
+// ===== GET ANSWER =====
 function getAns(){
 
-let val=document.getElementById("q").value;
+let val = document.getElementById("q").value;
 
 if(!val){
   alert("प्रश्न चुनें");
@@ -228,13 +239,14 @@ let index = parts[1];
 
 let selectedQ = Q[cat][index];
 
-}
-
 if(premium!=="yes" && used>=dailyLimit){
   alert("Free limit खत्म! Premium लें ₹199");
   return;
+}
 
-// loading feel
+// loading effect
+let ans = document.getElementById("ans");
+
 ans.innerText="✨ संदेश प्राप्त हो रहा है...";
 
 setTimeout(()=>{
@@ -250,6 +262,8 @@ ans.innerText="✨ संदेश प्राप्त हो रहा है
 },3000);
 
 }
+
+
 // ===== PREMIUM =====
 function goPremium(){
 localStorage.setItem("premium","yes");
