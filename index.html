@@ -100,10 +100,50 @@ button:hover {
     <div class="progress-bar" id="progressBar"></div>
 </div>
 
-<div class="card" id="gameBox">
-    <p class="level">Level 1 - Beginner</p>
-    <p class="question">अपनी यात्रा शुरू करें</p>
-    <button onclick="startGame()">Start Journey</button>
+<div class="card">
+
+    <h2 style="color:#00ffaa;">🔓 Unlock Your Inner Power</h2>
+
+    <p style="font-size:14px; color:#aaffdd;">
+        36 प्रश्न सिर्फ शुरुआत हैं…  
+        असली परिवर्तन अब शुरू होता है
+    </p>
+
+    <div style="margin:20px 0; text-align:left;">
+
+        <p>✨ 400+ Deep Questions</p>
+        <p>🧠 हर प्रश्न के साथ गहरा insight</p>
+        <p>🎯 Daily “आपका सवाल”</p>
+        <p>📈 तेजी से Inner Growth</p>
+        <p>🔮 ऐसा लगेगा जैसे app आपको समझता है</p>
+
+    </div>
+
+    <div style="
+        background: rgba(0,255,150,0.1);
+        padding: 15px;
+        border-radius: 15px;
+        margin: 20px 0;
+    ">
+        <p style="margin:0; font-size:14px;">
+            🔥 1000+ लोग अपनी journey शुरू कर चुके हैं
+        </p>
+    </div>
+
+    <h1 style="margin:10px 0; color:#e6c200;">₹99 / महीना</h1>
+
+    <button onclick="buyNow()" style="
+        background: linear-gradient(90deg,#00ffaa,#00cc88);
+        font-size:18px;
+        font-weight:bold;
+    ">
+        🚀 Upgrade Now
+    </button>
+
+    <p style="font-size:12px; margin-top:10px; color:#aaffdd;">
+        Cancel anytime • No risk
+    </p>
+
 </div>
 
 <div class="points">⭐ Points: <span id="points">0</span></div>
@@ -203,6 +243,9 @@ function updateProgress(){
     let totalQ = levels[levelIndex].questions.length;
     let percent = (questionIndex / totalQ) * 100;
     document.getElementById("progressBar").style.width = percent + "%";
+}
+    function buyNow(){
+    alert("Payment Gateway Connect Karna Hai (Razorpay etc.)");
 }
 
 </script>
