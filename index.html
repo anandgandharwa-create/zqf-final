@@ -2,88 +2,84 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zero Quantum Frequency</title>
 
 <style>
 
-/* MOBILE FIRST RESET */
-body {
+/* FULL MOBILE SCREEN */
+html, body {
     margin: 0;
+    padding: 0;
+    height: 100%;
     font-family: 'Segoe UI', sans-serif;
     background: radial-gradient(circle at top, #003d2b, #001a12);
     color: #e6fff5;
 }
 
+/* APP CONTAINER */
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 /* HEADER */
-h1 {
+.header {
+    padding: 12px;
+    font-size: 18px;
     color: #e6c200;
-    padding: 15px;
-    margin: 0;
-    font-size: 20px;
 }
 
-/* FULL SCREEN CONTAINER */
-.container {
+/* CONTENT CENTER */
+.main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 15px;
 }
 
-/* CARD - FULL WIDTH */
+/* CARD PERFECT CENTER */
 .card {
-    background: rgba(0, 0, 0, 0.6);
     width: 100%;
+    max-width: 100%;
+    background: rgba(0,0,0,0.6);
     padding: 20px;
     border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0,255,150,0.2);
-}
-
-/* TEXT */
-.question {
-    font-size: 17px;
-    margin-bottom: 15px;
-    line-height: 1.4;
+    box-shadow: 0 0 25px rgba(0,255,150,0.2);
 }
 
 /* BUTTON */
 button {
     width: 100%;
-    margin: 8px 0;
     padding: 14px;
-    border: none;
     border-radius: 30px;
-    background: linear-gradient(90deg, #00cc88, #00ffaa);
-    color: black;
+    border: none;
     font-size: 16px;
     font-weight: bold;
+    background: linear-gradient(90deg,#00ffaa,#00cc88);
 }
 
 /* PROGRESS */
 .progress {
-    height: 8px;
+    height: 6px;
+    margin: 0 10px;
     background: #002b20;
-    border-radius: 20px;
-    overflow: hidden;
-    margin: 10px 15px;
 }
 
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #00ffaa, #00cc88);
+    background: #00ffaa;
 }
 
-/* POINTS */
-.points {
+/* FOOTER */
+.footer {
     text-align: center;
-    margin: 10px;
+    padding: 10px;
     color: #00ffaa;
-}
-
-/* PREMIUM BOX */
-.premium-box {
-    background: rgba(0,255,150,0.08);
-    padding: 15px;
-    border-radius: 15px;
-    margin: 15px 0;
+    font-size: 14px;
 }
 
 </style>
@@ -91,50 +87,48 @@ button {
 
 <body>
 
-<h1>🎮 Quantum Journey</h1>
+<div class="app">
 
-<div class="progress">
-    <div class="progress-bar" id="progressBar"></div>
-</div>
+    <div class="header">🎮 Quantum Journey</div>
 
-<div class="container">
+    <div class="progress">
+        <div class="progress-bar"></div>
+    </div>
 
-    <div class="card">
+    <div class="main">
 
-        <h2 style="color:#00ffaa;">🔓 Unlock Your Inner Power</h2>
+        <div class="card">
 
-        <p style="font-size:14px;">
-            36 प्रश्न सिर्फ शुरुआत हैं…  
-            असली परिवर्तन अब शुरू होता है
-        </p>
+            <h2 style="color:#00ffaa;">🔓 Unlock Your Inner Power</h2>
 
-        <div style="margin:15px 0;">
+            <p style="font-size:14px;">
+                36 प्रश्न सिर्फ शुरुआत हैं…  
+                असली परिवर्तन अब शुरू होता है
+            </p>
 
-            <p>✨ 400+ Deep Questions</p>
-            <p>🧠 हर प्रश्न के साथ गहरा insight</p>
-            <p>🎯 Daily “आपका सवाल”</p>
-            <p>📈 तेजी से Inner Growth</p>
-            <p>🔮 ऐसा लगेगा जैसे app आपको समझता है</p>
+            <div>
+                <p>✨ 400+ Deep Questions</p>
+                <p>🧠 गहरा insight</p>
+                <p>🎯 Daily सवाल</p>
+                <p>📈 Fast Growth</p>
+            </div>
+
+            <div style="background:rgba(0,255,150,0.1);padding:12px;border-radius:12px;margin:15px 0;">
+                🔥 1000+ लोग जुड़ चुके हैं
+            </div>
+
+            <h2 style="color:#e6c200;">₹99 / महीना</h2>
+
+            <button onclick="buyNow()">🚀 Upgrade Now</button>
 
         </div>
-
-        <div class="premium-box">
-            🔥 1000+ लोग अपनी journey शुरू कर चुके हैं
-        </div>
-
-        <h1 style="color:#e6c200;">₹99 / महीना</h1>
-
-        <button onclick="buyNow()">🚀 Upgrade Now</button>
-
-        <p style="font-size:12px; text-align:center;">
-            Cancel anytime • No risk
-        </p>
 
     </div>
 
+    <div class="footer">⭐ Points: 0</div>
+
 </div>
 
-<div class="points">⭐ Points: 0</div>
 <script>
 
 let levels = [
