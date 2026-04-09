@@ -2,143 +2,209 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<title>Gyaan Game</title>
+<title>Zero Quantum Frequency</title>
 
 <style>
 body {
     margin: 0;
-    font-family: Arial;
-    background: linear-gradient(135deg, #001a12, #003d2b, #00664d);
-    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #003d2b, #001a12);
+    color: #e6fff5;
     text-align: center;
 }
 
-.container {
-    padding: 20px;
-}
-
+/* HEADER */
 h1 {
-    color: gold;
-}
-
-.question-box {
-    background: rgba(255,255,255,0.1);
-    padding: 20px;
-    border-radius: 15px;
+    color: #e6c200;
     margin-top: 20px;
+    letter-spacing: 1px;
 }
 
-.option {
-    display: block;
-    background: #00a86b;
-    margin: 10px;
-    padding: 12px;
-    border-radius: 10px;
-    cursor: pointer;
+/* CARD */
+.card {
+    background: rgba(0, 0, 0, 0.5);
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 420px;
+    box-shadow: 0 0 25px rgba(0,255,150,0.25);
+    transition: 0.3s;
 }
 
-.option:hover {
-    background: #00cc88;
-}
-
-.result {
-    margin-top: 20px;
+/* QUESTION */
+.question {
     font-size: 18px;
-    color: gold;
+    margin-bottom: 20px;
 }
 
-.next-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: gold;
-    color: black;
+/* BUTTON */
+button {
+    width: 85%;
+    margin: 8px auto;
+    padding: 12px;
     border: none;
-    border-radius: 10px;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #00cc88, #00ffaa);
+    color: black;
+    font-size: 16px;
     cursor: pointer;
+    transition: 0.3s;
 }
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* PROGRESS */
+.progress {
+    height: 10px;
+    background: #002b20;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 20px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00ffaa, #00cc88);
+}
+
+/* LEVEL TEXT */
+.level {
+    font-size: 14px;
+    color: #aaffdd;
+}
+
+/* POINTS */
+.points {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #00ffaa;
+}
+
+/* LOCK SCREEN */
+.lock {
+    color: #ffcc00;
+    font-size: 16px;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h1>🧠 Gyaan Game</h1>
+<h1>🎮 Quantum Journey</h1>
 
-    <div class="question-box">
-        <h2 id="question">Loading...</h2>
-
-        <div id="options"></div>
-
-        <div class="result" id="result"></div>
-
-        <button class="next-btn" onclick="nextQuestion()">Next</button>
-    </div>
+<div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
 </div>
 
+<div class="card" id="gameBox">
+    <p class="level">Level 1 - Beginner</p>
+    <p class="question">अपनी यात्रा शुरू करें</p>
+    <button onclick="startGame()">Start Journey</button>
+</div>
+
+<div class="points">⭐ Points: <span id="points">0</span></div>
+
 <script>
-let questions = [
-    {
-        question: "जीवन में सबसे बड़ा डर क्या है?",
-        options: ["असफलता", "लोग क्या कहेंगे", "अकेलापन"],
-        answers: [
-            "डर केवल मन की कल्पना है, सत्य नहीं।",
-            "लोगों की सोच बदलती रहती है, खुद पर ध्यान दो।",
-            "अकेलापन आत्मा से जुड़ने का अवसर है।"
-        ]
-    },
-    {
-        question: "सच्ची खुशी कहाँ है?",
-        options: ["पैसे में", "रिश्तों में", "अपने अंदर"],
-        answers: [
-            "पैसा सुविधा देता है, खुशी नहीं।",
-            "रिश्ते महत्वपूर्ण हैं, पर असली खुशी भीतर है।",
-            "सही! असली आनंद भीतर ही है।"
-        ]
-    },
-    {
-        question: "मन को शांत कैसे करें?",
-        options: ["भाग कर", "सोच बदलकर", "ध्यान से"],
-        answers: [
-            "भागने से मन और तेज भागेगा।",
-            "सोच बदलना पहला कदम है।",
-            "ध्यान मन को स्थिर करता है।"
-        ]
-    }
+
+let levels = [
+{
+    name: "Beginner",
+    questions: [
+        "क्या मैं सच में खुश हूँ?",
+        "क्या मैं अपने डर से भाग रहा हूँ?",
+        "क्या मैं खुद को समझता हूँ?",
+        "क्या मैं अपने जीवन का उद्देश्य जानता हूँ?"
+    ]
+},
+{
+    name: "Seeker",
+    questions: [
+        "क्या मैं अंदर से खाली महसूस करता हूँ?",
+        "क्या मैं दूसरों की सोच में जी रहा हूँ?",
+        "क्या मैं अपने मन का मालिक हूँ?"
+    ]
+},
+{
+    name: "Divine",
+    questions: [
+        "क्या मैं अपने असली स्वरूप को जानता हूँ?",
+        "क्या मैं जीवन को समझ चुका हूँ?"
+    ],
+    premium: true
+}
 ];
 
-let current = 0;
+let levelIndex = 0;
+let questionIndex = 0;
+let points = 0;
 
-function loadQuestion() {
-    document.getElementById("result").innerHTML = "";
-    let q = questions[current];
-
-    document.getElementById("question").innerText = q.question;
-
-    let optionsHTML = "";
-    q.options.forEach((opt, index) => {
-        optionsHTML += `<div class="option" onclick="selectOption(${index})">${opt}</div>`;
-    });
-
-    document.getElementById("options").innerHTML = optionsHTML;
-}
-
-function selectOption(index) {
-    let answer = questions[current].answers[index];
-    document.getElementById("result").innerText = answer;
-}
-
-function nextQuestion() {
-    current++;
-    if (current >= questions.length) {
-        document.getElementById("question").innerText = "🎉 आपने आज का ज्ञान पूरा कर लिया!";
-        document.getElementById("options").innerHTML = "";
-        document.getElementById("result").innerText = "आप अपने जीवन को समझने की दिशा में बढ़ रहे हैं।";
-        return;
-    }
+function startGame(){
+    levelIndex = 0;
+    questionIndex = 0;
+    points = 0;
     loadQuestion();
 }
 
-loadQuestion();
+function loadQuestion(){
+
+    let currentLevel = levels[levelIndex];
+
+    // PREMIUM LOCK
+    if(currentLevel.premium){
+        document.getElementById("gameBox").innerHTML = `
+            <p class="level">🔒 Premium Level</p>
+            <p class="lock">आप अब गहराई में प्रवेश करने वाले हैं</p>
+            <p>Premium Unlock करें ₹99 / month</p>
+            <button>Upgrade Now</button>
+        `;
+        return;
+    }
+
+    if(questionIndex < currentLevel.questions.length){
+
+        document.getElementById("gameBox").innerHTML = `
+            <p class="level">Level ${levelIndex+1} - ${currentLevel.name}</p>
+            <p class="question">${currentLevel.questions[questionIndex]}</p>
+            <button onclick="answer()">हाँ</button>
+            <button onclick="answer()">नहीं</button>
+            <button onclick="answer()">पता नहीं</button>
+        `;
+
+        updateProgress();
+
+    } else {
+        levelIndex++;
+        questionIndex = 0;
+
+        if(levelIndex < levels.length){
+            loadQuestion();
+        } else {
+            document.getElementById("gameBox").innerHTML = `
+                <h2>✨ Journey Complete</h2>
+                <p>आप जागरूकता की ओर बढ़ चुके हैं</p>
+                <button onclick="startGame()">Restart</button>
+            `;
+        }
+    }
+}
+
+function answer(){
+    points += 10;
+    questionIndex++;
+    document.getElementById("points").innerText = points;
+    loadQuestion();
+}
+
+function updateProgress(){
+    let totalQ = levels[levelIndex].questions.length;
+    let percent = (questionIndex / totalQ) * 100;
+    document.getElementById("progressBar").style.width = percent + "%";
+}
+
 </script>
 
 </body>
