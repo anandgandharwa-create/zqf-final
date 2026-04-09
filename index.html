@@ -26,6 +26,7 @@ html, body {
 
 /* HEADER */
 .header {
+    text-align: center;
     padding: 12px;
     font-size: 18px;
     color: #e6c200;
@@ -43,10 +44,12 @@ html, body {
 /* CARD PERFECT CENTER */
 .card {
     width: 100%;
-    max-width: 100%;
+    max-width: 500%;
+    margin: auto;
     background: rgba(0,0,0,0.6);
     padding: 20px;
     border-radius: 20px;
+    text-align: center;
     box-shadow: 0 0 25px rgba(0,255,150,0.2);
 }
 
@@ -81,6 +84,20 @@ button {
     color: #00ffaa;
     font-size: 14px;
 }
+.features {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.features p {
+    margin: 6px 0;
+}
+ .price {
+    text-align: center;
+    font-size: 22px;
+    color: #e6c200;
+    margin: 10px 0;
+}
 
 </style>
 </head>
@@ -106,18 +123,18 @@ button {
                 असली परिवर्तन अब शुरू होता है
             </p>
 
-            <div>
-                <p>✨ 400+ Deep Questions</p>
-                <p>🧠 गहरा insight</p>
-                <p>🎯 Daily सवाल</p>
-                <p>📈 Fast Growth</p>
-            </div>
+     <div class="features">
+    <p>✨ 400+ Deep Questions</p>
+    <p>🧠 गहरा insight</p>
+    <p>🎯 Daily सवाल</p>
+    <p>📈 Fast Growth</p>
+     </div>
 
             <div style="background:rgba(0,255,150,0.1);padding:12px;border-radius:12px;margin:15px 0;">
                 🔥 1000+ लोग जुड़ चुके हैं
             </div>
 
-            <h2 style="color:#e6c200;">₹99 / महीना</h2>
+           <div class="price">₹99 / महीना</div>
 
             <button onclick="buyNow()">🚀 Upgrade Now</button>
 
