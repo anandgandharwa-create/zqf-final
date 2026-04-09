@@ -5,63 +5,64 @@
 <title>Zero Quantum Frequency</title>
 
 <style>
+
+/* MOBILE FIRST RESET */
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     background: radial-gradient(circle at top, #003d2b, #001a12);
     color: #e6fff5;
-    text-align: center;
 }
 
 /* HEADER */
 h1 {
     color: #e6c200;
-    margin-top: 20px;
-    letter-spacing: 1px;
+    padding: 15px;
+    margin: 0;
+    font-size: 20px;
 }
 
-/* CARD */
+/* FULL SCREEN CONTAINER */
+.container {
+    padding: 15px;
+}
+
+/* CARD - FULL WIDTH */
 .card {
-    background: rgba(0, 0, 0, 0.5);
-    margin: 20px auto;
-    padding: 25px;
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    padding: 20px;
     border-radius: 20px;
-    max-width: 420px;
-    box-shadow: 0 0 25px rgba(0,255,150,0.25);
-    transition: 0.3s;
+    box-shadow: 0 0 20px rgba(0,255,150,0.2);
 }
 
-/* QUESTION */
+/* TEXT */
 .question {
-    font-size: 18px;
-    margin-bottom: 20px;
+    font-size: 17px;
+    margin-bottom: 15px;
+    line-height: 1.4;
 }
 
 /* BUTTON */
 button {
-    width: 85%;
-    margin: 8px auto;
-    padding: 12px;
+    width: 100%;
+    margin: 8px 0;
+    padding: 14px;
     border: none;
     border-radius: 30px;
     background: linear-gradient(90deg, #00cc88, #00ffaa);
     color: black;
     font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    transform: scale(1.05);
+    font-weight: bold;
 }
 
 /* PROGRESS */
 .progress {
-    height: 10px;
+    height: 8px;
     background: #002b20;
     border-radius: 20px;
     overflow: hidden;
-    margin: 20px;
+    margin: 10px 15px;
 }
 
 .progress-bar {
@@ -70,23 +71,19 @@ button:hover {
     background: linear-gradient(90deg, #00ffaa, #00cc88);
 }
 
-/* LEVEL TEXT */
-.level {
-    font-size: 14px;
-    color: #aaffdd;
-}
-
 /* POINTS */
 .points {
-    margin-top: 10px;
-    font-size: 18px;
+    text-align: center;
+    margin: 10px;
     color: #00ffaa;
 }
 
-/* LOCK SCREEN */
-.lock {
-    color: #ffcc00;
-    font-size: 16px;
+/* PREMIUM BOX */
+.premium-box {
+    background: rgba(0,255,150,0.08);
+    padding: 15px;
+    border-radius: 15px;
+    margin: 15px 0;
 }
 
 </style>
@@ -100,54 +97,44 @@ button:hover {
     <div class="progress-bar" id="progressBar"></div>
 </div>
 
-<div class="card">
+<div class="container">
 
-    <h2 style="color:#00ffaa;">🔓 Unlock Your Inner Power</h2>
+    <div class="card">
 
-    <p style="font-size:14px; color:#aaffdd;">
-        36 प्रश्न सिर्फ शुरुआत हैं…  
-        असली परिवर्तन अब शुरू होता है
-    </p>
+        <h2 style="color:#00ffaa;">🔓 Unlock Your Inner Power</h2>
 
-    <div style="margin:20px 0; text-align:left;">
-
-        <p>✨ 400+ Deep Questions</p>
-        <p>🧠 हर प्रश्न के साथ गहरा insight</p>
-        <p>🎯 Daily “आपका सवाल”</p>
-        <p>📈 तेजी से Inner Growth</p>
-        <p>🔮 ऐसा लगेगा जैसे app आपको समझता है</p>
-
-    </div>
-
-    <div style="
-        background: rgba(0,255,150,0.1);
-        padding: 15px;
-        border-radius: 15px;
-        margin: 20px 0;
-    ">
-        <p style="margin:0; font-size:14px;">
-            🔥 1000+ लोग अपनी journey शुरू कर चुके हैं
+        <p style="font-size:14px;">
+            36 प्रश्न सिर्फ शुरुआत हैं…  
+            असली परिवर्तन अब शुरू होता है
         </p>
+
+        <div style="margin:15px 0;">
+
+            <p>✨ 400+ Deep Questions</p>
+            <p>🧠 हर प्रश्न के साथ गहरा insight</p>
+            <p>🎯 Daily “आपका सवाल”</p>
+            <p>📈 तेजी से Inner Growth</p>
+            <p>🔮 ऐसा लगेगा जैसे app आपको समझता है</p>
+
+        </div>
+
+        <div class="premium-box">
+            🔥 1000+ लोग अपनी journey शुरू कर चुके हैं
+        </div>
+
+        <h1 style="color:#e6c200;">₹99 / महीना</h1>
+
+        <button onclick="buyNow()">🚀 Upgrade Now</button>
+
+        <p style="font-size:12px; text-align:center;">
+            Cancel anytime • No risk
+        </p>
+
     </div>
-
-    <h1 style="margin:10px 0; color:#e6c200;">₹99 / महीना</h1>
-
-    <button onclick="buyNow()" style="
-        background: linear-gradient(90deg,#00ffaa,#00cc88);
-        font-size:18px;
-        font-weight:bold;
-    ">
-        🚀 Upgrade Now
-    </button>
-
-    <p style="font-size:12px; margin-top:10px; color:#aaffdd;">
-        Cancel anytime • No risk
-    </p>
 
 </div>
 
-<div class="points">⭐ Points: <span id="points">0</span></div>
-
+<div class="points">⭐ Points: 0</div>
 <script>
 
 let levels = [
