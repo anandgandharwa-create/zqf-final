@@ -1,77 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quantum Gyan Runner</title>
+<title>Quantum Gyan Adventure</title>
 
 <style>
-body {
-    margin:0;
-    overflow:hidden;
-    font-family: 'Segoe UI';
-    background: linear-gradient(180deg, #020024, #090979, #00d4ff);
+body { margin:0; overflow:hidden; background:#000; }
+
+canvas {
+    display:block;
+    background: linear-gradient(#020024, #090979, #00d4ff);
 }
 
-/* Top UI */
 .ui {
-    position:absolute;
+    position:fixed;
     top:10px;
     left:50%;
     transform:translateX(-50%);
-    background:rgba(255,255,255,0.15);
-    padding:10px 25px;
-    border-radius:25px;
     color:white;
-    font-size:18px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    background:rgba(0,0,0,0.5);
+    padding:10px 20px;
+    border-radius:20px;
+    z-index:2;
 }
 
-/* Popup */
 .popup {
-    position:absolute;
+    position:fixed;
     bottom:120px;
     left:50%;
     transform:translateX(-50%);
+    color:white;
     background:rgba(0,0,0,0.7);
-    padding:12px 18px;
-    border-radius:12px;
-    color:#fff;
-    font-size:16px;
+    padding:10px;
+    border-radius:10px;
     display:none;
-    text-align:center;
 }
 
-/* Controls */
 .controls {
-    position:absolute;
+    position:fixed;
     bottom:20px;
     width:100%;
     display:flex;
     justify-content:center;
     gap:20px;
+    z-index:2;
 }
 
 .btn {
-    width:65px;
-    height:65px;
+    width:60px;
+    height:60px;
     border-radius:50%;
-    background:rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
+    background:rgba(255,255,255,0.3);
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:26px;
+    font-size:22px;
     color:white;
-    box-shadow:0 0 10px rgba(0,0,0,0.5);
 }
 </style>
 </head>
 
 <body>
 
-<div class="ui">⚡ Consciousness: <span id="score">0</span></div>
+<div class="ui">⚡ Level: <span id="level">1</span> | Gyan: <span id="score">0</span></div>
 <div class="popup" id="popup"></div>
 
 <canvas id="game"></canvas>
@@ -89,52 +80,58 @@ const ctx = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
-let gravity = 0.7;
+let cameraX = 0;
+let level = 1;
 let score = 0;
 
 const gyan = [
-"तुम चेतना हो 🧘‍♂️",
+"तुम शरीर नहीं, चेतना हो 🧘‍♂️",
+"वर्तमान ही सत्य है ⏳",
+"अहंकार ही दुख है 😌",
 "शांति भीतर है ✨",
-"अहंकार छोड़ो 😌",
-"वर्तमान में जियो ⏳",
-"ऊर्जा ही सत्य है ⚡"
+"तुम असीम ऊर्जा हो ⚡"
 ];
 
-function showPopup(text){
+function popup(text){
     let p = document.getElementById("popup");
     p.innerText = text;
-    p.style.display = "block";
-    setTimeout(()=>p.style.display="none",1500);
+    p.style.display="block";
+    setTimeout(()=>p.style.display="none",2000);
 }
 
 let player = {
     x:100,
-    y:0,
+    y:300,
     w:40,
     h:40,
     dx:0,
     dy:0,
-    grounded:false
+    ground:false
 };
 
-let platforms = [
-{x:0,y:canvas.height-40,w:canvas.width,h:40},
-{x:250,y:canvas.height-160,w:140,h:20},
-{x:500,y:canvas.height-260,w:140,h:20},
-{x:800,y:canvas.height-200,w:140,h:20}
-];
+let gravity = 0.7;
 
-let coins = [
-{x:280,y:canvas.height-190},
-{x:530,y:canvas.height-290},
-{x:830,y:canvas.height-230}
-];
+function generateLevel(){
+    platforms = [];
+    coins = [];
 
-let enemies = [
-{x:600,y:canvas.height-60,w:40,h:40,dir:1}
-];
+    for(let i=0;i<20;i++){
+        let x = i*250;
+        let y = canvas.height - (Math.random()*200 + 100);
 
-let keys={};
+        platforms.push({x:x,y:y,w:150,h:20});
+
+        if(Math.random()>0.5){
+            coins.push({x:x+50,y:y-30});
+        }
+    }
+}
+
+let platforms = [];
+let coins = [];
+generateLevel();
+
+let keys = {};
 
 onkeydown=e=>keys[e.key]=true;
 onkeyup=e=>keys[e.key]=false;
@@ -151,80 +148,90 @@ jump.ontouchend=()=>keys[" "]=false;
 
 function update(){
 
-    player.dx=0;
-    if(keys["ArrowRight"]) player.dx=6;
-    if(keys["ArrowLeft"]) player.dx=-6;
+    player.dx = 0;
 
-    if(keys[" "] && player.grounded){
-        player.dy=-14;
-        player.grounded=false;
+    if(keys["ArrowRight"]) player.dx = 6;
+    if(keys["ArrowLeft"]) player.dx = -6;
+
+    if(keys[" "] && player.ground){
+        player.dy = -14;
+        player.ground = false;
     }
 
-    player.dy+=gravity;
-    player.x+=player.dx;
-    player.y+=player.dy;
+    player.dy += gravity;
+    player.x += player.dx;
+    player.y += player.dy;
 
-    player.grounded=false;
+    player.ground = false;
 
     platforms.forEach(p=>{
-        if(player.x<p.x+p.w && player.x+player.w>p.x &&
-           player.y<p.y+p.h && player.y+player.h>p.y){
+        if(player.x < p.x+p.w &&
+           player.x+player.w > p.x &&
+           player.y < p.y+p.h &&
+           player.y+player.h > p.y){
 
-            if(player.dy>0){
-                player.y=p.y-player.h;
-                player.dy=0;
-                player.grounded=true;
+            if(player.dy > 0){
+                player.y = p.y - player.h;
+                player.dy = 0;
+                player.ground = true;
             }
         }
     });
 
     coins.forEach((c,i)=>{
-        if(player.x<c.x+20 && player.x+player.w>c.x &&
-           player.y<c.y+20 && player.y+player.h>c.y){
+        if(player.x < c.x+20 &&
+           player.x+player.w > c.x &&
+           player.y < c.y+20 &&
+           player.y+player.h > c.y){
 
-            showPopup(gyan[Math.floor(Math.random()*gyan.length)]);
             coins.splice(i,1);
             score++;
-            document.getElementById("score").innerText=score;
+            document.getElementById("score").innerText = score;
+
+            if(score % 3 === 0){
+                popup(gyan[Math.floor(Math.random()*gyan.length)]);
+            }
         }
     });
 
-    enemies.forEach(e=>{
-        e.x+=e.dir*2.5;
-        if(e.x<500||e.x>900) e.dir*=-1;
+    // camera follow
+    cameraX = player.x - 200;
 
-        if(player.x<e.x+e.w && player.x+player.w>e.x &&
-           player.y<e.y+e.h && player.y+player.h>e.y){
+    // next level
+    if(player.x > platforms.length*250){
+        level++;
+        document.getElementById("level").innerText = level;
+        player.x = 100;
+        generateLevel();
+        popup("🎉 Level " + level + " Unlock!");
+    }
 
-            showPopup("😈 Negative thought triggered!");
-            setTimeout(()=>location.reload(),1200);
-        }
-    });
-
-    if(player.y>canvas.height){
-        showPopup("⚠️ ध्यान भटक गया!");
-        setTimeout(()=>location.reload(),1200);
+    if(player.y > canvas.height){
+        popup("⚠️ ध्यान भटक गया");
+        setTimeout(()=>location.reload(),1500);
     }
 }
 
 function draw(){
+
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    // Player emoji
-    ctx.font = "35px serif";
+    ctx.save();
+    ctx.translate(-cameraX,0);
+
+    // player
+    ctx.font="35px serif";
     ctx.fillText("🧘‍♂️", player.x, player.y+35);
 
-    // Platforms
-    ctx.fillStyle="#ffffff";
+    // platforms
+    ctx.fillStyle="white";
     platforms.forEach(p=>ctx.fillRect(p.x,p.y,p.w,p.h));
 
-    // Coins
-    ctx.font="24px serif";
+    // coins
+    ctx.font="25px serif";
     coins.forEach(c=>ctx.fillText("✨",c.x,c.y));
 
-    // Enemies
-    ctx.font="30px serif";
-    enemies.forEach(e=>ctx.fillText("😈",e.x,e.y+30));
+    ctx.restore();
 }
 
 function loop(){
@@ -232,6 +239,7 @@ function loop(){
     draw();
     requestAnimationFrame(loop);
 }
+
 loop();
 </script>
 
