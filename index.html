@@ -5,57 +5,36 @@
 <title>Quantum Gyan Adventure</title>
 
 <style>
-body { margin:0; overflow:hidden; background:#000; }
-
-canvas {
-    display:block;
-    background: linear-gradient(#020024, #090979, #00d4ff);
+body {
+    margin:0;
+    overflow:hidden;
+    background: radial-gradient(circle at top, #1a2a6c, #000);
 }
 
+/* Glass UI */
 .ui {
     position:fixed;
     top:10px;
     left:50%;
     transform:translateX(-50%);
     color:white;
-    background:rgba(0,0,0,0.5);
-    padding:10px 20px;
-    border-radius:20px;
-    z-index:2;
+    background:rgba(255,255,255,0.1);
+    padding:10px 25px;
+    border-radius:30px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    font-weight:bold;
 }
 
-.popup {
-    position:fixed;
-    bottom:120px;
-    left:50%;
-    transform:translateX(-50%);
-    color:white;
-    background:rgba(0,0,0,0.7);
-    padding:10px;
-    border-radius:10px;
-    display:none;
-}
-
-.controls {
-    position:fixed;
-    bottom:20px;
-    width:100%;
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    z-index:2;
-}
-
+/* Controls premium */
 .btn {
-    width:60px;
-    height:60px;
+    width:65px;
+    height:65px;
     border-radius:50%;
-    background:rgba(255,255,255,0.3);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:22px;
-    color:white;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    font-size:24px;
 }
 </style>
 </head>
@@ -214,22 +193,57 @@ function update(){
 
 function draw(){
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    // sky gradient animation
+    let gradient = ctx.createLinearGradient(0,0,0,canvas.height);
+    gradient.addColorStop(0,"#141E30");
+    gradient.addColorStop(1,"#243B55");
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
     ctx.save();
     ctx.translate(-cameraX,0);
 
-    // player
-    ctx.font="35px serif";
+    // 🌟 glow effect function
+    function glow(color,blur){
+        ctx.shadowColor = color;
+        ctx.shadowBlur = blur;
+    }
+
+    // ☁️ clouds
+    ctx.globalAlpha = 0.2;
+    for(let i=0;i<5;i++){
+        ctx.beginPath();
+        ctx.arc(i*400 + (Date.now()*0.02 % 400), 100+i*30, 50, 0, Math.PI*2);
+        ctx.fillStyle = "#fff";
+        ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // 🧘‍♂️ player glow
+    glow("#00ffe0",20);
+    ctx.font="40px serif";
     ctx.fillText("🧘‍♂️", player.x, player.y+35);
 
-    // platforms
-    ctx.fillStyle="white";
-    platforms.forEach(p=>ctx.fillRect(p.x,p.y,p.w,p.h));
+    ctx.shadowBlur = 0;
 
-    // coins
-    ctx.font="25px serif";
-    coins.forEach(c=>ctx.fillText("✨",c.x,c.y));
+    // platforms (neon)
+    ctx.fillStyle="#ffffff";
+    platforms.forEach(p=>{
+        glow("#00f2ff",10);
+        ctx.fillRect(p.x,p.y,p.w,p.h);
+    });
+
+    ctx.shadowBlur = 0;
+
+    // ✨ coins glow animation
+    coins.forEach(c=>{
+        glow("gold",15);
+        ctx.font="28px serif";
+        ctx.fillText("✨",c.x,c.y + Math.sin(Date.now()/200)*5);
+    });
+
+    ctx.shadowBlur = 0;
 
     ctx.restore();
 }
