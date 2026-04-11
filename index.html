@@ -27,23 +27,33 @@ body {
 }
 
 /* Controls premium */
-.btn {
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    background:rgba(255,255,255,0.15);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    font-size:24px;
-}
-    .controls {
+.controls {
     position:fixed;
-    bottom:20px;
+    bottom:25px;
     width:100%;
     display:flex;
     justify-content:center;
-    gap:20px;
-    z-index:5; /* important */
+    gap:25px;
+    z-index:9999;
+}
+
+.btn {
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background: linear-gradient(145deg, #00c6ff, #0072ff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:26px;
+    color:white;
+    box-shadow: 
+        0 8px 20px rgba(0,0,0,0.6),
+        inset 0 2px 5px rgba(255,255,255,0.3);
+}
+
+.btn:active {
+    transform: scale(0.9);
 }
 </style>
 </head>
@@ -56,12 +66,14 @@ body {
 <canvas id="game"></canvas>
 
 <div class="controls">
-    <div class="btn" id="left">◀</div>
-    <div class="btn" id="jump">▲</div>
-    <div class="btn" id="right">▶</div>
+    <div class="btn" id="left">⬅️</div>
+    <div class="btn" id="jump">⏫</div>
+    <div class="btn" id="right">➡️</div>
 </div>
-
 <script>
+const left = document.getElementById("left");
+const right = document.getElementById("right");
+const jump = document.getElementById("jump");
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
@@ -124,16 +136,23 @@ let keys = {};
 onkeydown=e=>keys[e.key]=true;
 onkeyup=e=>keys[e.key]=false;
 
-// mobile
-left.ontouchstart=()=>keys["ArrowLeft"]=true;
-left.ontouchend=()=>keys["ArrowLeft"]=false;
+// LEFT
+left.onmousedown = ()=> keys["ArrowLeft"]=true;
+left.onmouseup = ()=> keys["ArrowLeft"]=false;
+left.ontouchstart = ()=> keys["ArrowLeft"]=true;
+left.ontouchend = ()=> keys["ArrowLeft"]=false;
 
-right.ontouchstart=()=>keys["ArrowRight"]=true;
-right.ontouchend=()=>keys["ArrowRight"]=false;
+// RIGHT
+right.onmousedown = ()=> keys["ArrowRight"]=true;
+right.onmouseup = ()=> keys["ArrowRight"]=false;
+right.ontouchstart = ()=> keys["ArrowRight"]=true;
+right.ontouchend = ()=> keys["ArrowRight"]=false;
 
-jump.ontouchstart=()=>keys[" "]=true;
-jump.ontouchend=()=>keys[" "]=false;
-
+// JUMP
+jump.onmousedown = ()=> keys[" "]=true;
+jump.onmouseup = ()=> keys[" "]=false;
+jump.ontouchstart = ()=> keys[" "]=true;
+jump.ontouchend = ()=> keys[" "]=false;
 function update(){
 
     player.dx = 0;
@@ -223,10 +242,12 @@ function draw(){
   // ☁️ smooth clouds (better design)
 ctx.globalAlpha = 0.4;
 
-for(let i=0;i<4;i++){
-    let x = (i*500 + (Date.now()*0.03 % 500));
+let time = Date.now() * 0.02;
 
-    ctx.fillStyle = "#fff";
+for(let i=0;i<4;i++){
+    let x = i*500 + (time % 500);
+
+    ctx.fillStyle = "#ffffff";
 
     ctx.beginPath();
     ctx.arc(x, 100, 30, 0, Math.PI*2);
