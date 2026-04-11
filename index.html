@@ -36,6 +36,15 @@ body {
     box-shadow: 0 0 15px rgba(0,0,0,0.5);
     font-size:24px;
 }
+    .controls {
+    position:fixed;
+    bottom:20px;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    z-index:5; /* important */
+}
 </style>
 </head>
 
@@ -211,14 +220,22 @@ function draw(){
     }
 
     // ☁️ clouds
-    ctx.globalAlpha = 0.2;
-    for(let i=0;i<5;i++){
-        ctx.beginPath();
-        ctx.arc(i*400 + (Date.now()*0.02 % 400), 100+i*30, 50, 0, Math.PI*2);
-        ctx.fillStyle = "#fff";
-        ctx.fill();
-    }
-    ctx.globalAlpha = 1;
+  // ☁️ smooth clouds (better design)
+ctx.globalAlpha = 0.4;
+
+for(let i=0;i<4;i++){
+    let x = (i*500 + (Date.now()*0.03 % 500));
+
+    ctx.fillStyle = "#fff";
+
+    ctx.beginPath();
+    ctx.arc(x, 100, 30, 0, Math.PI*2);
+    ctx.arc(x+30, 90, 35, 0, Math.PI*2);
+    ctx.arc(x+60, 100, 30, 0, Math.PI*2);
+    ctx.fill();
+}
+
+ctx.globalAlpha = 1;
 
     // 🧘‍♂️ player glow
     glow("#00ffe0",20);
