@@ -3,43 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quantum Gyan Quest</title>
+<title>Quantum Gyan Runner</title>
 
 <style>
 body {
     margin:0;
     overflow:hidden;
     font-family: 'Segoe UI';
-    background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
-    color:white;
+    background: linear-gradient(180deg, #020024, #090979, #00d4ff);
 }
 
-canvas { display:block; }
-
+/* Top UI */
 .ui {
     position:absolute;
     top:10px;
     left:50%;
     transform:translateX(-50%);
-    background:rgba(255,255,255,0.1);
-    padding:10px 20px;
-    border-radius:20px;
-    backdrop-filter: blur(15px);
+    background:rgba(255,255,255,0.15);
+    padding:10px 25px;
+    border-radius:25px;
+    color:white;
+    font-size:18px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
 }
 
+/* Popup */
 .popup {
     position:absolute;
-    bottom:100px;
+    bottom:120px;
     left:50%;
     transform:translateX(-50%);
     background:rgba(0,0,0,0.7);
-    padding:15px;
-    border-radius:10px;
-    max-width:80%;
-    text-align:center;
+    padding:12px 18px;
+    border-radius:12px;
+    color:#fff;
+    font-size:16px;
     display:none;
+    text-align:center;
 }
 
+/* Controls */
 .controls {
     position:absolute;
     bottom:20px;
@@ -50,21 +54,24 @@ canvas { display:block; }
 }
 
 .btn {
-    width:60px;
-    height:60px;
-    background:rgba(255,255,255,0.2);
+    width:65px;
+    height:65px;
     border-radius:50%;
+    background:rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:22px;
+    font-size:26px;
+    color:white;
+    box-shadow:0 0 10px rgba(0,0,0,0.5);
 }
 </style>
 </head>
 
 <body>
 
-<div class="ui">Consciousness: <span id="score">0</span></div>
+<div class="ui">⚡ Consciousness: <span id="score">0</span></div>
 <div class="popup" id="popup"></div>
 
 <canvas id="game"></canvas>
@@ -78,46 +85,53 @@ canvas { display:block; }
 <script>
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
+let gravity = 0.7;
 let score = 0;
-let gravity = 0.6;
 
 const gyan = [
-"तुम शरीर नहीं, चेतना हो",
-"जो हुआ अच्छा हुआ, जो होगा अच्छा होगा",
-"अहंकार ही दुख का कारण है",
-"शांति भीतर है, बाहर नहीं",
-"वर्तमान ही सत्य है",
-"तुम असीम ऊर्जा हो"
+"तुम चेतना हो 🧘‍♂️",
+"शांति भीतर है ✨",
+"अहंकार छोड़ो 😌",
+"वर्तमान में जियो ⏳",
+"ऊर्जा ही सत्य है ⚡"
 ];
 
-function showGyan(text){
-    let popup = document.getElementById("popup");
-    popup.innerText = text;
-    popup.style.display = "block";
-    setTimeout(()=> popup.style.display="none", 2000);
+function showPopup(text){
+    let p = document.getElementById("popup");
+    p.innerText = text;
+    p.style.display = "block";
+    setTimeout(()=>p.style.display="none",1500);
 }
 
 let player = {
-    x:100, y:0, w:40, h:40,
-    dx:0, dy:0, grounded:false
+    x:100,
+    y:0,
+    w:40,
+    h:40,
+    dx:0,
+    dy:0,
+    grounded:false
 };
 
 let platforms = [
 {x:0,y:canvas.height-40,w:canvas.width,h:40},
-{x:200,y:canvas.height-150,w:120,h:20},
-{x:400,y:canvas.height-250,w:120,h:20}
+{x:250,y:canvas.height-160,w:140,h:20},
+{x:500,y:canvas.height-260,w:140,h:20},
+{x:800,y:canvas.height-200,w:140,h:20}
 ];
 
 let coins = [
-{x:230,y:canvas.height-180},
-{x:430,y:canvas.height-280}
+{x:280,y:canvas.height-190},
+{x:530,y:canvas.height-290},
+{x:830,y:canvas.height-230}
 ];
 
 let enemies = [
-{x:500,y:canvas.height-60,w:40,h:40,dir:1}
+{x:600,y:canvas.height-60,w:40,h:40,dir:1}
 ];
 
 let keys={};
@@ -125,14 +139,24 @@ let keys={};
 onkeydown=e=>keys[e.key]=true;
 onkeyup=e=>keys[e.key]=false;
 
+// mobile
+left.ontouchstart=()=>keys["ArrowLeft"]=true;
+left.ontouchend=()=>keys["ArrowLeft"]=false;
+
+right.ontouchstart=()=>keys["ArrowRight"]=true;
+right.ontouchend=()=>keys["ArrowRight"]=false;
+
+jump.ontouchstart=()=>keys[" "]=true;
+jump.ontouchend=()=>keys[" "]=false;
+
 function update(){
 
     player.dx=0;
-    if(keys["ArrowRight"]) player.dx=5;
-    if(keys["ArrowLeft"]) player.dx=-5;
+    if(keys["ArrowRight"]) player.dx=6;
+    if(keys["ArrowLeft"]) player.dx=-6;
 
     if(keys[" "] && player.grounded){
-        player.dy=-12;
+        player.dy=-14;
         player.grounded=false;
     }
 
@@ -158,7 +182,7 @@ function update(){
         if(player.x<c.x+20 && player.x+player.w>c.x &&
            player.y<c.y+20 && player.y+player.h>c.y){
 
-            showGyan(gyan[Math.floor(Math.random()*gyan.length)]);
+            showPopup(gyan[Math.floor(Math.random()*gyan.length)]);
             coins.splice(i,1);
             score++;
             document.getElementById("score").innerText=score;
@@ -166,41 +190,41 @@ function update(){
     });
 
     enemies.forEach(e=>{
-        e.x+=e.dir*2;
-        if(e.x<400||e.x>700) e.dir*=-1;
+        e.x+=e.dir*2.5;
+        if(e.x<500||e.x>900) e.dir*=-1;
 
         if(player.x<e.x+e.w && player.x+player.w>e.x &&
            player.y<e.y+e.h && player.y+player.h>e.y){
 
-            showGyan("अहंकार ने तुम्हें गिरा दिया");
-            setTimeout(()=>location.reload(),1500);
+            showPopup("😈 Negative thought triggered!");
+            setTimeout(()=>location.reload(),1200);
         }
     });
 
     if(player.y>canvas.height){
-        showGyan("तुम गिर गए क्योंकि ध्यान भटक गया");
-        setTimeout(()=>location.reload(),1500);
+        showPopup("⚠️ ध्यान भटक गया!");
+        setTimeout(()=>location.reload(),1200);
     }
 }
 
 function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    ctx.fillStyle="#00ffe0";
-    ctx.fillRect(player.x,player.y,player.w,player.h);
+    // Player emoji
+    ctx.font = "35px serif";
+    ctx.fillText("🧘‍♂️", player.x, player.y+35);
 
+    // Platforms
     ctx.fillStyle="#ffffff";
     platforms.forEach(p=>ctx.fillRect(p.x,p.y,p.w,p.h));
 
-    ctx.fillStyle="gold";
-    coins.forEach(c=>{
-        ctx.beginPath();
-        ctx.arc(c.x,c.y,10,0,Math.PI*2);
-        ctx.fill();
-    });
+    // Coins
+    ctx.font="24px serif";
+    coins.forEach(c=>ctx.fillText("✨",c.x,c.y));
 
-    ctx.fillStyle="red";
-    enemies.forEach(e=>ctx.fillRect(e.x,e.y,e.w,e.h));
+    // Enemies
+    ctx.font="30px serif";
+    enemies.forEach(e=>ctx.fillText("😈",e.x,e.y+30));
 }
 
 function loop(){
