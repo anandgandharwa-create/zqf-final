@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Quantum Gyan Adventure</title>
 
 <style>
 body {
     margin:0;
     overflow:hidden;
+    touch-action:none;
     background: radial-gradient(circle at top, #1a2a6c, #000);
 }
 
@@ -29,14 +30,22 @@ body {
 /* Controls premium */
 .controls {
     position:fixed;
-    bottom:25px;
+    bottom:15px;
     width:100%;
     display:flex;
     justify-content:center;
-    gap:25px;
+    gap:20px;
     z-index:9999;
 }
 
+/* mobile size */
+@media (max-width:600px){
+    .btn{
+        width:60px;
+        height:60px;
+        font-size:22px;
+    }
+}
 .btn {
     width:75px;
     height:75px;
@@ -73,9 +82,12 @@ const jump = document.getElementById("jump");
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-
+function resizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 let cameraX = 0;
 let level = 1;
 let score = 0;
