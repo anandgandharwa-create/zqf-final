@@ -256,7 +256,7 @@ ctx.globalAlpha = 1;
 
     // 🧘‍♂️ player glow
     glow("#00ffe0",20);
-    ctx.font="40px serif";
+    ctx.font="50px serif";
     ctx.fillText("🧘‍♂️", player.x, player.y+35);
 
     ctx.shadowBlur = 0;
@@ -273,8 +273,8 @@ ctx.globalAlpha = 1;
     // ✨ coins glow animation
     coins.forEach(c=>{
         glow("gold",15);
-        ctx.font="28px serif";
-        ctx.fillText("✨",c.x,c.y + Math.sin(Date.now()/200)*5);
+        ctx.font="35px serif";
+       ctx.fillText("🏆",c.x,c.y + Math.sin(Date.now()/200)*5);
     });
 
     ctx.shadowBlur = 0;
