@@ -82,12 +82,9 @@ const jump = document.getElementById("jump");
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-function resizeCanvas(){
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+document.body.addEventListener("touchstart", e => e.preventDefault(), {passive:false});
 let cameraX = 0;
 let level = 1;
 let score = 0;
