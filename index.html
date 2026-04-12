@@ -38,20 +38,16 @@ body {
 }
 
 .btn {
-    width:70px;
-    height:70px;
+    width:75px;
+    height:75px;
     border-radius:50%;
-    background: linear-gradient(145deg, #00c6ff, #0072ff);
+    background: linear-gradient(#FFD700, #FF8C00);
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:26px;
-    color:white;
-    box-shadow: 
-        0 8px 20px rgba(0,0,0,0.6),
-        inset 0 2px 5px rgba(255,255,255,0.3);
+    font-size:28px;
+    color:black;
 }
-
 .btn:active {
     transform: scale(0.9);
 }
@@ -247,7 +243,7 @@ let time = Date.now() * 0.02;
 for(let i=0;i<4;i++){
     let x = i*500 + (time % 500);
 
-    ctx.fillStyle = "#ffffff";
+  ctx.fillStyle = "#eeeeee";
 
     ctx.beginPath();
     ctx.arc(x, 100, 30, 0, Math.PI*2);
@@ -266,9 +262,9 @@ ctx.globalAlpha = 1;
     ctx.shadowBlur = 0;
 
     // platforms (neon)
-    ctx.fillStyle="#ffffff";
+    ctx.fillStyle = "#FFD700";  // gold color
     platforms.forEach(p=>{
-        glow("#00f2ff",10);
+       glow("#FFD700",20);
         ctx.fillRect(p.x,p.y,p.w,p.h);
     });
 
