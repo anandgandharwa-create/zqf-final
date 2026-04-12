@@ -265,7 +265,17 @@ ctx.globalAlpha = 1;
     ctx.fillStyle = "#FFD700";  // gold color
     platforms.forEach(p=>{
        glow("#FFD700",20);
-        ctx.fillRect(p.x,p.y,p.w,p.h);
+       // golden gradient
+let grad = ctx.createLinearGradient(p.x, p.y, p.x, p.y + p.h);
+grad.addColorStop(0, "#FFD700");
+grad.addColorStop(1, "#C99700");
+
+ctx.fillStyle = grad;
+
+// rounded platform
+ctx.beginPath();
+ctx.roundRect(p.x, p.y, p.w, p.h, 8);
+ctx.fill();
     });
 
     ctx.shadowBlur = 0;
