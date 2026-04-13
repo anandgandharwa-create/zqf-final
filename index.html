@@ -132,7 +132,7 @@ let player = {
     ground:false
 };
 
-let gravity = 0.7;
+let gravity = 0.6;
 
 function generateLevel(){
     platforms = [];
@@ -174,8 +174,12 @@ right.ontouchend = ()=> keys["ArrowRight"]=false;
 // JUMP
 jump.onmousedown = ()=> keys[" "]=true;
 jump.onmouseup = ()=> keys[" "]=false;
-jump.ontouchstart = ()=> keys[" "]=true;
-jump.ontouchend = ()=> keys[" "]=false;
+jump.ontouchstart = ()=>{
+    if(player.ground){
+        player.dy = -14;
+        player.ground = false;
+    }
+};
 function update(){
 
     player.dx = 0;
@@ -200,11 +204,11 @@ function update(){
            player.y < p.y+p.h &&
            player.y+player.h > p.y){
 
-            if(player.dy > 0){
-                player.y = p.y - player.h;
-                player.dy = 0;
-                player.ground = true;
-            }
+          if(player.dy > 0 && player.y + player.h - player.dy <= p.y){
+    player.y = p.y - player.h;
+    player.dy = 0;
+    player.ground = true;
+}
         }
     });
 
@@ -225,7 +229,7 @@ function update(){
     });
 
     // camera follow
-    cameraX = player.x - 200;
+  cameraX = Math.max(0, player.x - 200);
 
     // next level
     if(player.x > platforms.length*250){
@@ -307,9 +311,7 @@ grad.addColorStop(1, "#C99700");
 ctx.fillStyle = grad;
 
 // rounded platform
-ctx.beginPath();
-ctx.roundRect(p.x, p.y, p.w, p.h, 8);
-ctx.fill();
+ctx.fillRect(p.x, p.y, p.w, p.h);
     });
 
     ctx.shadowBlur = 0;
@@ -333,6 +335,10 @@ function loop(){
 }
 
 loop();
+    window.onresize = ()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - 80;
+}
 </script>
 
 </body>
