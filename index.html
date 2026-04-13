@@ -15,52 +15,80 @@ body {
 /* Glass UI */
 .ui {
     position:fixed;
-    top:10px;
+    top:15px;
     left:50%;
     transform:translateX(-50%);
+    
     color:#FFD700;
-    background:rgba(0,0,0,0.6);
-    padding:10px 25px;
-    border-radius:30px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    background:rgba(0,0,0,0.75);
+    
+    padding:10px 20px;
+    border-radius:25px;
+    
+    font-size:16px;
     font-weight:bold;
-    font-size:14px;
-     text-shadow: 0 0 5px black;
+    
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(255,215,0,0.3);
+    
+    letter-spacing: 0.5px;
 }
 
 /* Controls premium */
 .controls {
     position:fixed;
-    bottom:15px;
+    bottom:0;
     width:100%;
+    
     display:flex;
     justify-content:center;
-    gap:20px;
-    z-index:9999;
+    gap:25px;
+
+    padding:15px 0;
+    
+    background:rgba(0,0,0,0.6);
+    backdrop-filter: blur(12px);
+
+    border-top:1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.4);
 }
 
-/* mobile size */
 @media (max-width:600px){
     .btn{
         width:60px;
         height:60px;
         font-size:22px;
     }
+
+    .ui{
+        font-size:14px;
+        padding:8px 15px;
+    }
 }
 .btn {
-    width:75px;
-    height:75px;
+    width:65px;
+    height:65px;
     border-radius:50%;
-    background: linear-gradient(#FFD700, #FF8C00);
+
+    background: linear-gradient(145deg, #FFD700, #FF8C00);
+
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:28px;
+
+    font-size:26px;
     color:black;
+
+    box-shadow: 
+        0 4px 10px rgba(0,0,0,0.5),
+        inset 0 2px 5px rgba(255,255,255,0.3);
+
+    transition: 0.15s;
 }
+
 .btn:active {
     transform: scale(0.9);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.6);
 }
     .popup {
     position:fixed;
