@@ -106,6 +106,7 @@ document.body.addEventListener("touchstart", e => e.preventDefault(), {passive:f
 let cameraX = 0;
 let level = 1;
 let score = 0;
+let lastGyanScore = 0;
 
 const gyan = [
 "तुम शरीर नहीं, चेतना हो 🧘‍♂️",
@@ -230,9 +231,10 @@ function update(){
             score++;
             document.getElementById("score").innerText = score;
 
-            if(score % 3 === 0){
-                popup(gyan[Math.floor(Math.random()*gyan.length)]);
-            }
+          if(score % 3 === 0 && score !== lastGyanScore){
+    lastGyanScore = score;
+    popup(gyan[Math.floor(Math.random()*gyan.length)]);
+}
         }
     });
 
