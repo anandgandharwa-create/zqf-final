@@ -374,8 +374,25 @@ function draw(){
     }
 
     ctx.globalAlpha = 1;
-   ctx.fillStyle = "#27ae60";
-ctx.fillRect(-cameraX, canvas.height - 260, canvas.width + 300, 50);
+  // 🌄 mountain (simple)
+ctx.fillStyle = "#2c5e3f";
+ctx.beginPath();
+ctx.moveTo(-cameraX, canvas.height);
+
+ctx.lineTo(0 - cameraX, canvas.height - 300);
+ctx.lineTo(400 - cameraX, canvas.height);
+
+ctx.lineTo(400 - cameraX, canvas.height - 250);
+ctx.lineTo(800 - cameraX, canvas.height);
+
+ctx.lineTo(canvas.width, canvas.height);
+
+ctx.closePath();
+ctx.fill();
+
+// 🌿 green ground
+ctx.fillStyle = "#2ecc71";
+ctx.fillRect(-cameraX, canvas.height - 200, canvas.width + 300, 60);
     glow("#00ffe0",8);
     ctx.font="50px serif";
     ctx.fillText("🧘‍♂️", player.x, player.y+35);
