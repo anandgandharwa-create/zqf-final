@@ -102,11 +102,13 @@ const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight - 80;
-document.body.addEventListener("touchstart", e => e.preventDefault(), {passive:false});
+
 let cameraX = 0;
 let level = 1;
 let score = 0;
 let lastGyanScore = 0;
+
+let popupActive = false;
 
 const gyan = [
 "तुम शरीर नहीं, चेतना हो 🧘‍♂️",
@@ -118,17 +120,22 @@ const gyan = [
 
 let popupTimeout;
 
+// ✅ SAFE POPUP
 function popup(text){
     let p = document.getElementById("popup");
 
-    clearTimeout(popupTimeout); // पुराना popup हटाओ
+    popupActive = true;
+    keys = {}; // 🔥 STOP movement
+
+    clearTimeout(popupTimeout);
 
     p.innerText = text;
     p.style.display="block";
 
     popupTimeout = setTimeout(()=>{
         p.style.display="none";
-    },3000); // time थोड़ा बढ़ाया
+        popupActive = false;
+    },2500);
 }
 
 let player = {
@@ -142,6 +149,9 @@ let player = {
 };
 
 let gravity = 0.6;
+
+let platforms = [];
+let coins = [];
 
 function generateLevel(){
     platforms = [];
@@ -159,37 +169,48 @@ function generateLevel(){
     }
 }
 
-let platforms = [];
-let coins = [];
 generateLevel();
 
+// ✅ INPUT SYSTEM FIX
 let keys = {};
 
-onkeydown=e=>keys[e.key]=true;
-onkeyup=e=>keys[e.key]=false;
+onkeydown = e=>{
+    if(!popupActive) keys[e.key] = true;
+};
 
-// LEFT
+onkeyup = e=>{
+    keys[e.key] = false;
+};
+
+function resetKeys(){
+    keys = {};
+}
+
+// buttons
 left.onmousedown = ()=> keys["ArrowLeft"]=true;
-left.onmouseup = ()=> keys["ArrowLeft"]=false;
+left.onmouseup = resetKeys;
 left.ontouchstart = ()=> keys["ArrowLeft"]=true;
-left.ontouchend = ()=> keys["ArrowLeft"]=false;
+left.ontouchend = resetKeys;
 
-// RIGHT
 right.onmousedown = ()=> keys["ArrowRight"]=true;
-right.onmouseup = ()=> keys["ArrowRight"]=false;
+right.onmouseup = resetKeys;
 right.ontouchstart = ()=> keys["ArrowRight"]=true;
-right.ontouchend = ()=> keys["ArrowRight"]=false;
+right.ontouchend = resetKeys;
 
-// JUMP
 jump.onmousedown = ()=> keys[" "]=true;
-jump.onmouseup = ()=> keys[" "]=false;
+jump.onmouseup = resetKeys;
 jump.ontouchstart = ()=>{
     if(player.ground){
         player.dy = -14;
         player.ground = false;
     }
 };
+jump.ontouchend = resetKeys;
+
+// ✅ UPDATE (FULL STABLE)
 function update(){
+
+    if(popupActive) return; // 🔥 FREEZE during popup
 
     player.dx = 0;
 
@@ -202,25 +223,27 @@ function update(){
     }
 
     player.dy += gravity;
- player.x += player.dx * 0.9;
+    player.x += player.dx;
     player.y += player.dy;
 
     player.ground = false;
 
+    // collision
     platforms.forEach(p=>{
         if(player.x < p.x+p.w &&
            player.x+player.w > p.x &&
            player.y < p.y+p.h &&
            player.y+player.h > p.y){
 
-          if(player.dy > 0 && player.y + player.h - player.dy <= p.y){
-    player.y = p.y - player.h;
-    player.dy = 0;
-    player.ground = true;
-}
+            if(player.dy > 0 && player.y + player.h - player.dy <= p.y){
+                player.y = p.y - player.h;
+                player.dy = 0;
+                player.ground = true;
+            }
         }
     });
 
+    // coins
     coins.forEach((c,i)=>{
         if(player.x < c.x+20 &&
            player.x+player.w > c.x &&
@@ -231,45 +254,47 @@ function update(){
             score++;
             document.getElementById("score").innerText = score;
 
-          if(score % 3 === 0 && score !== lastGyanScore){
-    lastGyanScore = score;
-    popup(gyan[Math.floor(Math.random()*gyan.length)]);
-}
+            if(score % 3 === 0 && score !== lastGyanScore){
+                lastGyanScore = score;
+                popup(gyan[Math.floor(Math.random()*gyan.length)]);
+            }
         }
     });
 
-    // camera follow
-  let targetX = player.x - 200;
-cameraX += (targetX - cameraX) * 0.08;
-cameraX = Math.max(0, cameraX);
+    // smooth camera
+    let targetX = player.x - 200;
+    cameraX += (targetX - cameraX) * 0.08;
+    cameraX = Math.max(0, cameraX);
 
-    // next level
+    // level change
     if(player.x > platforms.length*250){
         level++;
         cameraX = 0;
-        document.getElementById("level").innerText = level;
         player.x = 100;
+        document.getElementById("level").innerText = level;
         generateLevel();
         popup("🎉 Level " + level + " Unlock!");
     }
 
+    // fall reset
     if(player.y > canvas.height){
         popup("⚠️ ध्यान भटक गया");
-     setTimeout(()=>{
-    player.x = 100;
-    player.y = 250;
-    player.dy = 0;
-    score = 0;
-    cameraX = 0; // ✅ ADD
-    document.getElementById("score").innerText = score;
-    generateLevel();
-},1500);
+
+        setTimeout(()=>{
+            player.x = 100;
+            player.y = 250;
+            player.dy = 0;
+            score = 0;
+            lastGyanScore = 0;
+            cameraX = 0;
+            document.getElementById("score").innerText = score;
+            generateLevel();
+        },1500);
     }
 }
 
+// DRAW (same as before)
 function draw(){
-
-    // sky gradient animation
     let gradient = ctx.createLinearGradient(0,0,0,canvas.height);
     gradient.addColorStop(0,"#141E30");
     gradient.addColorStop(1,"#243B55");
@@ -280,68 +305,52 @@ function draw(){
     ctx.save();
     ctx.translate(-cameraX,0);
 
-    // 🌟 glow effect function
- function glow(color,blur){
-    ctx.shadowColor = color;
-    ctx.shadowBlur = blur * 0.4;  // auto reduce
-}
+    function glow(color,blur){
+        ctx.shadowColor = color;
+        ctx.shadowBlur = blur * 0.4;
+    }
 
-    // ☁️ clouds
-  // ☁️ smooth clouds (better design)
-ctx.globalAlpha = 0.9;
+    ctx.globalAlpha = 0.9;
 
-let time = Date.now() * 0.02;
+    let time = Date.now() * 0.02;
 
-for(let i=0;i<4;i++){
-    let x = i*500 + (time % 500);
+    for(let i=0;i<4;i++){
+        let x = i*500 + (time % 500);
 
-  ctx.fillStyle = "#eeeeee";
+        ctx.fillStyle = "#eee";
+        ctx.beginPath();
+        ctx.arc(x,100,30,0,Math.PI*2);
+        ctx.arc(x+30,90,35,0,Math.PI*2);
+        ctx.arc(x+60,100,30,0,Math.PI*2);
+        ctx.fill();
+    }
 
-    ctx.beginPath();
-    ctx.arc(x, 100, 30, 0, Math.PI*2);
-    ctx.arc(x+30, 90, 35, 0, Math.PI*2);
-    ctx.arc(x+60, 100, 30, 0, Math.PI*2);
-    ctx.fill();
-}
+    ctx.globalAlpha = 1;
 
-ctx.globalAlpha = 1;
-
-    // 🧘‍♂️ player glow
-  glow("#00ffe0",8);
+    glow("#00ffe0",8);
     ctx.font="50px serif";
     ctx.fillText("🧘‍♂️", player.x, player.y+35);
 
     ctx.shadowBlur = 0;
 
-    // platforms (neon)
-    ctx.fillStyle = "#FFD700";  // gold color
     platforms.forEach(p=>{
-     glow("#FFD700",6);
-       // golden gradient
-let grad = ctx.createLinearGradient(p.x, p.y, p.x, p.y + p.h);
-grad.addColorStop(0, "#FFD700");
-grad.addColorStop(1, "#C99700");
-
-ctx.fillStyle = grad;
-
-// rounded platform
-ctx.fillRect(p.x, p.y, p.w, p.h);
+        glow("#FFD700",6);
+        ctx.fillStyle="#FFD700";
+        ctx.fillRect(p.x,p.y,p.w,p.h);
     });
 
     ctx.shadowBlur = 0;
 
-    // ✨ coins glow animation
     coins.forEach(c=>{
-      glow("gold",5);
+        glow("gold",5);
         ctx.font="35px serif";
-       ctx.fillText("🏆",c.x,c.y + Math.sin(Date.now()/200)*5);
+        ctx.fillText("🏆",c.x,c.y + Math.sin(Date.now()/200)*5);
     });
-
-    ctx.shadowBlur = 0;
 
     ctx.restore();
 }
 
+// LOOP
 function loop(){
     update();
     draw();
@@ -349,10 +358,11 @@ function loop(){
 }
 
 loop();
-    window.onresize = ()=>{
+
+window.onresize = ()=>{
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight - 80;
-}
+};
 </script>
 
 </body>
