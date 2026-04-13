@@ -374,7 +374,8 @@ function draw(){
     }
 
     ctx.globalAlpha = 1;
-
+   ctx.fillStyle = "#27ae60";
+ctx.fillRect(-cameraX, canvas.height - 260, canvas.width + 300, 50);
     glow("#00ffe0",8);
     ctx.font="50px serif";
     ctx.fillText("🧘‍♂️", player.x, player.y+35);
