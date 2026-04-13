@@ -115,11 +115,19 @@ const gyan = [
 "तुम असीम ऊर्जा हो ⚡"
 ];
 
+let popupTimeout;
+
 function popup(text){
     let p = document.getElementById("popup");
+
+    clearTimeout(popupTimeout); // पुराना popup हटाओ
+
     p.innerText = text;
     p.style.display="block";
-    setTimeout(()=>p.style.display="none",2000);
+
+    popupTimeout = setTimeout(()=>{
+        p.style.display="none";
+    },3000); // time थोड़ा बढ़ाया
 }
 
 let player = {
