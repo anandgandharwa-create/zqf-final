@@ -202,7 +202,7 @@ function update(){
     }
 
     player.dy += gravity;
-    player.x += player.dx;
+ player.x += player.dx * 0.9;
     player.y += player.dy;
 
     player.ground = false;
@@ -239,11 +239,14 @@ function update(){
     });
 
     // camera follow
-  cameraX = Math.max(0, player.x - 200);
+  let targetX = player.x - 200;
+cameraX += (targetX - cameraX) * 0.08;
+cameraX = Math.max(0, cameraX);
 
     // next level
     if(player.x > platforms.length*250){
         level++;
+        cameraX = 0;
         document.getElementById("level").innerText = level;
         player.x = 100;
         generateLevel();
@@ -252,11 +255,12 @@ function update(){
 
     if(player.y > canvas.height){
         popup("⚠️ ध्यान भटक गया");
-       setTimeout(()=>{
+     setTimeout(()=>{
     player.x = 100;
     player.y = 250;
     player.dy = 0;
     score = 0;
+    cameraX = 0; // ✅ ADD
     document.getElementById("score").innerText = score;
     generateLevel();
 },1500);
