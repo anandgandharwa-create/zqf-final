@@ -263,14 +263,14 @@ function draw(){
     ctx.translate(-cameraX,0);
 
     // 🌟 glow effect function
-    function glow(color,blur){
-        ctx.shadowColor = color;
-        ctx.shadowBlur = blur;
-    }
+ function glow(color,blur){
+    ctx.shadowColor = color;
+    ctx.shadowBlur = blur * 0.4;  // auto reduce
+}
 
     // ☁️ clouds
   // ☁️ smooth clouds (better design)
-ctx.globalAlpha = 0.4;
+ctx.globalAlpha = 0.9;
 
 let time = Date.now() * 0.02;
 
@@ -289,7 +289,7 @@ for(let i=0;i<4;i++){
 ctx.globalAlpha = 1;
 
     // 🧘‍♂️ player glow
-    glow("#00ffe0",20);
+  glow("#00ffe0",8);
     ctx.font="50px serif";
     ctx.fillText("🧘‍♂️", player.x, player.y+35);
 
@@ -298,7 +298,7 @@ ctx.globalAlpha = 1;
     // platforms (neon)
     ctx.fillStyle = "#FFD700";  // gold color
     platforms.forEach(p=>{
-       glow("#FFD700",20);
+     glow("#FFD700",6);
        // golden gradient
 let grad = ctx.createLinearGradient(p.x, p.y, p.x, p.y + p.h);
 grad.addColorStop(0, "#FFD700");
@@ -316,7 +316,7 @@ ctx.fill();
 
     // ✨ coins glow animation
     coins.forEach(c=>{
-        glow("gold",15);
+      glow("gold",5);
         ctx.font="35px serif";
        ctx.fillText("🏆",c.x,c.y + Math.sin(Date.now()/200)*5);
     });
