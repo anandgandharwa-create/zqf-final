@@ -140,8 +140,6 @@ body {
     <div class="btn" id="right">➡️</div>
 </div>
 <script>
-document.addEventListener("contextmenu", e => e.preventDefault());
-document.addEventListener("selectstart", e => e.preventDefault());
 const left = document.getElementById("left");
 const right = document.getElementById("right");
 const jump = document.getElementById("jump");
@@ -155,7 +153,6 @@ let cameraX = 0;
 let level = 1;
 let score = 0;
 let lastGyanScore = 0;
-
 let popupActive = false;
 
 const gyan = [
@@ -168,12 +165,10 @@ const gyan = [
 
 let popupTimeout;
 
-// ✅ SAFE POPUP
 function popup(text){
     let p = document.getElementById("popup");
-
     popupActive = true;
-    keys = {}; // 🔥 STOP movement
+    keys = {};
 
     clearTimeout(popupTimeout);
 
@@ -186,18 +181,8 @@ function popup(text){
     },2500);
 }
 
-let player = {
-    x:100,
-    y:250,
-    w:40,
-    h:40,
-    dx:0,
-    dy:0,
-    ground:false
-};
-
+let player = {x:100,y:250,w:40,h:40,dx:0,dy:0,ground:false};
 let gravity = 0.6;
-
 let platforms = [];
 let coins = [];
 
@@ -219,22 +204,13 @@ function generateLevel(){
 
 generateLevel();
 
-// ✅ INPUT SYSTEM FIX
 let keys = {};
 
-onkeydown = e=>{
-    if(!popupActive) keys[e.key] = true;
-};
+onkeydown = e=>{ if(!popupActive) keys[e.key]=true; };
+onkeyup = e=> keys[e.key]=false;
 
-onkeyup = e=>{
-    keys[e.key] = false;
-};
+function resetKeys(){ keys = {}; }
 
-function resetKeys(){
-    keys = {};
-}
-
-// buttons
 left.onmousedown = ()=> keys["ArrowLeft"]=true;
 left.onmouseup = resetKeys;
 left.ontouchstart = ()=> keys["ArrowLeft"]=true;
@@ -245,8 +221,6 @@ right.onmouseup = resetKeys;
 right.ontouchstart = ()=> keys["ArrowRight"]=true;
 right.ontouchend = resetKeys;
 
-jump.onmousedown = ()=> keys[" "]=true;
-jump.onmouseup = resetKeys;
 jump.ontouchstart = ()=>{
     if(player.ground){
         player.dy = -14;
@@ -255,10 +229,9 @@ jump.ontouchstart = ()=>{
 };
 jump.ontouchend = resetKeys;
 
-// ✅ UPDATE (FULL STABLE)
 function update(){
 
-    if(popupActive) return; // 🔥 FREEZE during popup
+    if(popupActive) return;
 
     player.dx = 0;
 
@@ -276,7 +249,6 @@ function update(){
 
     player.ground = false;
 
-    // collision
     platforms.forEach(p=>{
         if(player.x < p.x+p.w &&
            player.x+player.w > p.x &&
@@ -291,7 +263,6 @@ function update(){
         }
     });
 
-    // coins
     coins.forEach((c,i)=>{
         if(player.x < c.x+20 &&
            player.x+player.w > c.x &&
@@ -309,12 +280,10 @@ function update(){
         }
     });
 
-    // smooth camera
     let targetX = player.x - 200;
     cameraX += (targetX - cameraX) * 0.08;
     cameraX = Math.max(0, cameraX);
 
-    // level change
     if(player.x > platforms.length*250){
         level++;
         cameraX = 0;
@@ -324,7 +293,6 @@ function update(){
         popup("🎉 Level " + level + " Unlock!");
     }
 
-    // fall reset
     if(player.y > canvas.height){
         popup("⚠️ ध्यान भटक गया");
 
@@ -341,31 +309,22 @@ function update(){
     }
 }
 
-// DRAW (same as before)
 function draw(){
+
+    // 🌌 sky
     let gradient = ctx.createLinearGradient(0,0,0,canvas.height);
     gradient.addColorStop(0,"#141E30");
     gradient.addColorStop(1,"#243B55");
-
     ctx.fillStyle = gradient;
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
     ctx.save();
     ctx.translate(-cameraX,0);
 
-    function glow(color,blur){
-        ctx.shadowColor = color;
-        ctx.shadowBlur = blur * 0.4;
-    }
-
-    ctx.globalAlpha = 0.9;
-
-    let time = Date.now() * 0.02;
-
+    // ☁️ clouds
+    ctx.fillStyle="#eee";
     for(let i=0;i<4;i++){
-        let x = i*500 + (time % 500);
-
-        ctx.fillStyle = "#eee";
+        let x=i*500 + (Date.now()*0.02 % 500);
         ctx.beginPath();
         ctx.arc(x,100,30,0,Math.PI*2);
         ctx.arc(x+30,90,35,0,Math.PI*2);
@@ -373,42 +332,37 @@ function draw(){
         ctx.fill();
     }
 
-    ctx.globalAlpha = 1;
-  // 🌄 mountain (simple)
-ctx.fillStyle = "#2c5e3f";
-ctx.beginPath();
-ctx.moveTo(-cameraX, canvas.height);
+    // 🌄 mountains (BACKGROUND)
+    ctx.fillStyle="#2c5e3f";
+    ctx.beginPath();
+    ctx.moveTo(-cameraX, canvas.height);
 
-ctx.lineTo(0 - cameraX, canvas.height - 300);
-ctx.lineTo(400 - cameraX, canvas.height);
+    ctx.lineTo(0 - cameraX, canvas.height - 200);
+    ctx.lineTo(300 - cameraX, canvas.height);
 
-ctx.lineTo(400 - cameraX, canvas.height - 250);
-ctx.lineTo(800 - cameraX, canvas.height);
+    ctx.lineTo(300 - cameraX, canvas.height - 180);
+    ctx.lineTo(700 - cameraX, canvas.height);
 
-ctx.lineTo(canvas.width, canvas.height);
+    ctx.lineTo(canvas.width, canvas.height);
+    ctx.closePath();
+    ctx.fill();
 
-ctx.closePath();
-ctx.fill();
+    // 🌿 ground (BOTTOM ONLY)
+    ctx.fillStyle="#27ae60";
+    ctx.fillRect(-cameraX, canvas.height - 80, canvas.width + 300, 80);
 
-// 🌿 green ground
-ctx.fillStyle = "#2ecc71";
-ctx.fillRect(-cameraX, canvas.height - 200, canvas.width + 300, 60);
-    glow("#00ffe0",8);
+    // 🧘 player
     ctx.font="50px serif";
     ctx.fillText("🧘‍♂️", player.x, player.y+35);
 
-    ctx.shadowBlur = 0;
-
+    // platforms
     platforms.forEach(p=>{
-        glow("#FFD700",6);
         ctx.fillStyle="#FFD700";
         ctx.fillRect(p.x,p.y,p.w,p.h);
     });
 
-    ctx.shadowBlur = 0;
-
+    // coins
     coins.forEach(c=>{
-        glow("gold",5);
         ctx.font="35px serif";
         ctx.fillText("🏆",c.x,c.y + Math.sin(Date.now()/200)*5);
     });
@@ -416,7 +370,6 @@ ctx.fillRect(-cameraX, canvas.height - 200, canvas.width + 300, 60);
     ctx.restore();
 }
 
-// LOOP
 function loop(){
     update();
     draw();
