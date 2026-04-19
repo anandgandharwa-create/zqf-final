@@ -258,7 +258,16 @@ generateLevel();
 
 let keys = {};
 
-onkeydown = e=>{ if(!popupActive) keys[e.key]=true; };
+onkeydown = e=>{
+    if(!popupActive){
+        keys[e.key] = true;
+
+        if((e.code === "Space" || e.key === " ") && player.ground){
+            player.dy = -16;
+            player.ground = false;
+        }
+    }
+};
 onkeyup = e=> keys[e.key]=false;
 
 function resetKeys(){ keys = {}; }
@@ -275,6 +284,11 @@ right.ontouchstart = ()=> keys["ArrowRight"]=true;
 right.ontouchend = resetKeys;
 
 // 🔥 FIXED JUMP
+    jump.onmousedown = ()=>{
+    if(player.ground){
+        player.dy = -16;
+        player.ground = false;
+    }
 jump.ontouchstart = ()=>{
     if(player.ground){
         player.dy = -16;
