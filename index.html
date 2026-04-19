@@ -284,19 +284,22 @@ right.ontouchstart = ()=> keys["ArrowRight"]=true;
 right.ontouchend = resetKeys;
 
 // 🔥 FIXED JUMP
-    jump.onmousedown = ()=>{
+   // 🔥 FIXED JUMP (FINAL)
+jump.onmousedown = ()=>{
     if(player.ground){
         player.dy = -16;
         player.ground = false;
     }
+};
+
 jump.ontouchstart = ()=>{
     if(player.ground){
         player.dy = -16;
         player.ground = false;
     }
 };
-jump.ontouchend = resetKeys;
 
+jump.ontouchend = resetKeys;
 function update(){
 
     if(popupActive) return;
