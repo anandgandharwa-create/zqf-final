@@ -185,45 +185,27 @@ let score = 0;
 let lastGyanScore = 0;
 let popupActive = false;
 
-const gyanFlow = [
-{
-q: "तुम दुखी क्यों हो?",
-a: "क्योंकि तुम जो बदल रहा है, उसे स्थायी मान रहे हो।"
-},
-{
-q: "तुम्हें शांति क्यों नहीं मिलती?",
-a: "क्योंकि तुम बाहर ढूंढ रहे हो, जो भीतर है।"
-},
-{
-q: "डर कहाँ से आता है?",
-a: "भविष्य की कल्पना से।"
-},
-{
-q: "तुम कौन हो?",
-a: "वह जो देख रहा है… न कि जो दिख रहा है।"
-}
-];
+let jumpForce = -16;
+let gravity = 0.6;
 
-let popupTimeout;
+const gyanFlow = [
+{q:"तुम दुखी क्यों हो?", a:"क्योंकि तुम जो बदल रहा है, उसे स्थायी मान रहे हो।"},
+{q:"तुम्हें शांति क्यों नहीं मिलती?", a:"क्योंकि तुम बाहर ढूंढ रहे हो, जो भीतर है।"},
+{q:"डर कहाँ से आता है?", a:"भविष्य की कल्पना से।"},
+{q:"तुम कौन हो?", a:"वह जो देख रहा है… न कि जो दिख रहा है।"}
+];
 
 function showQA(){
     let box = document.getElementById("qaBox");
-
     let item = gyanFlow[Math.floor(Math.random()*gyanFlow.length)];
 
-    box.innerHTML = `
-    ⚡ <b>${item.q}</b><br><br>
-    🕉 ${item.a}
-    `;
-
+    box.innerHTML = `⚡ <b>${item.q}</b><br><br>🕉 ${item.a}`;
     box.style.display = "block";
 
-    setTimeout(()=>{
-        box.style.display = "none";
-    },3000);
+    setTimeout(()=> box.style.display="none",3000);
 }
 
-// 🔥 FIXED PLAYER
+// PLAYER
 let player = {
     x:100,
     y:canvas.height - 120,
@@ -234,7 +216,6 @@ let player = {
     ground:false
 };
 
-let gravity = 0.5;
 let platforms = [];
 let coins = [];
 
@@ -244,7 +225,7 @@ function generateLevel(){
 
     for(let i=0;i<20;i++){
         let x = i*250;
-        let y = canvas.height - (Math.random()*200 + 120);
+        let y = canvas.height - (Math.random()*150 + 100);
 
         platforms.push({x:x,y:y,w:150,h:20});
 
@@ -263,7 +244,7 @@ onkeydown = e=>{
         keys[e.key] = true;
 
         if((e.code === "Space" || e.key === " ") && player.ground){
-            player.dy = -16;
+            player.dy = jumpForce;
             player.ground = false;
         }
     }
@@ -272,7 +253,7 @@ onkeyup = e=> keys[e.key]=false;
 
 function resetKeys(){ keys = {}; }
 
-// controls
+// CONTROLS
 left.onmousedown = ()=> keys["ArrowLeft"]=true;
 left.onmouseup = resetKeys;
 left.ontouchstart = ()=> keys["ArrowLeft"]=true;
@@ -283,23 +264,23 @@ right.onmouseup = resetKeys;
 right.ontouchstart = ()=> keys["ArrowRight"]=true;
 right.ontouchend = resetKeys;
 
-// 🔥 FIXED JUMP
-   // 🔥 FIXED JUMP (FINAL)
+// JUMP
 jump.onmousedown = ()=>{
     if(player.ground){
-        player.dy = -16;
+        player.dy = jumpForce;
         player.ground = false;
     }
 };
 
 jump.ontouchstart = ()=>{
     if(player.ground){
-        player.dy = -16;
+        player.dy = jumpForce;
         player.ground = false;
     }
 };
 
 jump.ontouchend = resetKeys;
+
 function update(){
 
     if(popupActive) return;
@@ -309,19 +290,13 @@ function update(){
     if(keys["ArrowRight"]) player.dx = 6;
     if(keys["ArrowLeft"]) player.dx = -6;
 
-    if(keys[" "] && player.ground){
-        player.dy = -16;
-        player.ground = false;
-    }
-
-    // gravity
     player.dy += gravity;
     player.x += player.dx;
     player.y += player.dy;
 
     player.ground = false;
 
-    // 🟡 PLATFORM COLLISION
+    // PLATFORM COLLISION
     platforms.forEach(p=>{
         if(player.x < p.x+p.w &&
            player.x+player.w > p.x &&
@@ -336,14 +311,14 @@ function update(){
         }
     });
 
-    // 🟢 GROUND COLLISION (MOST IMPORTANT FIX)
+    // GROUND
     if(player.y + player.h >= canvas.height - 80){
         player.y = canvas.height - 80 - player.h;
         player.dy = 0;
         player.ground = true;
     }
 
-    // coins
+    // COINS
     coins.forEach((c,i)=>{
         if(player.x < c.x+20 &&
            player.x+player.w > c.x &&
@@ -354,42 +329,46 @@ function update(){
             score++;
             document.getElementById("score").innerText = score;
 
-           if(score % 3 === 0 && score !== lastGyanScore){
-    lastGyanScore = score;
-    showQA(); // 🔥 नया system
-}
-            if(score === 5){
-    popup("⚖️ क्या तुम परिणाम चाहते हो या शांति?");
-}
+            if(score % 3 === 0 && score !== lastGyanScore){
+                lastGyanScore = score;
+                showQA();
+            }
         }
     });
 
+    // CAMERA
     let targetX = player.x - 200;
     cameraX += (targetX - cameraX) * 0.08;
     cameraX = Math.max(0, cameraX);
 
+    // LEVEL CHANGE FIXED
     if(player.x > platforms.length*250){
         level++;
+
         cameraX = 0;
+
+        // FULL RESET (IMPORTANT)
         player.x = 100;
+        player.y = canvas.height - 120;
+        player.dy = 0;
+        player.ground = true;
+
         document.getElementById("level").innerText = level;
+
         generateLevel();
-        popup("🎉 Level " + level + " Unlock!");
+        showQA();
     }
 
+    // FALL RESET
     if(player.y > canvas.height){
-        popup("⚠️ ध्यान भटक गया");
-
-        setTimeout(()=>{
-            player.x = 100;
-            player.y = canvas.height - 120;
-            player.dy = 0;
-            score = 0;
-            lastGyanScore = 0;
-            cameraX = 0;
-            document.getElementById("score").innerText = score;
-            generateLevel();
-        },1500);
+        player.x = 100;
+        player.y = canvas.height - 120;
+        player.dy = 0;
+        score = 0;
+        lastGyanScore = 0;
+        cameraX = 0;
+        document.getElementById("score").innerText = score;
+        generateLevel();
     }
 }
 
@@ -404,6 +383,7 @@ function draw(){
     ctx.save();
     ctx.translate(-cameraX,0);
 
+    // clouds
     ctx.fillStyle="#eee";
     for(let i=0;i<4;i++){
         let x=i*500 + (Date.now()*0.02 % 500);
@@ -414,17 +394,7 @@ function draw(){
         ctx.fill();
     }
 
-    ctx.fillStyle="#2c5e3f";
-    ctx.beginPath();
-    ctx.moveTo(-cameraX, canvas.height);
-    ctx.lineTo(0 - cameraX, canvas.height - 200);
-    ctx.lineTo(300 - cameraX, canvas.height);
-    ctx.lineTo(300 - cameraX, canvas.height - 180);
-    ctx.lineTo(700 - cameraX, canvas.height);
-    ctx.lineTo(canvas.width, canvas.height);
-    ctx.closePath();
-    ctx.fill();
-
+    // ground
     ctx.fillStyle="#27ae60";
     ctx.fillRect(-cameraX, canvas.height - 80, canvas.width + 300, 80);
 
@@ -432,11 +402,13 @@ function draw(){
     ctx.font="50px serif";
     ctx.fillText("🧘‍♂️", player.x, player.y+35);
 
+    // platforms
     platforms.forEach(p=>{
         ctx.fillStyle="#FFD700";
         ctx.fillRect(p.x,p.y,p.w,p.h);
     });
 
+    // coins
     coins.forEach(c=>{
         ctx.font="35px serif";
         ctx.fillText("🏆",c.x,c.y + Math.sin(Date.now()/200)*5);
